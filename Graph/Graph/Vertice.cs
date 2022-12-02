@@ -18,6 +18,8 @@ namespace Graph
         {
             Id=Counter++;
         }
+        
+        public List<Connection> connections = new List<Connection>();
 
         public static bool operator == (Vertice vertice1, Vertice vertice2)
         {

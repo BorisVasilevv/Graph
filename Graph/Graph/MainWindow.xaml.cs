@@ -84,7 +84,6 @@ namespace Graph
             IsProgramReady = true;
             canvas1.Children.Clear();
             (Vertices,Connections) = FileWorker.Read(FileToWork);
-            int p = 0;
         }
 
         private void btnCreateNewFile_Click(object sender, RoutedEventArgs e)

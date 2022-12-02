@@ -17,17 +17,37 @@ namespace Graph
 
             for (int i = 0; i < vertice.Count; i++)
             {
+                List<Connection> connectionsForVertice = new List<Connection>();
                 for (int j = 0; j < vertice.Count; j++)
                 {
+                    
                     if (stringsVertices[i][j] != "0")
-                    {           
+                    {
+                        
                         Connection newConn =new Connection(int.Parse(stringsVertices[i][j]), vertice[i], vertice[j]);
-                        if(!Connection.ConnectionRepeat(connections,newConn))
-                            connections.Add(new Connection(int.Parse(stringsVertices[i][j]), vertice[i], vertice[j]));
+                        connectionsForVertice.Add(newConn);
+                        if (!Connection.ConnectionRepeat(connections, newConn))
+                        {
+                            connections.Add(newConn);
+                            
+                        }
+                        
                     }
+                    
                 }
+                vertice[i].connections = new List<Connection>(connectionsForVertice);
             }
             return (vertice,connections);
         }
+
+        public static void Write(List<Vertice> vertices, List<Connection> connections)
+        {
+            List<string[]> stringsVertices= new List<string[]>();
+            for (int i = 0; i < vertices.Count; i++)
+            {
+
+            }
+        }
+
     }
 }
