@@ -1,17 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Graph
 {
     public static class FileWorker
     {
-        public static List<Vertice> Read(string fileName)
+        public static (List<Vertice>, List<Connection>) Read(string filePath)
         {
+            List<Vertice> vertice = new List<Vertice>();
+            List<Connection> connections = new List<Connection>();
+            List <string[]> stringsVertices = File.ReadAllLines(filePath).Select(x=>x.Split(";")).ToList();
+            
+            for (int i = 0; i < stringsVertices.Count; i++)
+                vertice.Add(new Vertice());
 
-            return null;
+            for (int i = 0; i < vertice.Count; i++)
+            {
+                for (int j = 0; j < vertice.Count; j++)
+                {
+                    if (stringsVertices[i][j] != "0")
+                    {           
+                        Connection newConn =new Connection(int.Parse(stringsVertices[i][j]), vertice[i], vertice[j]);
+                        if(!Connection.ConnectionRepeat(connections,newConn))
+                            connections.Add(new Connection(int.Parse(stringsVertices[i][j]), vertice[i], vertice[j]));
+                    }
+                }
+            }
+            return (vertice,connections);
         }
     }
 }

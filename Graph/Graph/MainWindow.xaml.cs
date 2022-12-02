@@ -24,7 +24,8 @@ namespace Graph
         Canvas MainCanvas;
         public static string FileToWork= "..\\..\\..\\..\\";
         public bool IsProgramReady = false;
-        public List<Vertice> Graph;
+        public List<Vertice> Vertices;
+        public List<Connection> Connections;
 
         public MainWindow()
         {
@@ -82,7 +83,8 @@ namespace Graph
             FileToWork += btn.Content.ToString();
             IsProgramReady = true;
             canvas1.Children.Clear();
-            Graph = FileWorker.Read(FileToWork);
+            (Vertices,Connections) = FileWorker.Read(FileToWork);
+            int p = 0;
         }
 
         private void btnCreateNewFile_Click(object sender, RoutedEventArgs e)
@@ -95,7 +97,7 @@ namespace Graph
             textBlock.Height = 30;
             textBlock.Text = "Введите имя файла ниже и нажмите Enter";
             canvas1.Children.Add(textBlock);
-            Canvas.SetLeft(textBlock, 65);
+            Canvas.SetLeft(textBlock, 150);
             TextBox textBox = new TextBox();
             textBox.VerticalAlignment = VerticalAlignment.Top;
             textBox.HorizontalAlignment = HorizontalAlignment.Left;
