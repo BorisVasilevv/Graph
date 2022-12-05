@@ -21,15 +21,17 @@ namespace Graph
     /// </summary>
     public partial class MainWindow : Window
     {
-        Canvas MainCanvas;
-        public static string FileToWork= "..\\..\\..\\..\\";
+        public static Canvas MainCanvas;
+        public static string FileToWork = "..\\..\\..\\..\\";
         public bool IsProgramReady = false;
-        public List<Vertice> Vertices;
-        public List<Connection> Connections;
+        public static AddVerticeTool ToolAddVertice;
+        public AddConnectionTool ToolAddConnedtion;
+
 
         public MainWindow()
         {
             InitializeComponent();
+            ToolAddVertice = new AddVerticeTool();
             MainCanvas = canvas1;
             TextBlock textBlock = new TextBlock();
             textBlock.VerticalAlignment = VerticalAlignment.Top;
@@ -37,8 +39,9 @@ namespace Graph
             textBlock.Width = 735;
             textBlock.Height = 30;
             textBlock.Text = "Выберите Файл для работы";
+            canvas1.MouseMove += AddVerticeTool.clearSelection;
             canvas1.Children.Add(textBlock);
-            Canvas.SetLeft(textBlock, 65);
+            Canvas.SetLeft(textBlock, 200);
             string[] allFiles = Directory.GetFiles("..\\..\\..\\..\\");
             Button btn = new Button();
             btn.Width = 100;
@@ -54,7 +57,7 @@ namespace Graph
             foreach (string file in allFiles)
             {
                 string extension = System.IO.Path.GetExtension(file);
-                string mainNameOfFile = System.IO.Path.GetFileName(file); 
+                string mainNameOfFile = System.IO.Path.GetFileName(file);
                 if (extension == ".csv")
                 {
                     Button button = new Button();
@@ -70,33 +73,65 @@ namespace Graph
                     button.Click += btnFileName_Click;
                 }
             }
-
-
         }
 
 
 
         private void btnFileName_Click(object sender, RoutedEventArgs e)
         {
-            
+
             Button btn = (Button)sender;
             FileToWork += btn.Content.ToString();
             IsProgramReady = true;
             canvas1.Children.Clear();
-            (Vertices,Connections) = FileWorker.Read(FileToWork);
+            (AddVerticeTool.AllVertices, AddConnectionTool.Connections) = FileWorker.Read(FileToWork);
+            
+            for (int i = 0; i < AddVerticeTool.AllVertices.Count; i++)
+            {
+                Rectangle Rect = new Rectangle();
+                Rect.Width = 50;
+                Rect.Height = 50;
+                Rect.Fill = new SolidColorBrush(Colors.Brown);
+                Rect.Stroke = new SolidColorBrush(Colors.Black);
+                Rect.MouseMove += ToolAddVertice.RectangleMouseMove;
+                Canvas.SetZIndex(Rect, 2);
+                MainWindow.MainCanvas.Children.Add(Rect);
+                Point center = new Point(200 + 70 * (i % 5), 50 * (i / 5 + 1));
+                Canvas.SetTop(Rect, center.Y);
+                Canvas.SetLeft(Rect,center.X );
+
+                AddVerticeTool.AllVertices[i].Rect = Rect;
+                AddVerticeTool.AllVertices[i].RectCenter = new Point(center.X+ Rect.Width/2, center.Y + Rect.Height/2);
+                TextBlock textBlock = new TextBlock() { Text = (AddVerticeTool.AllVertices[i].Id + 1).ToString() };
+
+                textBlock.Height = 20;
+                textBlock.Width = 50;
+                textBlock.VerticalAlignment = VerticalAlignment.Top;
+                textBlock.HorizontalAlignment = HorizontalAlignment.Center;
+                textBlock.TextAlignment = TextAlignment.Center;
+                Canvas.SetZIndex(textBlock, 2);
+                MainWindow.MainCanvas.Children.Add(textBlock);
+                Canvas.SetTop(textBlock, 50 * (i/ 5+1)+30);
+                Canvas.SetLeft(textBlock, 200 +70 * (i %5));
+                AddVerticeTool.AllVertices[i].VerticeNameTextBlock = textBlock;
+
+            }
+            AddConnectionTool.DrawConnections();
         }
+
 
         private void btnCreateNewFile_Click(object sender, RoutedEventArgs e)
         {
             canvas1.Children.Clear();
             TextBlock textBlock = new TextBlock();
+            canvas1.MouseMove += AddVerticeTool.clearSelection;
             textBlock.VerticalAlignment = VerticalAlignment.Top;
             textBlock.HorizontalAlignment = HorizontalAlignment.Left;
             textBlock.Width = 735;
             textBlock.Height = 30;
             textBlock.Text = "Введите имя файла ниже и нажмите Enter";
             canvas1.Children.Add(textBlock);
-            Canvas.SetLeft(textBlock, 150);
+            Canvas.SetLeft(textBlock, 200);
             TextBox textBox = new TextBox();
             textBox.VerticalAlignment = VerticalAlignment.Top;
             textBox.HorizontalAlignment = HorizontalAlignment.Left;
@@ -106,13 +141,16 @@ namespace Graph
             Canvas.SetTop(textBox, 40);
             Canvas.SetLeft(textBox, 65);
             canvas1.Children.Add(textBox);
+            AddVerticeTool.AllVertices = new List<Vertice>();
+            AddConnectionTool.Connections = new List<Connection>();
         }
 
         private void btnCreateVertice_Click(object sender, RoutedEventArgs e)
         {
             if (IsProgramReady)
             {
-                
+                canvas1.MouseMove += ToolAddVertice.NewRectMouseMove;
+                canvas1.MouseDown += ToolAddVertice.RectMouseDown;
             }
         }
 
@@ -120,7 +158,7 @@ namespace Graph
         {
             if (IsProgramReady)
             {
-                
+                canvas1.MouseDown += AddConnectionTool.AddConnection;
             }
         }
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
@@ -138,7 +176,7 @@ namespace Graph
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
         private void btnExit_click(object sender, RoutedEventArgs e)

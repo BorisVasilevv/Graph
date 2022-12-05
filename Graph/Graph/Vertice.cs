@@ -5,21 +5,32 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Media.Animation;
+using System.Windows.Shapes;
+using System.Windows;
+
 
 namespace Graph
 {
 
     public class Vertice
     {
-        static int Counter=0;
+        static int _counter=0;
         public readonly int Id;
 
         public Vertice()
         {
-            Id=Counter++;
+            Id=_counter++;
         }
-        
-        public List<Connection> connections = new List<Connection>();
+
+        public TextBlock VerticeNameTextBlock { get; set; }
+
+        public Rectangle Rect { get; set; }
+
+        public Point RectCenter { get; set; }
+
+        public List<int> ConnectionIds = new List<int>();
 
         public static bool operator == (Vertice vertice1, Vertice vertice2)
         {
@@ -27,7 +38,31 @@ namespace Graph
         }
         public static bool operator != (Vertice vertice1, Vertice vertice2)
         {
-            return vertice1.Id == vertice2.Id;
+            return vertice1.Id != vertice2.Id;
         }
+
+
+
+        public static Vertice SearchVertice(int id)
+        {
+            foreach (Vertice vertice in AddVerticeTool.AllVertices)
+            {
+                if (vertice.Id == id)
+                    return vertice;
+            }
+            return null;
+        }
+        public static Vertice SearchVertice(Rectangle rect)
+        {
+            foreach (Vertice vertice in AddVerticeTool.AllVertices)
+            {
+                if (vertice.Rect == rect)
+                    return vertice;
+            }
+            return null;
+        }
+
+
+
     }
 }
