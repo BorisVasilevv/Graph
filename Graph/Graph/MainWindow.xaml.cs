@@ -85,7 +85,7 @@ namespace Graph
             IsProgramReady = true;
             canvas1.Children.Clear();
             (AddVerticeTool.AllVertices, AddConnectionTool.Connections) = FileWorker.Read(FileToWork);
-            
+
             for (int i = 0; i < AddVerticeTool.AllVertices.Count; i++)
             {
                 Rectangle Rect = new Rectangle();
@@ -98,10 +98,10 @@ namespace Graph
                 MainWindow.MainCanvas.Children.Add(Rect);
                 Point center = new Point(200 + 70 * (i % 5), 50 * (i / 5 + 1));
                 Canvas.SetTop(Rect, center.Y);
-                Canvas.SetLeft(Rect,center.X );
+                Canvas.SetLeft(Rect, center.X);
 
                 AddVerticeTool.AllVertices[i].Rect = Rect;
-                AddVerticeTool.AllVertices[i].RectCenter = new Point(center.X+ Rect.Width/2, center.Y + Rect.Height/2);
+                AddVerticeTool.AllVertices[i].RectCenter = new Point(center.X + Rect.Width / 2, center.Y + Rect.Height / 2);
                 TextBlock textBlock = new TextBlock() { Text = (AddVerticeTool.AllVertices[i].Id + 1).ToString() };
 
                 textBlock.Height = 20;
@@ -111,8 +111,8 @@ namespace Graph
                 textBlock.TextAlignment = TextAlignment.Center;
                 Canvas.SetZIndex(textBlock, 2);
                 MainWindow.MainCanvas.Children.Add(textBlock);
-                Canvas.SetTop(textBlock, 50 * (i/ 5+1)+30);
-                Canvas.SetLeft(textBlock, 200 +70 * (i %5));
+                Canvas.SetTop(textBlock, 50 * (i / 5 + 1) + 30);
+                Canvas.SetLeft(textBlock, 200 + 70 * (i % 5));
                 AddVerticeTool.AllVertices[i].VerticeNameTextBlock = textBlock;
 
             }
@@ -124,7 +124,9 @@ namespace Graph
         {
             canvas1.Children.Clear();
             TextBlock textBlock = new TextBlock();
-            canvas1.MouseMove += AddVerticeTool.clearSelection;
+
+
+
             textBlock.VerticalAlignment = VerticalAlignment.Top;
             textBlock.HorizontalAlignment = HorizontalAlignment.Left;
             textBlock.Width = 735;
@@ -176,7 +178,10 @@ namespace Graph
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-
+            if (IsProgramReady)
+            {
+                FileWorker.WriteToFile(AddVerticeTool.AllVertices,AddConnectionTool.Connections ,FileToWork);
+            }
         }
 
         private void btnExit_click(object sender, RoutedEventArgs e)
@@ -187,7 +192,10 @@ namespace Graph
 
         private void btnDeleteVertice_Click(object sender, RoutedEventArgs e)
         {
-
+            if (IsProgramReady)
+            {
+                canvas1.MouseDown += DeleteVerticeTool.DeleteVertice;
+            }
         }
 
         private void btnTraversal_Click(object sender, RoutedEventArgs e)

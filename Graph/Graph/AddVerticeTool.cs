@@ -100,7 +100,10 @@ namespace Graph
         {
             foreach (Vertice vertice in AllVertices)
                 if (!vertice.Rect.IsMouseOver)
+                {
                     vertice.Rect.Effect = null;
+                    if (vertice.Rect == SelectedRectangle) SelectedRectangle = null;
+                }
         }
 
         private void selectedShapes(Canvas canvas)

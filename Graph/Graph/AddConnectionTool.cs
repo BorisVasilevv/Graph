@@ -56,8 +56,8 @@ namespace Graph
         {
             foreach (Connection connection in Connections)
             {
-                if ((connection.Vertice1 == connectionToTest.Vertice1 && connection.Vertice2 == connectionToTest.Vertice2)
-                    || (connection.Vertice1 == connectionToTest.Vertice2 && connection.Vertice2 == connectionToTest.Vertice1))
+                if ((connection.Vertice1.Id == connectionToTest.Vertice1.Id && connection.Vertice2.Id == connectionToTest.Vertice2.Id)
+                    || (connection.Vertice1.Id == connectionToTest.Vertice2.Id && connection.Vertice2.Id == connectionToTest.Vertice1.Id))
                 {
                     return false;
                 }

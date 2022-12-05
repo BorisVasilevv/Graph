@@ -32,14 +32,8 @@ namespace Graph
 
         public List<int> ConnectionIds = new List<int>();
 
-        public static bool operator == (Vertice vertice1, Vertice vertice2)
-        {
-            return vertice1.Id== vertice2.Id;
-        }
-        public static bool operator != (Vertice vertice1, Vertice vertice2)
-        {
-            return vertice1.Id != vertice2.Id;
-        }
+
+
 
 
 

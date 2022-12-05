@@ -9,10 +9,10 @@ namespace Graph
 {
     public class Connection
     {
-        public int Length;
-        public Vertice Vertice1;
-        public Vertice Vertice2;
-        public Polyline Polyline;
+        public int Length { get; set; }
+        public Vertice Vertice1 { get; set; }
+        public Vertice Vertice2 { get; set; }
+        public Polyline Polyline { get; set; }
 
         public Connection()
         {
@@ -31,10 +31,23 @@ namespace Graph
         {
             foreach (Connection connection in connections)
             {
-                if ((connection.Vertice1 == checkConnection.Vertice1 && connection.Vertice1 == checkConnection.Vertice1)
-                    || (connection.Vertice1 == checkConnection.Vertice2 && connection.Vertice2 == checkConnection.Vertice1)) return true;
+                if ((connection.Vertice1.Id == checkConnection.Vertice1.Id && connection.Vertice2.Id == checkConnection.Vertice1.Id)
+                    || (connection.Vertice1.Id == checkConnection.Vertice2.Id && connection.Vertice2.Id == checkConnection.Vertice1.Id)) return true;
             }
             return false;
+        }
+
+        public static Connection SearchConnection(Vertice vertice1, Vertice vertice2, List<Connection> connections)
+        {
+            foreach (Connection connection in connections)
+            {
+                if((connection.Vertice1.Id == vertice1.Id && connection.Vertice2.Id == vertice2.Id)
+                    || (connection.Vertice2.Id == vertice1.Id && connection.Vertice1.Id == vertice2.Id))
+                {
+                    return connection;
+                }
+            }
+            return null;
         }
     }
 }
