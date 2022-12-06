@@ -17,21 +17,13 @@ namespace Graph
 
         public TextBlock BlockText { get; set; }
 
-        
-
-        
+            
         public Connection()
         {
             this.BlockText = new TextBlock();
             BlockText.MouseDown += ChangeDataTool.TextBlock_MouseDown;
 
-        }
-
-
-        
-
-
-        
+        }            
 
         public Connection(int length, Vertice vertice1, Vertice vertice2)
         {

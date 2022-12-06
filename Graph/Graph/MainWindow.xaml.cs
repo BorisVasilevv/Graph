@@ -195,7 +195,7 @@ namespace Graph
         {
             if (IsProgramReady)
             {
-                FileWorker.WriteToFile(AddVerticeTool.AllVertices,AddConnectionTool.Connections ,FileToWork);
+                FileWorker.WriteToFile(AddVerticeTool.AllVertices, AddConnectionTool.Connections, FileToWork);
             }
         }
 
@@ -219,7 +219,7 @@ namespace Graph
             {
                 BtnSearchDetpth.Click += BtnSearchDetpth_Click;
                 BtnSearchWidth.Click += BtnSearchWidth_Click;
-                if(!MainCanvas.Children.Contains(BtnSearchDetpth)) MainCanvas.Children.Add(BtnSearchDetpth); 
+                if (!MainCanvas.Children.Contains(BtnSearchDetpth)) MainCanvas.Children.Add(BtnSearchDetpth);
                 if (!MainCanvas.Children.Contains(BtnSearchWidth)) MainCanvas.Children.Add(BtnSearchWidth);
             }
         }
@@ -263,12 +263,20 @@ namespace Graph
 
         private void btnMinWay_Click(object sender, RoutedEventArgs e)
         {
-
+            if (IsProgramReady)
+            {
+                IsProgramReady = false;
+                ChoseStartEndHelper.ChooseVertice(DijkstraAlgorithm.Algorithm);
+            }
         }
 
         private void btnMaxFlow_Click(object sender, RoutedEventArgs e)
         {
-
+            if (IsProgramReady)
+            {
+                IsProgramReady = false;
+                ChoseStartEndHelper.ChooseVertice(AlgorithmFordFarkenson.Algorithm);
+            }
         }
 
         Canvas dopCanvas = new Canvas
@@ -282,15 +290,15 @@ namespace Graph
         List<Connection> Copy;
         private void btnMinTree_Click(object sender, RoutedEventArgs e)
         {
-            Copy=new List<Connection>(AddConnectionTool.Connections);
-            bool IsGraphConnected=true;
-            if(IsProgramReady)
+            Copy = new List<Connection>(AddConnectionTool.Connections);
+            bool IsGraphConnected = true;
+            if (IsProgramReady)
             {
-                if(IsGraphConnected)
+                if (IsGraphConnected)
                 {
                     AddConnectionTool.Connections = PrimAlghoritm.AlgorithmByPrim();
                     MainCanvas.Children.Clear();
-                    DrawGraph(MainCanvas,AddVerticeTool.AllVertices, AddConnectionTool.Connections);
+                    DrawGraph(MainCanvas, AddVerticeTool.AllVertices, AddConnectionTool.Connections);
                     BtnReturn.Click += BtnReturn_Click;
                     //BtnSaveToAnotherFile.Click += BtnSaveToAnotherFile_Click;
                     MainCanvas.Children.Add(BtnReturn);
@@ -309,15 +317,19 @@ namespace Graph
 
         //private void BtnSaveToAnotherFile_Click(object sender, RoutedEventArgs e)
         //{
-            
+
         //}
 
         Button BtnReturn = new Button
         {
-            Content = "Назад", Height = 20, Width = 100, Background = new SolidColorBrush(Colors.Gray), 
-            Margin = new Thickness(650, 350, 0, 0), VerticalAlignment=VerticalAlignment.Center,
-            HorizontalContentAlignment=HorizontalAlignment.Center
-            
+            Content = "Назад",
+            Height = 20,
+            Width = 100,
+            Background = new SolidColorBrush(Colors.Gray),
+            Margin = new Thickness(650, 350, 0, 0),
+            VerticalAlignment = VerticalAlignment.Center,
+            HorizontalContentAlignment = HorizontalAlignment.Center
+
         };
 
         //Button BtnSaveToAnotherFile = new Button
@@ -333,7 +345,7 @@ namespace Graph
 
 
 
-        
+
 
         private void btnDeleteConnection_Click(object sender, RoutedEventArgs e)
         {

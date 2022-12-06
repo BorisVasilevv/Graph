@@ -8,8 +8,6 @@ namespace Graph
 {
     class PrimAlghoritm
     {
-
-
         public static List<Connection> AlgorithmByPrim()
         {
             List<Connection> MST = new List<Connection>();

@@ -42,6 +42,7 @@ namespace Graph
                     TextBlock textBlock = new TextBlock();
                     NewConnection.BlockText = textBlock;
                     NewConnection.BlockText.Text = "1";
+                    NewConnection.BlockText.MouseDown += ChangeDataTool.TextBlock_MouseDown;
 
 
                     if (!Connection.ConnectionRepeat(Connections, NewConnection))
