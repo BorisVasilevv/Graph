@@ -38,9 +38,14 @@ namespace Graph
                     Rect2 = AddVerticeTool.SelectedRectangle;
                     NewConnection.Vertice1 = Vertice.SearchVertice(Rect1);
                     NewConnection.Vertice2 = Vertice.SearchVertice(Rect2);
+                    NewConnection.Length = 1;
+                    TextBlock textBlock = new TextBlock();
+                    NewConnection.BlockText = textBlock;
+                    NewConnection.BlockText.Text = "1";
+
+
                     if (!Connection.ConnectionRepeat(Connections, NewConnection))
                     {
-
                         Connections.Add(NewConnection);
                         Rect1 = Rect2 = null;
                     }
@@ -74,6 +79,19 @@ namespace Graph
                 PointCollection points = new PointCollection();
                 Point point1 = connection.Vertice1.RectCenter;
                 Point point2 = connection.Vertice2.RectCenter;
+                double minX = point1.X < point2.X ? point1.X : point2.X;
+                double minY = point1.Y < point2.Y ? point1.Y : point2.Y;
+                Point textBlockCenter= new Point(minX+Math.Abs(point1.X-point2.X)/2, minY+Math.Abs(point1.Y-point2.Y)/2);
+                if (connection.BlockText != null) MainWindow.MainCanvas.Children.Remove(connection.BlockText);
+                MainWindow.MainCanvas.Children.Add(connection.BlockText);
+                Canvas.SetZIndex(connection.BlockText, 0);
+                
+                connection.BlockText.VerticalAlignment =VerticalAlignment.Center;
+                connection.BlockText.HorizontalAlignment =HorizontalAlignment.Center;
+                connection.BlockText.Margin = new Thickness(textBlockCenter.X, textBlockCenter.Y, 800- textBlockCenter.X, 450- textBlockCenter.Y);
+                //Canvas.SetTop(connection.BlockText, textBlockCenter.Y);
+                //Canvas.SetRight(connection.BlockText, textBlockCenter.X);
+                
 
 
                 points.Add(point1);

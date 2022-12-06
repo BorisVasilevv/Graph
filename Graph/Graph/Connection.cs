@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Shapes;
 
 namespace Graph
@@ -14,10 +15,18 @@ namespace Graph
         public Vertice Vertice2 { get; set; }
         public Polyline Line { get; set; }
 
+        public TextBlock BlockText { get; set; }
+
         public Connection()
         {
+            this.BlockText = new TextBlock();
+            BlockText.MouseDown += TextBlock_MouseDown;
 
+        }
 
+        private void TextBlock_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            
         }
 
         public Connection(int length, Vertice vertice1, Vertice vertice2)
@@ -25,6 +34,9 @@ namespace Graph
             this.Length = length;
             Vertice1 = vertice1;
             Vertice2 = vertice2;
+            this.BlockText=new TextBlock();
+            this.BlockText.Text = length.ToString();
+            BlockText.MouseDown += TextBlock_MouseDown;
         }
 
         public static bool ConnectionRepeat(List<Connection> connections, Connection checkConnection)

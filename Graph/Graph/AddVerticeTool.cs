@@ -76,7 +76,7 @@ namespace Graph
                 point.Y = mouseY + SelectedRectangle.Height / 4;
                 Canvas.SetLeft(SelectedRectangle, mouseX - SelectedRectangle.Width / 2);
                 Canvas.SetTop(SelectedRectangle, mouseY - SelectedRectangle.Height / 4);
-                //RectangleData rectangleData = AddRectangleTool.RectangleDatas[SelectedVertice];
+
 
 
                 Vertice vertice = Vertice.SearchVertice(SelectedRectangle);
@@ -85,9 +85,6 @@ namespace Graph
                 Canvas.SetTop(vertice.VerticeNameTextBlock, mouseY +20);
                 Canvas.SetLeft(vertice.VerticeNameTextBlock, mouseX - SelectedRectangle.Height / 2);
                 AddConnectionTool.DrawConnections();
-
-
-                //AddConnectionTool.DrawConnections(AddConnectionTool.connections);
             }
         }
 
