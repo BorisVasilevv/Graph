@@ -215,8 +215,51 @@ namespace Graph
 
         private void btnTraversal_Click(object sender, RoutedEventArgs e)
         {
-
+            if (IsProgramReady)
+            {
+                BtnSearchDetpth.Click += BtnSearchDetpth_Click;
+                BtnSearchWidth.Click += BtnSearchWidth_Click;
+                if(!MainCanvas.Children.Contains(BtnSearchDetpth)) MainCanvas.Children.Add(BtnSearchDetpth); 
+                if (!MainCanvas.Children.Contains(BtnSearchWidth)) MainCanvas.Children.Add(BtnSearchWidth);
+            }
         }
+
+        private void BtnSearchWidth_Click(object sender, RoutedEventArgs e)
+        {
+            MainCanvas.Children.Remove(BtnSearchDetpth);
+            MainCanvas.Children.Remove(BtnSearchWidth);
+        }
+
+        private void BtnSearchDetpth_Click(object sender, RoutedEventArgs e)
+        {
+            MainCanvas.Children.Remove(BtnSearchDetpth);
+            MainCanvas.Children.Remove(BtnSearchWidth);
+        }
+
+        Button BtnSearchDetpth = new Button
+        {
+            Content = "В глубину",
+            Height = 20,
+            Width = 100,
+            Background = new SolidColorBrush(Colors.Gray),
+            Margin = new Thickness(80, 170, 0, 0),
+            VerticalAlignment = VerticalAlignment.Center,
+            HorizontalContentAlignment = HorizontalAlignment.Center
+
+        };
+
+        Button BtnSearchWidth = new Button
+        {
+            Content = "В ширину",
+            Height = 20,
+            Width = 100,
+            Background = new SolidColorBrush(Colors.Gray),
+            Margin = new Thickness(80, 190, 0, 0),
+            VerticalAlignment = VerticalAlignment.Center,
+            HorizontalContentAlignment = HorizontalAlignment.Center
+
+        };
+
 
         private void btnMinWay_Click(object sender, RoutedEventArgs e)
         {
