@@ -49,7 +49,7 @@ namespace Graph
                         Connections.Add(NewConnection);
                         Rect1 = Rect2 = null;
                     }
-                    DrawConnections();
+                    DrawConnections(MainWindow.MainCanvas, Connections);
                     
                     MainWindow.MainCanvas.MouseDown -= addConnection;
                 }
@@ -70,11 +70,11 @@ namespace Graph
             return true;
         }
 
-        public static void DrawConnections()
+        public static void DrawConnections(Canvas canvas, List<Connection> connections)
         {
-            foreach (Connection connection in Connections)
+            foreach (Connection connection in connections)
             {
-                if (connection.Line != null) MainWindow.MainCanvas.Children.Remove(connection.Line); //удаление линии при перетаскивании прямоугольника
+                if (connection.Line != null) canvas.Children.Remove(connection.Line); //удаление линии при перетаскивании прямоугольника
                 Polyline line = new Polyline();
                 PointCollection points = new PointCollection();
                 Point point1 = connection.Vertice1.RectCenter;
@@ -82,18 +82,14 @@ namespace Graph
                 double minX = point1.X < point2.X ? point1.X : point2.X;
                 double minY = point1.Y < point2.Y ? point1.Y : point2.Y;
                 Point textBlockCenter= new Point(minX+Math.Abs(point1.X-point2.X)/2, minY+Math.Abs(point1.Y-point2.Y)/2);
-                if (connection.BlockText != null) MainWindow.MainCanvas.Children.Remove(connection.BlockText);
-                MainWindow.MainCanvas.Children.Add(connection.BlockText);
+                if (connection.BlockText != null) canvas.Children.Remove(connection.BlockText);
+                canvas.Children.Add(connection.BlockText);
                 Canvas.SetZIndex(connection.BlockText, 0);
                 Canvas.SetLeft(connection.BlockText, textBlockCenter.X);
                 Canvas.SetTop(connection.BlockText, textBlockCenter.Y-15);
                 //connection.BlockText.VerticalAlignment =VerticalAlignment.Center;
                 //connection.BlockText.HorizontalAlignment =HorizontalAlignment.Center;
                 //connection.BlockText.Margin = new Thickness(textBlockCenter.X, textBlockCenter.Y, 800- textBlockCenter.X, 450- textBlockCenter.Y);
-
-                
-
-
                 points.Add(point1);
                 points.Add(point2);
                 line.Fill = Brushes.Blue;
@@ -103,7 +99,7 @@ namespace Graph
                 line.Points = points;
                 Canvas.SetZIndex(line, 1);
                 connection.Line = line;
-                MainWindow.MainCanvas.Children.Add(line);
+                canvas.Children.Add(line);
             }
         }
     }

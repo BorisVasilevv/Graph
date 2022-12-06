@@ -27,7 +27,6 @@ namespace Graph
                     int lengthConnection = int.Parse(stringsVertices[i][j]);
                     if (lengthConnection != 0)
                     {
-
                         Connection newConn = new Connection(lengthConnection, vertice[i], vertice[j]);
                         vertice[i].ConnectionIds.Add(vertice[j].Id);
                         if (!Connection.ConnectionRepeat(connections, newConn))

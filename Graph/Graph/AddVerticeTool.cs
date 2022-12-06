@@ -84,7 +84,7 @@ namespace Graph
                     vertice.RectCenter = point;
                     Canvas.SetTop(vertice.VerticeNameTextBlock, mouseY + 20);
                     Canvas.SetLeft(vertice.VerticeNameTextBlock, mouseX - SelectedRectangle.Height / 2);
-                    AddConnectionTool.DrawConnections();
+                    AddConnectionTool.DrawConnections(MainWindow.MainCanvas, AddConnectionTool.Connections);
                 }
             }
         }
