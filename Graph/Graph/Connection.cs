@@ -12,7 +12,7 @@ namespace Graph
         public int Length { get; set; }
         public Vertice Vertice1 { get; set; }
         public Vertice Vertice2 { get; set; }
-        public Polyline Polyline { get; set; }
+        public Polyline Line { get; set; }
 
         public Connection()
         {
@@ -37,11 +37,20 @@ namespace Graph
             return false;
         }
 
+        public static Connection SearchConnection(Polyline line)
+        {
+            foreach (Connection connect in AddConnectionTool.Connections)
+            {
+                if (connect.Line == line) return connect;
+            }
+            return null;
+        }
+
         public static Connection SearchConnection(Vertice vertice1, Vertice vertice2, List<Connection> connections)
         {
             foreach (Connection connection in connections)
             {
-                if((connection.Vertice1.Id == vertice1.Id && connection.Vertice2.Id == vertice2.Id)
+                if ((connection.Vertice1.Id == vertice1.Id && connection.Vertice2.Id == vertice2.Id)
                     || (connection.Vertice2.Id == vertice1.Id && connection.Vertice1.Id == vertice2.Id))
                 {
                     return connection;

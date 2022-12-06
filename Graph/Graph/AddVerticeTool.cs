@@ -11,20 +11,20 @@ namespace Graph
 {
     public class AddVerticeTool
     {
-        public static List<Vertice> AllVertices = new List<Vertice>();
+        public static List<Vertice> AllVertices {get; set;}
         private Rectangle NewVerticeRect;
         public static Rectangle SelectedRectangle;
 
 
-        public void RectMouseDown(object sender, MouseButtonEventArgs e)
+        public void rectMouseDown(object sender, MouseButtonEventArgs e)
         {
-            MainWindow.MainCanvas.MouseMove -= NewRectMouseMove;
-            MainWindow.MainCanvas.MouseDown -= RectMouseDown;
+            MainWindow.MainCanvas.MouseMove -= newRectMouseMove;
+            MainWindow.MainCanvas.MouseDown -= rectMouseDown;
             NewVerticeRect = null;
             SelectedRectangle = null;
         }
 
-        public void NewRectMouseMove(object sender, MouseEventArgs e)
+        public void newRectMouseMove(object sender, MouseEventArgs e)
         {
             Point point = new Point();
             double mouseX = e.GetPosition(MainWindow.MainCanvas).X;
@@ -59,11 +59,6 @@ namespace Graph
                 Canvas.SetLeft(textBlock, mouseX - NewVerticeRect.Height / 2);
                 vertice.VerticeNameTextBlock = textBlock;
             }
-
-            
-
-
-
             Canvas.SetLeft(NewVerticeRect, mouseX - NewVerticeRect.Width / 2);
             Canvas.SetTop(NewVerticeRect, mouseY - NewVerticeRect.Height / 2);
         }
@@ -72,7 +67,7 @@ namespace Graph
         {
             double mouseX = e.GetPosition(MainWindow.MainCanvas).X;
             double mouseY = e.GetPosition(MainWindow.MainCanvas).Y;
-            selectedShapes(MainWindow.MainCanvas);
+            selectedRectangle(MainWindow.MainCanvas);
             DrawSelection();
             if (SelectedRectangle != null && e.LeftButton == MouseButtonState.Pressed)
             {
@@ -99,14 +94,16 @@ namespace Graph
         public static void clearSelection(object sender, MouseEventArgs e)
         {
             foreach (Vertice vertice in AllVertices)
+            {
                 if (!vertice.Rect.IsMouseOver)
                 {
                     vertice.Rect.Effect = null;
                     if (vertice.Rect == SelectedRectangle) SelectedRectangle = null;
                 }
+            }
         }
 
-        private void selectedShapes(Canvas canvas)
+        private void selectedRectangle(Canvas canvas)
         {
             foreach (var elem in canvas.Children)
             {

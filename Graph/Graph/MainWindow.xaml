@@ -27,7 +27,7 @@
         </Button>
         <Button 
             x:Name="btnDeleteConnection" HorizontalAlignment="Left"  Margin="5,130,0,0" Height="30" 
-            VerticalAlignment="Top" Width="70" Click="btnAddConnection_Click" Content="Del Connect">
+            VerticalAlignment="Top" Width="70" Click="btnDeleteConnection_Click" Content="Del Connect">
         </Button>
         <Button 
             x:Name="btnTraversal" HorizontalAlignment="Left"  Margin="5,170,0,0" Height="30" 

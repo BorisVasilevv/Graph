@@ -39,7 +39,8 @@ namespace Graph
             textBlock.Width = 735;
             textBlock.Height = 30;
             textBlock.Text = "Выберите Файл для работы";
-            canvas1.MouseMove += AddVerticeTool.clearSelection;
+
+
             canvas1.Children.Add(textBlock);
             Canvas.SetLeft(textBlock, 200);
             string[] allFiles = Directory.GetFiles("..\\..\\..\\..\\");
@@ -73,6 +74,8 @@ namespace Graph
                     button.Click += btnFileName_Click;
                 }
             }
+
+
         }
 
 
@@ -85,7 +88,8 @@ namespace Graph
             IsProgramReady = true;
             canvas1.Children.Clear();
             (AddVerticeTool.AllVertices, AddConnectionTool.Connections) = FileWorker.Read(FileToWork);
-
+            canvas1.MouseMove += AddVerticeTool.clearSelection;
+            canvas1.MouseMove += DeleteConnectionTool.clearSelection;
             for (int i = 0; i < AddVerticeTool.AllVertices.Count; i++)
             {
                 Rectangle Rect = new Rectangle();
@@ -145,14 +149,17 @@ namespace Graph
             canvas1.Children.Add(textBox);
             AddVerticeTool.AllVertices = new List<Vertice>();
             AddConnectionTool.Connections = new List<Connection>();
+            canvas1.MouseMove += AddVerticeTool.clearSelection;
+            canvas1.MouseMove += DeleteConnectionTool.clearSelection;
+
         }
 
         private void btnCreateVertice_Click(object sender, RoutedEventArgs e)
         {
             if (IsProgramReady)
             {
-                canvas1.MouseMove += ToolAddVertice.NewRectMouseMove;
-                canvas1.MouseDown += ToolAddVertice.RectMouseDown;
+                canvas1.MouseMove += ToolAddVertice.newRectMouseMove;
+                canvas1.MouseDown += ToolAddVertice.rectMouseDown;
             }
         }
 
@@ -160,7 +167,7 @@ namespace Graph
         {
             if (IsProgramReady)
             {
-                canvas1.MouseDown += AddConnectionTool.AddConnection;
+                canvas1.MouseDown += AddConnectionTool.addConnection;
             }
         }
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
@@ -216,6 +223,14 @@ namespace Graph
         private void btnMinTree_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void btnDeleteConnection_Click(object sender, RoutedEventArgs e)
+        {
+            if (IsProgramReady)
+            {
+                canvas1.MouseDown += DeleteConnectionTool.deleteLine;
+            }
         }
     }
 }

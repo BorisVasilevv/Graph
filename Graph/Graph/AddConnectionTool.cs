@@ -21,7 +21,7 @@ namespace Graph
 
         public AddVerticeTool ToolAddVertice = MainWindow.ToolAddVertice;
 
-        public static void AddConnection(object sender, MouseEventArgs e)
+        public static void addConnection(object sender, MouseEventArgs e)
         {
             
             Vertice data1, data2;
@@ -46,10 +46,10 @@ namespace Graph
                     }
                     DrawConnections();
                     
-                    MainWindow.MainCanvas.MouseDown -= AddConnection;
+                    MainWindow.MainCanvas.MouseDown -= addConnection;
                 }
             }
-            MainWindow.MainCanvas.MouseDown += MainWindow.ToolAddVertice.RectMouseDown;
+            MainWindow.MainCanvas.MouseDown += MainWindow.ToolAddVertice.rectMouseDown;
         }
 
         public static bool IsConnectionNewTest(Connection connectionToTest)
@@ -69,7 +69,7 @@ namespace Graph
         {
             foreach (Connection connection in Connections)
             {
-                if (connection.Polyline != null) MainWindow.MainCanvas.Children.Remove(connection.Polyline); //удаление линии при перетаскивании прямоугольника
+                if (connection.Line != null) MainWindow.MainCanvas.Children.Remove(connection.Line); //удаление линии при перетаскивании прямоугольника
                 Polyline line = new Polyline();
                 PointCollection points = new PointCollection();
                 Point point1 = connection.Vertice1.RectCenter;
@@ -84,7 +84,7 @@ namespace Graph
 
                 line.Points = points;
                 Canvas.SetZIndex(line, 1);
-                connection.Polyline = line;
+                connection.Line = line;
                 MainWindow.MainCanvas.Children.Add(line);
             }
         }
