@@ -48,8 +48,10 @@ namespace Graph
             
             if (SelectLine != null)
             {
+                TextBlock textBlock = Connection.SearchConnection(SelectLine).BlockText;
                 AddConnectionTool.Connections.Remove(Connection.SearchConnection(SelectLine));
                 MainWindow.MainCanvas.Children.Remove(SelectLine);
+                MainWindow.MainCanvas.Children.Remove(textBlock);
                 MainWindow.MainCanvas.MouseDown -= deleteLine;
             }
         }

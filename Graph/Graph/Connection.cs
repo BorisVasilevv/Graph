@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Shapes;
 
 namespace Graph
@@ -17,26 +17,30 @@ namespace Graph
 
         public TextBlock BlockText { get; set; }
 
+        
+
+        
         public Connection()
         {
             this.BlockText = new TextBlock();
-            BlockText.MouseDown += TextBlock_MouseDown;
+            BlockText.MouseDown += ChangeDataTool.TextBlock_MouseDown;
 
         }
 
-        private void TextBlock_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            
-        }
+
+        
+
+
+        
 
         public Connection(int length, Vertice vertice1, Vertice vertice2)
         {
             this.Length = length;
             Vertice1 = vertice1;
             Vertice2 = vertice2;
-            this.BlockText=new TextBlock();
+            this.BlockText = new TextBlock();
             this.BlockText.Text = length.ToString();
-            BlockText.MouseDown += TextBlock_MouseDown;
+            BlockText.MouseDown += ChangeDataTool.TextBlock_MouseDown;
         }
 
         public static bool ConnectionRepeat(List<Connection> connections, Connection checkConnection)
@@ -54,6 +58,15 @@ namespace Graph
             foreach (Connection connect in AddConnectionTool.Connections)
             {
                 if (connect.Line == line) return connect;
+            }
+            return null;
+        }
+
+        public static Connection SearchConnection(TextBlock textBlock)
+        {
+            foreach (Connection connect in AddConnectionTool.Connections)
+            {
+                if (connect.BlockText == textBlock) return connect;
             }
             return null;
         }

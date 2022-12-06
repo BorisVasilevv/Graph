@@ -28,6 +28,7 @@ namespace Graph
                 foreach (Connection conn in connectToDel)
                 {
                     MainWindow.MainCanvas.Children.Remove(conn.Line);
+                    MainWindow.MainCanvas.Children.Remove(conn.BlockText);
                 }
                 MainWindow.MainCanvas.Children.Remove(selectedRectangle);
                 MainWindow.MainCanvas.Children.Remove(vert.VerticeNameTextBlock);

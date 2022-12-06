@@ -71,20 +71,21 @@ namespace Graph
             DrawSelection();
             if (SelectedRectangle != null && e.LeftButton == MouseButtonState.Pressed)
             {
-                Point point = new Point();
-                point.X = mouseX;
-                point.Y = mouseY + SelectedRectangle.Height / 4;
-                Canvas.SetLeft(SelectedRectangle, mouseX - SelectedRectangle.Width / 2);
-                Canvas.SetTop(SelectedRectangle, mouseY - SelectedRectangle.Height / 4);
-
-
-
                 Vertice vertice = Vertice.SearchVertice(SelectedRectangle);
-                vertice.RectCenter = point;
+                if (vertice != null)
+                {
+                    Point point = new Point();
+                    point.X = mouseX;
+                    point.Y = mouseY + SelectedRectangle.Height / 4;
+                    Canvas.SetLeft(SelectedRectangle, mouseX - SelectedRectangle.Width / 2);
+                    Canvas.SetTop(SelectedRectangle, mouseY - SelectedRectangle.Height / 4);
 
-                Canvas.SetTop(vertice.VerticeNameTextBlock, mouseY +20);
-                Canvas.SetLeft(vertice.VerticeNameTextBlock, mouseX - SelectedRectangle.Height / 2);
-                AddConnectionTool.DrawConnections();
+
+                    vertice.RectCenter = point;
+                    Canvas.SetTop(vertice.VerticeNameTextBlock, mouseY + 20);
+                    Canvas.SetLeft(vertice.VerticeNameTextBlock, mouseX - SelectedRectangle.Height / 2);
+                    AddConnectionTool.DrawConnections();
+                }
             }
         }
 

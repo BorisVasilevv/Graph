@@ -23,7 +23,7 @@ namespace Graph
     {
         public static Canvas MainCanvas;
         public static string FileToWork = "..\\..\\..\\..\\";
-        public bool IsProgramReady = false;
+        public static bool IsProgramReady = false;
         public static AddVerticeTool ToolAddVertice;
         public AddConnectionTool ToolAddConnedtion;
 
@@ -90,6 +90,8 @@ namespace Graph
             (AddVerticeTool.AllVertices, AddConnectionTool.Connections) = FileWorker.Read(FileToWork);
             canvas1.MouseMove += AddVerticeTool.clearSelection;
             canvas1.MouseMove += DeleteConnectionTool.clearSelection;
+            canvas1.MouseMove += ChangeDataTool.TextBlockSelected;
+
             for (int i = 0; i < AddVerticeTool.AllVertices.Count; i++)
             {
                 Rectangle Rect = new Rectangle();
@@ -151,6 +153,7 @@ namespace Graph
             AddConnectionTool.Connections = new List<Connection>();
             canvas1.MouseMove += AddVerticeTool.clearSelection;
             canvas1.MouseMove += DeleteConnectionTool.clearSelection;
+            canvas1.MouseMove += ChangeDataTool.TextBlockSelected;
 
         }
 
