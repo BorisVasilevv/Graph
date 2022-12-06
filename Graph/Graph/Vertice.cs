@@ -33,10 +33,6 @@ namespace Graph
         public List<int> ConnectionIds = new List<int>();
 
 
-
-
-
-
         public static Vertice SearchVertice(int id)
         {
             foreach (Vertice vertice in AddVerticeTool.AllVertices)

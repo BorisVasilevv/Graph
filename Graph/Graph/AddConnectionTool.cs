@@ -85,12 +85,12 @@ namespace Graph
                 if (connection.BlockText != null) MainWindow.MainCanvas.Children.Remove(connection.BlockText);
                 MainWindow.MainCanvas.Children.Add(connection.BlockText);
                 Canvas.SetZIndex(connection.BlockText, 0);
-                
-                connection.BlockText.VerticalAlignment =VerticalAlignment.Center;
-                connection.BlockText.HorizontalAlignment =HorizontalAlignment.Center;
-                connection.BlockText.Margin = new Thickness(textBlockCenter.X, textBlockCenter.Y, 800- textBlockCenter.X, 450- textBlockCenter.Y);
-                //Canvas.SetTop(connection.BlockText, textBlockCenter.Y);
-                //Canvas.SetRight(connection.BlockText, textBlockCenter.X);
+                Canvas.SetLeft(connection.BlockText, textBlockCenter.X);
+                Canvas.SetTop(connection.BlockText, textBlockCenter.Y-15);
+                //connection.BlockText.VerticalAlignment =VerticalAlignment.Center;
+                //connection.BlockText.HorizontalAlignment =HorizontalAlignment.Center;
+                //connection.BlockText.Margin = new Thickness(textBlockCenter.X, textBlockCenter.Y, 800- textBlockCenter.X, 450- textBlockCenter.Y);
+
                 
 
 
