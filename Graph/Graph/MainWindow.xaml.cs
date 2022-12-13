@@ -78,13 +78,14 @@ namespace Graph
 
         }
 
-
+        public string FullFileNamePath = null;
 
         private void btnFileName_Click(object sender, RoutedEventArgs e)
         {
 
             Button btn = (Button)sender;
             FileToWork += btn.Content.ToString();
+            FullFileNamePath= FileToWork;
             IsProgramReady = true;
             canvas1.Children.Clear();
             (AddVerticeTool.AllVertices, AddConnectionTool.Connections) = FileWorker.Read(FileToWork);
@@ -241,7 +242,6 @@ namespace Graph
         };
 
 
-        
 
         private void btnMaxFlow_Click(object sender, RoutedEventArgs e)
         {
