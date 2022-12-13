@@ -13,7 +13,7 @@ namespace Graph
 {
     public class AnimaztionPainter
     {
-        enum Algorithm
+        public enum AlgorithmType
         {
             Traversal,
             FordFarkenson,
@@ -21,28 +21,12 @@ namespace Graph
             Dijkstra
         }
 
-
-        readonly List<Vertice> Vertices;
         private Canvas _canvas = MainWindow.MainCanvas;
-        
-
-        readonly Dictionary<Shape, string> MessagesToEachShape;
-
-        public AnimaztionPainter(List<Vertice> vertices)
-        {
-            Vertices = vertices;
-        }
-        public AnimaztionPainter(Dictionary<Shape, string> messages)
-        {
-            MessagesToEachShape = messages;
-        }
-
-
         public List<Shape> Shapes;
-        public bool onlyOneShapeEffect;
-        public AnimaztionPainter()
+        AlgorithmType _type;
+        public AnimaztionPainter(AlgorithmType type)
         {
-
+            _type = type;
         }
 
 
@@ -73,7 +57,7 @@ namespace Graph
 
         public void ShowAnimation()
         {
-            _shapes=Shapes;
+            _shapes = Shapes;
             //for (int i = 0; i < Vertices.Count; i++)
             //{
             //    if (i == 0)
@@ -88,7 +72,11 @@ namespace Graph
             //}
 
             BtnReturn.Click += BtnReturn_Click;
-            BtnNext.Click += BtnNextTraversal_Click;
+            if (_type == AlgorithmType.Traversal) BtnNext.Click += BtnNextTraversal_Click;
+            else if (_type == AlgorithmType.Prim) BtnNext.Click += BtnNextPrim_Click;
+            else if (_type == AlgorithmType.FordFarkenson) BtnNext.Click += BtnNextFordFarkenson_Click;
+            else if (_type == AlgorithmType.Dijkstra) BtnNext.Click += BtnNextDijkstra_Click;
+
             _canvas.MouseMove -= AddVerticeTool.clearSelection;
             _canvas.MouseMove -= DeleteConnectionTool.clearSelection;
             _canvas.MouseMove -= ChangeDataTool.TextBlockSelected;
@@ -96,7 +84,7 @@ namespace Graph
             _canvas.MouseDown -= MainWindow.ToolAddVertice.rectMouseDown;
             foreach (var v in AddVerticeTool.AllVertices)
                 v.Rect.MouseMove -= MainWindow.ToolAddVertice.RectangleMouseMove;
-            
+
 
             MainWindow.IsProgramReady = false;
             _canvas.Children.Add(BtnNext);
@@ -107,13 +95,13 @@ namespace Graph
 
         private void BtnReturn_Click(object sender, RoutedEventArgs e)
         {
-      
+
             _canvas.MouseMove += AddVerticeTool.clearSelection;
             _canvas.MouseMove += DeleteConnectionTool.clearSelection;
             _canvas.MouseMove += ChangeDataTool.TextBlockSelected;
             _canvas.MouseDown += MainWindow.ToolAddVertice.rectMouseDown;
             BtnNext.Click -= BtnNextTraversal_Click;
-            foreach(Shape shape in _shapes)
+            foreach (Shape shape in _shapes)
                 shape.Effect = null;
 
             foreach (var v in AddVerticeTool.AllVertices)
@@ -131,12 +119,12 @@ namespace Graph
         int _counter = 0;
         private void BtnNextTraversal_Click(object sender, RoutedEventArgs e)
         {
-            
+
             if (_counter < _shapes.Count)
             {
                 _shapes[_counter].Effect = new DropShadowEffect() { Color = Colors.Black };
                 _counter++;
-                if(_counter==_shapes.Count) _canvas.Children.Remove(BtnNext);
+                if (_counter == _shapes.Count) _canvas.Children.Remove(BtnNext);
             }
 
         }
@@ -154,6 +142,17 @@ namespace Graph
 
         }
 
+
+        private void BtnNextFordFarkenson_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
+        private void BtnNextDijkstra_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
 
     }
 }
