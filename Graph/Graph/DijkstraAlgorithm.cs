@@ -33,6 +33,7 @@ namespace Graph
             Width = 150,
             HorizontalAlignment = HorizontalAlignment.Left,
             VerticalAlignment = VerticalAlignment.Bottom,
+            Margin = new Thickness(655, 375, 0, 0),
             //Text = result.ToString()
         };
 
@@ -75,24 +76,20 @@ namespace Graph
                     vertices1.Add(vertise);
             }
 
-            foreach(Connection connection in connections1)
-            {
-                result += connection.Length;
-            }
-
-            AnswerBlock.Text="Result: "+result.ToString();
+            
 
             MainWindow.MainCanvas.Children.Clear();
 
             DrawGraphHelper.DrawGraph(MainWindow.MainCanvas, vertices1, connections1);
 
             MainWindow.IsProgramReady = true;
-            MainWindow.BtnReturn.Click += MainWindow.BtnReturn_Click;
-
-
-
-            MainWindow.MainCanvas.Children.Add(MainWindow.BtnReturn);
-
+            MainWindow.BtnReturn.Click += MainWindow.BtnReturn_Click;
+            foreach (Connection connection in connections1)
+            {
+                result += connection.Length;
+            }
+            AnswerBlock.Text = "Result: " + result.ToString();
+            MainWindow.MainCanvas.Children.Add(MainWindow.BtnReturn);
             Canvas.SetZIndex(MainWindow.BtnReturn, 20);
             MainWindow.MainCanvas.Children.Add(AnswerRect);
             Canvas.SetZIndex(AnswerRect, 18);
@@ -100,8 +97,6 @@ namespace Graph
             Canvas.SetLeft(AnswerRect, MainWindow.MainCanvas.Width - AnswerRect.Width);
 
             MainWindow.MainCanvas.Children.Add(AnswerBlock);
-            Canvas.SetTop(AnswerBlock, MainWindow.MainCanvas.Height - AnswerBlock.Height);
-            Canvas.SetLeft(AnswerBlock, MainWindow.MainCanvas.Width - AnswerBlock.Width);
             Canvas.SetZIndex(AnswerBlock, 19);
         }
 
