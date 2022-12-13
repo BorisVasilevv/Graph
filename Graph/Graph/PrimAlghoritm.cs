@@ -39,7 +39,7 @@ namespace Graph
                         if (minE != -1)
                         {
                             if (notUsedE[i].Length < notUsedE[minE].Length)
-                                minE = i;
+                                minE = i; 
                         }
                         else
                         {

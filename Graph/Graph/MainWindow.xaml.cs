@@ -195,7 +195,7 @@ namespace Graph
         {
             if (IsProgramReady)
             {
-                FileWorker.WriteToFile(AddVerticeTool.AllVertices, AddConnectionTool.Connections, FileToWork);
+                FileWorker.WriteToFile(AddVerticeTool.AllVertices, FileToWork);
             }
         }
 
@@ -217,28 +217,31 @@ namespace Graph
         {
             if (IsProgramReady)
             {
-                BtnSearchDetpth.Click += BtnSearchDetpth_Click;
+                BtnSearchDepth.Click += BtnSearchDetpth_Click;
                 BtnSearchWidth.Click += BtnSearchWidth_Click;
-                if (!MainCanvas.Children.Contains(BtnSearchDetpth)) MainCanvas.Children.Add(BtnSearchDetpth);
+                if (!MainCanvas.Children.Contains(BtnSearchDepth)) MainCanvas.Children.Add(BtnSearchDepth);
                 if (!MainCanvas.Children.Contains(BtnSearchWidth)) MainCanvas.Children.Add(BtnSearchWidth);
             }
         }
 
         private void BtnSearchWidth_Click(object sender, RoutedEventArgs e)
         {
-            MainCanvas.Children.Remove(BtnSearchDetpth);
+            MainCanvas.Children.Remove(BtnSearchDepth);
             MainCanvas.Children.Remove(BtnSearchWidth);
+            Traversal.BFS(AddVerticeTool.AllVertices, AddConnectionTool.Connections);
+            
         }
 
         private void BtnSearchDetpth_Click(object sender, RoutedEventArgs e)
         {
-            MainCanvas.Children.Remove(BtnSearchDetpth);
+            MainCanvas.Children.Remove(BtnSearchDepth);
             MainCanvas.Children.Remove(BtnSearchWidth);
+            Traversal.DFS(AddVerticeTool.AllVertices, AddConnectionTool.Connections);
         }
 
-        Button BtnSearchDetpth = new Button
+        Button BtnSearchDepth = new Button
         {
-            Content = "В глубину",
+            Content = "In depth",
             Height = 20,
             Width = 100,
             Background = new SolidColorBrush(Colors.Gray),
@@ -250,7 +253,7 @@ namespace Graph
 
         Button BtnSearchWidth = new Button
         {
-            Content = "В ширину",
+            Content = "In Width",
             Height = 20,
             Width = 100,
             Background = new SolidColorBrush(Colors.Gray),
@@ -261,14 +264,7 @@ namespace Graph
         };
 
 
-        private void btnMinWay_Click(object sender, RoutedEventArgs e)
-        {
-            if (IsProgramReady)
-            {
-                IsProgramReady = false;
-                ChoseStartEndHelper.ChooseVertice(DijkstraAlgorithm.Algorithm);
-            }
-        }
+        
 
         private void btnMaxFlow_Click(object sender, RoutedEventArgs e)
         {
@@ -286,11 +282,12 @@ namespace Graph
             Background = new SolidColorBrush(Colors.White)
         };
 
+        List<Connection> _copyConnection;
+        List<Vertice> _copyVertice;
 
-        List<Connection> Copy;
         private void btnMinTree_Click(object sender, RoutedEventArgs e)
         {
-            Copy = new List<Connection>(AddConnectionTool.Connections);
+            _copyConnection = new List<Connection>(AddConnectionTool.Connections);
             bool IsGraphConnected = true;
             if (IsProgramReady)
             {
@@ -308,10 +305,21 @@ namespace Graph
             }
         }
 
+        private void btnMinWay_Click(object sender, RoutedEventArgs e)
+        {
+            _copyConnection = new List<Connection>(AddConnectionTool.Connections);
+            _copyVertice = new List<Vertice>(AddVerticeTool.AllVertices);
+            if (IsProgramReady)
+            {
+                IsProgramReady = false;
+                ChoseStartEndHelper.ChooseVertice(DijkstraAlgorithm.Algorithm);
+            }
+        }
+
         private void BtnReturn_Click(object sender, RoutedEventArgs e)
         {
             MainCanvas.Children.Clear();
-            AddConnectionTool.Connections = Copy;
+            AddConnectionTool.Connections = _copyConnection;
             DrawGraph(MainCanvas, AddVerticeTool.AllVertices, AddConnectionTool.Connections);
         }
 
@@ -322,9 +330,9 @@ namespace Graph
 
         Button BtnReturn = new Button
         {
-            Content = "Назад",
+            Content = "К исходному графу",
             Height = 20,
-            Width = 100,
+            Width = 125,
             Background = new SolidColorBrush(Colors.Gray),
             Margin = new Thickness(650, 350, 0, 0),
             VerticalAlignment = VerticalAlignment.Center,
