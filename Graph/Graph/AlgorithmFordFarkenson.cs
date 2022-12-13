@@ -15,19 +15,6 @@ namespace Graph
     public class AlgorithmFordFarkenson
     {
 
-        readonly int SummAllConnectionLength;
-
-        public AlgorithmFordFarkenson()
-        {
-            foreach(Connection c in AddConnectionTool.Connections)
-            {
-                SummAllConnectionLength+=c.Length; 
-            }
-        }
-
-        List<Connection> conn = AddConnectionTool.Connections;
-        List<Vertice> vertices = AddVerticeTool.AllVertices;
-
 
         static bool Bfs(int[,] rGraph, int s, int t, int[] parent)
         {
@@ -136,9 +123,10 @@ namespace Graph
             Margin = new Thickness(200, 20, 0, 0)
         };
 
+
         public static void Algorithm(Vertice start, Vertice end)
         {
-            string path = "D:/Visual Studio2019/Progects/AlgsLab5/Graph/Graph/testGraph2.csv";
+            string path = MainWindow.FullFileNamePath;
             string[][] graph2 = File.ReadAllLines(path).Select(x => x.Split(";")).ToArray();
 
             int[,] graph = new int[graph2.Length, graph2.Length];

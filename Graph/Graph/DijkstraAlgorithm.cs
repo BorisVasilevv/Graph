@@ -98,9 +98,12 @@ namespace Graph
 
             MainWindow.MainCanvas.Children.Add(AnswerBlock);
             Canvas.SetZIndex(AnswerBlock, 19);
-        }
-
-
+        }
+
+
+
+
+
         /// <summary>
         /// Ребро графа
         /// </summary>

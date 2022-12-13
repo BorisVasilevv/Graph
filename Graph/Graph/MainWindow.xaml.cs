@@ -78,7 +78,7 @@ namespace Graph
 
         }
 
-        public string FullFileNamePath = null;
+        public static string FullFileNamePath = null;
 
         private void btnFileName_Click(object sender, RoutedEventArgs e)
         {
