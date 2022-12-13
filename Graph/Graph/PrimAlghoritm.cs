@@ -10,6 +10,7 @@ namespace Graph
     {
         public static List<Connection> AlgorithmByPrim(List<Connection> connections)
         {
+
             List<Connection> MST = new List<Connection>();
             //неиспользованные ребра
             List<Connection> notUsedE = new List<Connection>(connections);

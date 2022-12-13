@@ -259,12 +259,13 @@ namespace Graph
             Background = new SolidColorBrush(Colors.White)
         };
 
-        List<Connection> _copyConnection;
-        List<Vertice> _copyVertice;
+        static List<Connection> _copyConnection;
+        static List<Vertice> _copyVertice;
 
         private void btnMinTree_Click(object sender, RoutedEventArgs e)
         {
             _copyConnection = new List<Connection>(AddConnectionTool.Connections);
+            _copyVertice = new List<Vertice>(AddVerticeTool.AllVertices);
             bool IsGraphConnected = true;
             if (IsProgramReady)
             {
@@ -274,10 +275,9 @@ namespace Graph
                     MainCanvas.Children.Clear();
                     DrawGraphHelper.DrawGraph(MainCanvas, AddVerticeTool.AllVertices, connections);
                     BtnReturn.Click += BtnReturn_Click;
-                    //BtnSaveToAnotherFile.Click += BtnSaveToAnotherFile_Click;
+
                     MainCanvas.Children.Add(BtnReturn);
                     Canvas.SetZIndex(BtnReturn, 20);
-                    //MainCanvas.Children.Add(BtnSaveToAnotherFile);
                 }
 
             }
@@ -291,22 +291,22 @@ namespace Graph
             {
                 IsProgramReady = false;
                 ChoseStartEndHelper.ChooseVertices(DijkstraAlgorithm.Algorithm);
+
             }
         }
 
-        private void BtnReturn_Click(object sender, RoutedEventArgs e)
+        public static void BtnReturn_Click(object sender, RoutedEventArgs e)
         {
             MainCanvas.Children.Clear();
             AddConnectionTool.Connections = _copyConnection;
+            AddVerticeTool.AllVertices = _copyVertice;
             DrawGraphHelper.DrawGraph(MainCanvas, AddVerticeTool.AllVertices, AddConnectionTool.Connections);
+            BtnReturn.Click-=BtnReturn_Click;
         }
 
-        //private void BtnSaveToAnotherFile_Click(object sender, RoutedEventArgs e)
-        //{
 
-        //}
 
-        Button BtnReturn = new Button
+        public static Button BtnReturn = new Button
         {
             Content = "To original graph",
             Height = 20,
@@ -317,16 +317,6 @@ namespace Graph
             HorizontalContentAlignment = HorizontalAlignment.Center
         };
 
-        //Button BtnSaveToAnotherFile = new Button
-        //{
-        //    Content = "Назад",
-        //    Height = 20,
-        //    Width = 100,
-        //    Background = new SolidColorBrush(Colors.Gray),
-        //    Margin = new Thickness(650, 320, 0, 0),
-        //    VerticalAlignment = VerticalAlignment.Center,
-        //    HorizontalContentAlignment = HorizontalAlignment.Center
-        //};
 
 
 

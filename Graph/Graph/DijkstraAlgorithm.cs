@@ -65,6 +65,10 @@ namespace Graph
             DrawGraphHelper.DrawGraph(MainWindow.MainCanvas, vertices1, connections1);
 
             MainWindow.IsProgramReady = true;
+            MainWindow.BtnReturn.Click += MainWindow.BtnReturn_Click;
+
+            MainWindow.MainCanvas.Children.Add(MainWindow.BtnReturn);
+            Canvas.SetZIndex(MainWindow.BtnReturn, 20);
         }
 
 

@@ -18,6 +18,10 @@ namespace Graph
 {
     public class DrawGraphHelper
     {
+        const int LeftIndent = 100;
+        const int TopIndent = 10;
+        const int RectOnOneLine = 11;
+        const int RectBetweenIndent = 60;
         public static void DrawGraph(Canvas canvas, List<Vertice> vertices, List<Connection> connections)
         {
             AddConnectionTool.Connections=connections;
@@ -33,7 +37,7 @@ namespace Graph
                 Rect.MouseMove += MainWindow.ToolAddVertice.RectangleMouseMove;
                 Canvas.SetZIndex(Rect, 2);
                 canvas.Children.Add(Rect);
-                Point center = new Point(200 + 70 * (i % 5), 50 * (i / 5 + 1));
+                Point center = new Point(LeftIndent + RectBetweenIndent * (i % RectOnOneLine), TopIndent+ RectBetweenIndent * (i / RectOnOneLine));
                 Canvas.SetTop(Rect, center.Y);
                 Canvas.SetLeft(Rect, center.X);
 
@@ -48,8 +52,8 @@ namespace Graph
                 textBlock.TextAlignment = TextAlignment.Center;
                 Canvas.SetZIndex(textBlock, 2);
                 canvas.Children.Add(textBlock);
-                Canvas.SetTop(textBlock, 50 * (i / 5 + 1) + 30);
-                Canvas.SetLeft(textBlock, 200 + 70 * (i % 5));
+                Canvas.SetTop(textBlock, TopIndent+ RectBetweenIndent * (i / RectOnOneLine) + 30);
+                Canvas.SetLeft(textBlock, LeftIndent + RectBetweenIndent * (i % RectOnOneLine));
                 vertices[i].VerticeNameTextBlock = textBlock;
 
             }
