@@ -62,10 +62,7 @@ namespace Graph
 
             MainWindow.MainCanvas.Children.Clear();
 
-            AddConnectionTool.Connections = connections1;
-            AddVerticeTool.AllVertices = vertices1;
-            
-            MainWindow.DrawGraph(MainWindow.MainCanvas, vertices1, connections1);
+            DrawGraphHelper.DrawGraph(MainWindow.MainCanvas, vertices1, connections1);
 
             MainWindow.IsProgramReady = true;
         }

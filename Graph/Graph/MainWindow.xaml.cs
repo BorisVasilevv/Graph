@@ -260,9 +260,9 @@ namespace Graph
             {
                 if (IsGraphConnected)
                 {
-                    AddConnectionTool.Connections = PrimAlghoritm.AlgorithmByPrim();
+                    List<Connection> connections = PrimAlghoritm.AlgorithmByPrim(_copyConnection);
                     MainCanvas.Children.Clear();
-                    DrawGraphHelper.DrawGraph(MainCanvas, AddVerticeTool.AllVertices, AddConnectionTool.Connections);
+                    DrawGraphHelper.DrawGraph(MainCanvas, AddVerticeTool.AllVertices, connections);
                     BtnReturn.Click += BtnReturn_Click;
                     //BtnSaveToAnotherFile.Click += BtnSaveToAnotherFile_Click;
                     MainCanvas.Children.Add(BtnReturn);
