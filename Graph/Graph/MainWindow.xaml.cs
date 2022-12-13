@@ -298,10 +298,12 @@ namespace Graph
         public static void BtnReturn_Click(object sender, RoutedEventArgs e)
         {
             MainCanvas.Children.Clear();
-            AddConnectionTool.Connections = _copyConnection;
-            AddVerticeTool.AllVertices = _copyVertice;
+            AddConnectionTool.Connections = _copyConnection==null? AddConnectionTool.Connections: _copyConnection;
+            AddVerticeTool.AllVertices = _copyVertice == null ? AddVerticeTool.AllVertices : _copyVertice;
             DrawGraphHelper.DrawGraph(MainCanvas, AddVerticeTool.AllVertices, AddConnectionTool.Connections);
             BtnReturn.Click-=BtnReturn_Click;
+            _copyVertice = null;
+            _copyConnection = null;
         }
 
 

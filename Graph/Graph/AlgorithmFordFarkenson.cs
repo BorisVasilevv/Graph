@@ -141,7 +141,9 @@ namespace Graph
             TextBlock.Text = $"The maximum possible flow is {FordFulkerson(graph, start.Id, end.Id)}";
             MainWindow.MainCanvas.Children.Add(TextBlock);
             Canvas.SetZIndex(TextBlock, 20);
+
             MainWindow.MainCanvas.Children.Add(MainWindow.BtnReturn);
+            MainWindow.BtnReturn.Click += MainWindow.BtnReturn_Click;
             Canvas.SetZIndex(MainWindow.BtnReturn, 20);
         }
 
