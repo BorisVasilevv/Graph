@@ -22,6 +22,7 @@ namespace Graph
             var connections = AddConnectionTool.Connections;
 
             var vertices = AddVerticeTool.AllVertices;
+
             //добавление вершин
             foreach ( var vertex in vertices )
             {
@@ -33,18 +34,16 @@ namespace Graph
             {
                 g.AddEdge(connections[i].Vertice1.Id.ToString(), connections[i].Vertice2.Id.ToString(), connections[i].Length);
             }
-
           
-            /*g.AddVertex("1");
-            g.AddVertex("G");*/
-
-            /*g.AddEdge("A", "B", 22);
-            g.AddEdge("A", "C", 33);*/
-
             var dijkstra = new Dijkstra(g);
             var path = dijkstra.FindShortestPath(start.Id.ToString(), end.Id.ToString());
-            //Console.WriteLine(path);
-            //0;2.
+
+            List<Connection> connections1 = new List<Connection>();
+            for (int i = 0; i < path.Count - 1; i++)
+            {
+                connections1.Add(
+                    Connection.SearchConnection(vertices[path[i]], vertices[path[i + 1]]));
+            }
 
             List<Vertice> vertices1 = new List<Vertice>();
             foreach (var vertise in vertices)
@@ -53,19 +52,13 @@ namespace Graph
                     vertices1.Add(vertise);
             }
 
-            List<Connection> connections1 = new List<Connection>();
-            foreach (var connection in connections)
-            {
-                if (vertices1.Contains(connection.Vertice1) && vertices1.Contains(connection.Vertice2))
-                    connections1.Add(connection);
-            }
-
             MainWindow.MainCanvas.Children.Clear();
 
             DrawGraphHelper.DrawGraph(MainWindow.MainCanvas, vertices1, connections1);
 
             MainWindow.IsProgramReady = true;
         }
+
 
 
         /// <summary>
