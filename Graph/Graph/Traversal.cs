@@ -48,7 +48,7 @@ namespace Graph
                 if(!shapes.Contains(vert.Rect)) shapes.Add(vert.Rect);
             } while (vertices.Count!=0);
 
-            AnimaztionPainter animaztionPainter = new AnimaztionPainter();
+            AnimaztionPainter animaztionPainter = new AnimaztionPainter(AnimaztionPainter.AlgorithmType.Traversal);
             animaztionPainter.Shapes=shapes;
             animaztionPainter.ShowAnimation();
         }
@@ -86,7 +86,7 @@ namespace Graph
                 notVisitedV.Remove(vertice);
             }
 
-            AnimaztionPainter animaztionPainter = new AnimaztionPainter();
+            AnimaztionPainter animaztionPainter = new AnimaztionPainter(AnimaztionPainter.AlgorithmType.Traversal);
             animaztionPainter.Shapes = shapes;
             animaztionPainter.ShowAnimation();
         }

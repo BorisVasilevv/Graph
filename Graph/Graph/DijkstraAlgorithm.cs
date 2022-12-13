@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Shapes;
 
 
@@ -15,6 +16,28 @@ namespace Graph
 {
     class DijkstraAlgorithm
     {
+        static int result;
+
+        static Rectangle AnswerRect = new Rectangle
+        {
+            Height = 100,
+            Width = 150,
+            Fill = new SolidColorBrush(Colors.Brown),
+            HorizontalAlignment = HorizontalAlignment.Left,
+            VerticalAlignment = VerticalAlignment.Bottom
+        };
+
+        static TextBlock AnswerBlock = new TextBlock
+        {
+            Height = 40,
+            Width = 150,
+            HorizontalAlignment = HorizontalAlignment.Left,
+            VerticalAlignment = VerticalAlignment.Bottom,
+            //Text = result.ToString()
+        };
+
+
+
         public static void Algorithm(Vertice start, Vertice end)
         {
             var g = new Graph();
@@ -52,6 +75,13 @@ namespace Graph
                     vertices1.Add(vertise);
             }
 
+            foreach(Connection connection in connections1)
+            {
+                result += connection.Length;
+            }
+
+            AnswerBlock.Text="Result: "+result.ToString();
+
             MainWindow.MainCanvas.Children.Clear();
 
             DrawGraphHelper.DrawGraph(MainWindow.MainCanvas, vertices1, connections1);
@@ -61,6 +91,15 @@ namespace Graph
 
             MainWindow.MainCanvas.Children.Add(MainWindow.BtnReturn);
             Canvas.SetZIndex(MainWindow.BtnReturn, 20);
+            MainWindow.MainCanvas.Children.Add(AnswerRect);
+            Canvas.SetZIndex(AnswerRect, 18);
+            Canvas.SetTop(AnswerRect, MainWindow.MainCanvas.Height - AnswerRect.Height);
+            Canvas.SetLeft(AnswerRect, MainWindow.MainCanvas.Width - AnswerRect.Width);
+
+            MainWindow.MainCanvas.Children.Add(AnswerBlock);
+            Canvas.SetTop(AnswerBlock, MainWindow.MainCanvas.Height - AnswerBlock.Height);
+            Canvas.SetLeft(AnswerBlock, MainWindow.MainCanvas.Width - AnswerBlock.Width);
+            Canvas.SetZIndex(AnswerBlock, 19);
         }
 
 
