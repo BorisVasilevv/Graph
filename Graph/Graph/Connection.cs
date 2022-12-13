@@ -63,9 +63,9 @@ namespace Graph
             return null;
         }
 
-        public static Connection SearchConnection(Vertice vertice1, Vertice vertice2, List<Connection> connections)
+        public static Connection SearchConnection(Vertice vertice1, Vertice vertice2)
         {
-            foreach (Connection connection in connections)
+            foreach (Connection connection in AddConnectionTool.Connections)
             {
                 if ((connection.Vertice1.Id == vertice1.Id && connection.Vertice2.Id == vertice2.Id)
                     || (connection.Vertice2.Id == vertice1.Id && connection.Vertice1.Id == vertice2.Id))

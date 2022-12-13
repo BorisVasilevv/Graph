@@ -13,7 +13,7 @@ namespace Graph
         {
             List<Vertice> vertice = new List<Vertice>();
             List<Connection> connections = new List<Connection>();
-            string[] a = File.ReadAllLines(filePath);
+
             List<string[]> stringsVertices = File.ReadAllLines(filePath).Select(x => x.Split(";")).ToList();
 
             for (int i = 0; i < stringsVertices.Count; i++)
@@ -42,7 +42,7 @@ namespace Graph
             return (vertice, connections);
         }
 
-        public static void WriteToFile(List<Vertice> vertices, List<Connection> connections, string filePath)
+        public static void WriteToFile(List<Vertice> vertices, string filePath)
         {
             List<string[]> stringsVertices = new List<string[]>();
             for (int i = 0; i < vertices.Count; i++)
@@ -52,7 +52,7 @@ namespace Graph
                 {
                     Connection checkConnection = null;
                     if (i == j) arrayConnection[j] = "0";
-                    else checkConnection = Connection.SearchConnection(Vertice.SearchVertice(vertices[i].Id), Vertice.SearchVertice(vertices[j].Id), connections);
+                    else checkConnection = Connection.SearchConnection(Vertice.SearchVertice(vertices[i].Id), Vertice.SearchVertice(vertices[j].Id));
 
                     if (checkConnection != null) arrayConnection[j] = checkConnection.Length.ToString();
                     else arrayConnection[j] = "0";

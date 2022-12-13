@@ -8,11 +8,11 @@ namespace Graph
 {
     class PrimAlghoritm
     {
-        public static List<Connection> AlgorithmByPrim()
+        public static List<Connection> AlgorithmByPrim(List<Connection> connections)
         {
             List<Connection> MST = new List<Connection>();
             //неиспользованные ребра
-            List<Connection> notUsedE = new List<Connection>(AddConnectionTool.Connections);
+            List<Connection> notUsedE = new List<Connection>(connections);
 
             //использованные вершины
             List<Vertice> usedV = new List<Vertice>();
@@ -39,7 +39,7 @@ namespace Graph
                         if (minE != -1)
                         {
                             if (notUsedE[i].Length < notUsedE[minE].Length)
-                                minE = i;
+                                minE = i; 
                         }
                         else
                         {
