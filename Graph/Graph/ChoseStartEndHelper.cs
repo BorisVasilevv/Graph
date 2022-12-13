@@ -32,6 +32,7 @@ namespace Graph
         {
             TextBlock.Text = "Выберите стартовую вершину";
             MainWindow.MainCanvas.Children.Add(TextBlock);
+            Canvas.SetZIndex(TextBlock, 20);
             Function = func;
             MainWindow.MainCanvas.MouseDown += ChooseVertice_MouseDown;
 
