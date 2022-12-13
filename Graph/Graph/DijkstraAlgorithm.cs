@@ -43,8 +43,31 @@ namespace Graph
 
             var dijkstra = new Dijkstra(g);
             var path = dijkstra.FindShortestPath(start.Id.ToString(), end.Id.ToString());
-            Console.WriteLine(path);
-            //1+2+3+4.
+            //Console.WriteLine(path);
+            //0;2.
+
+            List<Vertice> vertices1 = new List<Vertice>();
+            foreach (var vertise in vertices)
+            {
+                if (path.Contains(vertise.Id))
+                    vertices1.Add(vertise);
+            }
+
+            List<Connection> connections1 = new List<Connection>();
+            foreach (var connection in connections)
+            {
+                if (vertices1.Contains(connection.Vertice1) && vertices1.Contains(connection.Vertice2))
+                    connections1.Add(connection);
+            }
+
+            MainWindow.MainCanvas.Children.Clear();
+
+            AddConnectionTool.Connections = connections1;
+            AddVerticeTool.AllVertices = vertices1;
+            
+            MainWindow.DrawGraph(MainWindow.MainCanvas, vertices1, connections1);
+
+            MainWindow.IsProgramReady = true;
         }
 
 
@@ -300,9 +323,10 @@ namespace Graph
             /// <param name="startName">Название стартовой вершины</param>
             /// <param name="finishName">Название финишной вершины</param>
             /// <returns>Кратчайший путь</returns>
-            public string FindShortestPath(string startName, string finishName)
+            public List<int> FindShortestPath(string startName, string finishName)
             {
-                return FindShortestPath(graph.FindVertex(startName), graph.FindVertex(finishName));
+                return FindShortestPath(graph.FindVertex(startName), graph.FindVertex(finishName))
+                    .Split(';').ToList().Select(int.Parse).ToList<int>();
             }
 
             /// <summary>
@@ -361,7 +385,7 @@ namespace Graph
                 while (startVertex != endVertex)
                 {
                     endVertex = GetVertexInfo(endVertex).PreviousVertex;
-                    path = endVertex.ToString() + path;
+                    path = $"{endVertex.ToString()};{path}";
                 }
 
                 return path;
