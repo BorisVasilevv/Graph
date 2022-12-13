@@ -38,6 +38,13 @@ namespace Graph
         }
 
 
+        public List<Shape> Shapes;
+        public bool onlyOneShapeEffect;
+        public AnimaztionPainter()
+        {
+
+        }
+
 
         Button BtnNext = new Button
         {
@@ -66,19 +73,19 @@ namespace Graph
 
         public void ShowAnimation()
         {
-
-            for (int i = 0; i < Vertices.Count; i++)
-            {
-                if (i == 0)
-                {
-                    _shapes.Add(Vertices[i].Rect);
-                }
-                else
-                {
-                    _shapes.Add(Connection.SearchConnection(Vertices[i - 1], Vertices[i]).Line);
-                    _shapes.Add(Vertices[i].Rect);
-                }
-            }
+            _shapes=Shapes;
+            //for (int i = 0; i < Vertices.Count; i++)
+            //{
+            //    if (i == 0)
+            //    {
+            //        _shapes.Add(Vertices[i].Rect);
+            //    }
+            //    else
+            //    {
+            //        _shapes.Add(Connection.SearchConnection(Vertices[i - 1], Vertices[i]).Line);
+            //        _shapes.Add(Vertices[i].Rect);
+            //    }
+            //}
 
             BtnReturn.Click += BtnReturn_Click;
             BtnNext.Click += BtnNextTraversal_Click;
@@ -87,7 +94,7 @@ namespace Graph
             _canvas.MouseMove -= ChangeDataTool.TextBlockSelected;
             _canvas.MouseMove -= MainWindow.ToolAddVertice.newRectMouseMove;
             _canvas.MouseDown -= MainWindow.ToolAddVertice.rectMouseDown;
-            foreach (var v in Vertices)
+            foreach (var v in AddVerticeTool.AllVertices)
                 v.Rect.MouseMove -= MainWindow.ToolAddVertice.RectangleMouseMove;
             
 
@@ -109,7 +116,7 @@ namespace Graph
             foreach(Shape shape in _shapes)
                 shape.Effect = null;
 
-            foreach (var v in Vertices)
+            foreach (var v in AddVerticeTool.AllVertices)
                 v.Rect.MouseMove += MainWindow.ToolAddVertice.RectangleMouseMove;
 
             MainWindow.IsProgramReady = true;
