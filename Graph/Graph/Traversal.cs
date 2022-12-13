@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Graph
 {
@@ -40,8 +41,9 @@ namespace Graph
 
                 }
                 used.Add(vertices.Pop());
-            } while (vertices.Count!=0); // я проверяю не пустой ли стек. если кто знает как это сделать по-человечески, сообщите пожалуйста
-
+            } while (vertices.Count!=0);
+            AnimaztionPainter animaztionPainter = new AnimaztionPainter(used);
+            animaztionPainter.ShowAnimation();
             //return used
         }
 
@@ -74,6 +76,8 @@ namespace Graph
 
                 }
             }
+            AnimaztionPainter animaztionPainter = new AnimaztionPainter(next);
+            animaztionPainter.ShowAnimation();
             //return next;
         }
 
