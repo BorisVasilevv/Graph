@@ -112,14 +112,15 @@ namespace Graph
             textBlock.Text = "Введите имя файла ниже и нажмите Enter";
             canvas1.Children.Add(textBlock);
             Canvas.SetLeft(textBlock, 200);
+            Canvas.SetTop(textBlock, 10);
             TextBox textBox = new TextBox();
             textBox.VerticalAlignment = VerticalAlignment.Top;
             textBox.HorizontalAlignment = HorizontalAlignment.Left;
-            textBox.Width = 735;
-            textBox.Height = 30;
+            textBox.Width = 400;
+            textBox.Height = 20;
             textBox.KeyDown += TextBox_KeyDown;
-            Canvas.SetTop(textBox, 40);
-            Canvas.SetLeft(textBox, 65);
+            Canvas.SetTop(textBox, 30);
+            Canvas.SetLeft(textBox, 200);
             canvas1.Children.Add(textBox);
             AddVerticeTool.AllVertices = new List<Vertice>();
             AddConnectionTool.Connections = new List<Connection>();
@@ -186,8 +187,17 @@ namespace Graph
             {
                 BtnSearchDepth.Click += BtnSearchDetpth_Click;
                 BtnSearchWidth.Click += BtnSearchWidth_Click;
-                if (!MainCanvas.Children.Contains(BtnSearchDepth)) MainCanvas.Children.Add(BtnSearchDepth);
-                if (!MainCanvas.Children.Contains(BtnSearchWidth)) MainCanvas.Children.Add(BtnSearchWidth);
+                if (!MainCanvas.Children.Contains(BtnSearchDepth))
+                {
+                    MainCanvas.Children.Add(BtnSearchDepth);
+                    Canvas.SetZIndex(BtnSearchDepth, 20);
+                }
+
+                if (!MainCanvas.Children.Contains(BtnSearchWidth))
+                {
+                    MainCanvas.Children.Add(BtnSearchWidth);
+                    Canvas.SetZIndex(BtnSearchWidth, 20);
+                }
             }
         }
 
@@ -238,7 +248,7 @@ namespace Graph
             if (IsProgramReady)
             {
                 IsProgramReady = false;
-                ChoseStartEndHelper.ChooseVertice(AlgorithmFordFarkenson.Algorithm);
+                ChoseStartEndHelper.ChooseVertices(AlgorithmFordFarkenson.Algorithm);
             }
         }
 
@@ -266,6 +276,7 @@ namespace Graph
                     BtnReturn.Click += BtnReturn_Click;
                     //BtnSaveToAnotherFile.Click += BtnSaveToAnotherFile_Click;
                     MainCanvas.Children.Add(BtnReturn);
+                    Canvas.SetZIndex(BtnReturn, 20);
                     //MainCanvas.Children.Add(BtnSaveToAnotherFile);
                 }
 
@@ -279,7 +290,7 @@ namespace Graph
             if (IsProgramReady)
             {
                 IsProgramReady = false;
-                ChoseStartEndHelper.ChooseVertice(DijkstraAlgorithm.Algorithm);
+                ChoseStartEndHelper.ChooseVertices(DijkstraAlgorithm.Algorithm);
             }
         }
 

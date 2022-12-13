@@ -28,7 +28,7 @@ namespace Graph
 
         public static Action<Vertice, Vertice> Function;
 
-        public static void ChooseVertice(Action<Vertice, Vertice> func)
+        public static void ChooseVertices(Action<Vertice, Vertice> func)
         {
             TextBlock.Text = "Выберите стартовую вершину";
             MainWindow.MainCanvas.Children.Add(TextBlock);
@@ -54,8 +54,12 @@ namespace Graph
                     MainWindow.IsProgramReady = true;
                     MainWindow.MainCanvas.Children.Remove(TextBlock);
                     Function.Invoke(Start, End);
+                    Function = null;
+                    Start = null;
+                    End = null;
                 }
             }
+            
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Graph
         {
             List<Vertice> vertice = new List<Vertice>();
             List<Connection> connections = new List<Connection>();
-            string[] a = File.ReadAllLines(filePath);
+
             List<string[]> stringsVertices = File.ReadAllLines(filePath).Select(x => x.Split(";")).ToList();
 
             for (int i = 0; i < stringsVertices.Count; i++)

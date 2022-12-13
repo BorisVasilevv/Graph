@@ -93,7 +93,9 @@ namespace Graph
 
             MainWindow.IsProgramReady = false;
             _canvas.Children.Add(BtnNext);
+            Canvas.SetZIndex(BtnNext, 20);
             _canvas.Children.Add(BtnReturn);
+            Canvas.SetZIndex(BtnReturn, 20);
         }
 
         private void BtnReturn_Click(object sender, RoutedEventArgs e)

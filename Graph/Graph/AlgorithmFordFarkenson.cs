@@ -24,6 +24,10 @@ namespace Graph
             }
         }
 
+        List<Connection> conn = AddConnectionTool.Connections;
+        List<Vertice> vertices = AddVerticeTool.AllVertices;
+
+
         public static void Algorithm(Vertice start, Vertice end)
         {
 
