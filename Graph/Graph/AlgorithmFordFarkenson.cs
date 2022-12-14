@@ -112,17 +112,38 @@ namespace Graph
             return max_flow;
         }
 
-        public static void Algorithm(Vertice start, Vertice end, MyGraph mainGraph)
+        public static void FordFarkensonAlgorithm(Vertice start, Vertice end, MyGraph mainGraph)
         {
-            string path = MainWindow.FullFileNamePath;
-            string[][] graph2 = File.ReadAllLines(path).Select(x => x.Split(";")).ToArray();
 
-            int[,] graph = new int[graph2.Length, graph2.Length];
-            for (int i = 0; i < graph2.Length; i++)
+
+
+            string[][] stringsVertices = new string[mainGraph.AllVertices.Count][];
+            for (int i = 0; i < mainGraph.AllVertices.Count; i++)
             {
-                for (int j = 0; j < graph2.Length; j++)
+                string[] arrayConnection = new string[mainGraph.AllVertices.Count];
+                for (int j = 0; j < mainGraph.AllVertices.Count; j++)
                 {
-                    graph[i, j] = Int32.Parse(graph2[i][j]);
+                    Connection checkConnection = null;
+                    if (i == j) arrayConnection[j] = "0";
+                    else checkConnection = Connection.SearchConnection(
+                        Vertice.SearchVertice(mainGraph.AllVertices[i].Id, mainGraph.AllVertices),
+                        Vertice.SearchVertice(mainGraph.AllVertices[j].Id, mainGraph.AllVertices),
+                        mainGraph.Connections);
+
+                    if (checkConnection != null) arrayConnection[j] = checkConnection.Length.ToString();
+                    else arrayConnection[j] = "0";
+                }
+                stringsVertices[i]=arrayConnection;
+            }
+
+
+
+            int[,] graph = new int[stringsVertices.Length, stringsVertices.Length];
+            for (int i = 0; i < stringsVertices.Length; i++)
+            {
+                for (int j = 0; j < stringsVertices.Length; j++)
+                {
+                    graph[i, j] = Int32.Parse(stringsVertices[i][j]);
                 }
             }
 

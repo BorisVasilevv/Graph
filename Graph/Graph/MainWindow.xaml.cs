@@ -27,7 +27,7 @@ namespace Graph
         public static AddVerticeTool ToolAddVertice;
         public AddConnectionTool ToolAddConnedtion;
 
-
+        const string Extension = ".csv";
         public MainWindow()
         {
             InitializeComponent();
@@ -63,7 +63,7 @@ namespace Graph
             {
                 string extension = System.IO.Path.GetExtension(file);
                 
-                if (extension == ".csv")
+                if (extension == Extension)
                 {
                     string mainNameOfFile = System.IO.Path.GetFileNameWithoutExtension(file);
                     Button button = new Button();
@@ -90,7 +90,7 @@ namespace Graph
         {
 
             Button btn = (Button)sender;
-            FileToWork += btn.Content.ToString();
+            FileToWork += btn.Content.ToString() + Extension;
             FullFileNamePath= FileToWork;
             IsProgramReady = true;
             canvas1.Children.Clear();
@@ -230,7 +230,7 @@ namespace Graph
             if (IsProgramReady)
             {
                 IsProgramReady = false;
-                ChoseStartEndHelper.ChooseVertices(AlgorithmFordFarkenson.Algorithm);
+                ChoseStartEndHelper.ChooseVertices(AlgorithmFordFarkenson.FordFarkensonAlgorithm);
             }
         }
 
