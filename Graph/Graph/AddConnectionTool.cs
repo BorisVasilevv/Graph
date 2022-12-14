@@ -17,7 +17,7 @@ namespace Graph
         public static Connection NewConnection { get; set; }
         private static Rectangle Rect1 = null;
         private static Rectangle Rect2 = null;
-        static Graph MainGraph=MainWindow.MainGraph;
+        static MyGraph MainGraph=MainWindow.MainGraph;
 
         public AddVerticeTool ToolAddVertice = MainWindow.ToolAddVertice;
 

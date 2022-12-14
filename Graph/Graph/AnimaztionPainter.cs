@@ -20,7 +20,7 @@ namespace Graph
             Prim,
             Dijkstra
         }
-        Graph MainGraph = MainWindow.MainGraph;
+        MyGraph MainGraph = MainWindow.MainGraph;
         private Canvas _canvas = MainWindow.MainCanvas;
         public List<Shape> Shapes;
         AlgorithmType _type;

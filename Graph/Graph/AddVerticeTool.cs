@@ -15,7 +15,7 @@ namespace Graph
 
         private Rectangle NewVerticeRect;
         public static Rectangle SelectedRectangle;
-        public static Graph MainGraph=MainWindow.MainGraph; 
+        public static MyGraph MainGraph=MainWindow.MainGraph; 
 
 
         public void rectMouseDown(object sender, MouseButtonEventArgs e)

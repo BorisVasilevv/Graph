@@ -22,7 +22,7 @@ namespace Graph
 
         static TextBox TextBox = new TextBox();
 
-        static Graph MainGraph = MainWindow.MainGraph;
+        static MyGraph MainGraph = MainWindow.MainGraph;
         private static TextBlock SelectedTextBlock;
 
         private static TextBlock TextBlockToChange;

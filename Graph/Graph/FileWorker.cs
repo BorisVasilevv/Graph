@@ -10,7 +10,7 @@ namespace Graph
 
         public static string FilePath { get; set; }
 
-        public static Graph Read(string filePath)
+        public static MyGraph Read(string filePath)
         {
             List<Vertice> vertice = new List<Vertice>();
             List<Connection> connections = new List<Connection>();
@@ -40,10 +40,10 @@ namespace Graph
                 }
                 vertice[i].ConnectionIds = new List<int>(connectionsForVertice);
             }
-            return new Graph(vertice, connections);
+            return new MyGraph(vertice, connections);
         }
 
-        public static void WriteToFile(Graph graph, string filePath)
+        public static void WriteToFile(MyGraph graph, string filePath)
         {
             List<string[]> stringsVertices = new List<string[]>();
             for (int i = 0; i < graph.AllVertices.Count; i++)

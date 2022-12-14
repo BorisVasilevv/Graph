@@ -6,20 +6,19 @@ using System.Threading.Tasks;
 
 namespace Graph
 {
-    public class Graph
+    public class MyGraph
     {
         public List<Vertice> AllVertices;
 
         public List<Connection> Connections;
-        public Graph() { }
 
-        public Graph(List<Vertice> vertices, List<Connection> connections)
+        public MyGraph(List<Vertice> vertices, List<Connection> connections)
         {
             AllVertices = vertices;
             Connections = connections;
         }
 
-        public Graph(Graph graph)
+        public MyGraph(MyGraph graph)
         {
             AllVertices=graph.AllVertices;
             Connections=graph.Connections;

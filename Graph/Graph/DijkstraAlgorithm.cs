@@ -39,7 +39,7 @@ namespace Graph
 
 
 
-        public static void Algorithm(Vertice start, Vertice end, Graph graph)
+        public static void Algorithm(Vertice start, Vertice end, MyGraph graph)
         {
             var g = new GraphD();
 

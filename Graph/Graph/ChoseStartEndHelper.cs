@@ -16,7 +16,7 @@ namespace Graph
     {
 
         public static Vertice Start, End;
-        public static Graph MainGraph=MainWindow.MainGraph;
+        public static MyGraph MainGraph=MainWindow.MainGraph;
         static TextBlock TextBlock = new TextBlock
         {
             Height = 20,
@@ -26,9 +26,9 @@ namespace Graph
             Margin = new Thickness(200, 20, 0, 0)
         };
 
-        public static Action<Vertice, Vertice, Graph> Function;
+        public static Action<Vertice, Vertice, MyGraph> Function;
 
-        public static void ChooseVertices(Action<Vertice, Vertice, Graph> func)
+        public static void ChooseVertices(Action<Vertice, Vertice, MyGraph> func)
         {
             TextBlock.Text = "Выберите стартовую вершину";
             MainWindow.MainCanvas.Children.Add(TextBlock);

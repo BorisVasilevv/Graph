@@ -13,7 +13,7 @@ namespace Graph
 {
     public class DeleteConnectionTool
     {
-        static Graph MainGraph=MainWindow.MainGraph;
+        static MyGraph MainGraph=MainWindow.MainGraph;
         public static Polyline SelectLine;
         private static void SelectedLine(Canvas canvas)
         {

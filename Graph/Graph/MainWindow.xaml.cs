@@ -79,8 +79,8 @@ namespace Graph
         }
 
         public static string FullFileNamePath = null;
-        public static Graph MainGraph;
-        private static Graph _mainGraphCopy;
+        public static MyGraph MainGraph;
+        private static MyGraph _mainGraphCopy;
         private void btnFileName_Click(object sender, RoutedEventArgs e)
         {
 
@@ -266,7 +266,7 @@ namespace Graph
 
         private void btnMinTree_Click(object sender, RoutedEventArgs e)
         {
-            _mainGraphCopy=new Graph(MainGraph);
+            _mainGraphCopy=new MyGraph(MainGraph);
             bool IsGraphConnected = true;
             if (IsProgramReady)
             {
@@ -286,7 +286,7 @@ namespace Graph
 
         private void btnMinWay_Click(object sender, RoutedEventArgs e)
         {
-            _mainGraphCopy = new Graph(MainGraph);
+            _mainGraphCopy = new MyGraph(MainGraph);
 
             if (IsProgramReady)
             {

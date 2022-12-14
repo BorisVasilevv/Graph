@@ -134,7 +134,7 @@ namespace Graph
         };
 
 
-        public static void Algorithm(Vertice start, Vertice end, Graph mainGraph)
+        public static void Algorithm(Vertice start, Vertice end, MyGraph mainGraph)
         {
             string path = MainWindow.FullFileNamePath;
             string[][] graph2 = File.ReadAllLines(path).Select(x => x.Split(";")).ToArray();

@@ -14,7 +14,7 @@ namespace Graph
 {
     public class DeleteVerticeTool
     {
-        static Graph MainGraph= MainWindow.MainGraph;
+        static MyGraph MainGraph= MainWindow.MainGraph;
 
         public static void DeleteVertice(object sender, MouseEventArgs e)
         {

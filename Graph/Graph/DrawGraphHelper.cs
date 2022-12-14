@@ -22,7 +22,7 @@ namespace Graph
         const int TopIndent = 40;
         const int RectOnOneLine = 11;
         const int RectBetweenIndent = 60;
-        public static void DrawGraph(Canvas canvas, Graph graph)
+        public static void DrawGraph(Canvas canvas, MyGraph graph)
         {
 
             for (int i = 0; i < graph.AllVertices.Count; i++)

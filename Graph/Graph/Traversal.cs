@@ -10,7 +10,7 @@ namespace Graph
 {
     public class Traversal
     {
-        static Graph MainGraph= MainWindow.MainGraph;
+        static MyGraph MainGraph= MainWindow.MainGraph;
         public static void DFS(List<Vertice> LV, List<Connection> LC)//я хз, надо тестить
         {
             Stack<Vertice> vertices = new Stack<Vertice>();

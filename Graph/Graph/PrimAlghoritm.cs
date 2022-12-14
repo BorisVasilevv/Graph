@@ -8,7 +8,7 @@ namespace Graph
 {
     class PrimAlghoritm
     {
-        public static List<Connection> AlgorithmByPrim(Graph graph)
+        public static List<Connection> AlgorithmByPrim(MyGraph graph)
         {
 
             List<Connection> resultConn = new List<Connection>();
