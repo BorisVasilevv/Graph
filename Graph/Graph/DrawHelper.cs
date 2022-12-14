@@ -28,32 +28,46 @@ namespace Graph
 
             for (int i = 0; i < graph.AllVertices.Count; i++)
             {
-                Rectangle Rect = new Rectangle();
-                Rect.Width = 50;
-                Rect.Height = 50;
-                Rect.Fill = new SolidColorBrush(Colors.Brown);
-                Rect.Stroke = new SolidColorBrush(Colors.Black);
-                Rect.MouseMove += MainWindow.ToolAddVertice.RectangleMouseMove;
-                Canvas.SetZIndex(Rect, 2);
-                canvas.Children.Add(Rect);
-                Point center = new Point(LeftIndent + RectBetweenIndent * (i % RectOnOneLine), TopIndent+ RectBetweenIndent * (i / RectOnOneLine));
-                Canvas.SetTop(Rect, center.Y);
-                Canvas.SetLeft(Rect, center.X);
+                if(graph.AllVertices[i].Rect == null)
+                {
+                    Rectangle Rect = new Rectangle();
+                    Rect.Width = 50;
+                    Rect.Height = 50;
+                    Rect.Fill = new SolidColorBrush(Colors.Brown);
+                    Rect.Stroke = new SolidColorBrush(Colors.Black);
+                    Rect.MouseMove += MainWindow.ToolAddVertice.RectangleMouseMove;
+                    Canvas.SetZIndex(Rect, 2);
+                    canvas.Children.Add(Rect);
+                    Point center = new Point(LeftIndent + RectBetweenIndent * (i % RectOnOneLine), TopIndent + RectBetweenIndent * (i / RectOnOneLine));
+                    Canvas.SetTop(Rect, center.Y);
+                    Canvas.SetLeft(Rect, center.X);
 
-                graph.AllVertices[i].Rect = Rect;
-                graph.AllVertices[i].RectCenter = new Point(center.X + Rect.Width / 2, center.Y + Rect.Height / 2);
-                TextBlock textBlock = new TextBlock() { Text = (graph.AllVertices[i].Id + 1).ToString() };
+                    graph.AllVertices[i].Rect = Rect;
+                    graph.AllVertices[i].RectCenter = new Point(center.X + Rect.Width / 2, center.Y + Rect.Height / 2);
+                    TextBlock textBlock = new TextBlock() { Text = (graph.AllVertices[i].Id + 1).ToString() };
 
-                textBlock.Height = 20;
-                textBlock.Width = 50;
-                textBlock.VerticalAlignment = VerticalAlignment.Top;
-                textBlock.HorizontalAlignment = HorizontalAlignment.Center;
-                textBlock.TextAlignment = TextAlignment.Center;
-                Canvas.SetZIndex(textBlock, 2);
-                canvas.Children.Add(textBlock);
-                Canvas.SetTop(textBlock, TopIndent+ RectBetweenIndent * (i / RectOnOneLine) + TextBoxIndent);
-                Canvas.SetLeft(textBlock, LeftIndent + RectBetweenIndent * (i % RectOnOneLine));
-                graph.AllVertices[i].NameTextBlock = textBlock;
+                    textBlock.Height = 20;
+                    textBlock.Width = 50;
+                    textBlock.VerticalAlignment = VerticalAlignment.Top;
+                    textBlock.HorizontalAlignment = HorizontalAlignment.Center;
+                    textBlock.TextAlignment = TextAlignment.Center;
+                    Canvas.SetZIndex(textBlock, 2);
+                    canvas.Children.Add(textBlock);
+                    Canvas.SetTop(textBlock, center.Y + TextBoxIndent);
+                    Canvas.SetLeft(textBlock, center.X);
+                    graph.AllVertices[i].NameTextBlock = textBlock;
+                }
+                else
+                {
+                    Vertice vert = graph.AllVertices[i];
+                    Canvas.SetTop(vert.Rect, vert.RectCenter.Y-vert.Rect.Height/2);
+                    Canvas.SetLeft(vert.Rect, vert.RectCenter.X - vert.Rect.Width / 2);
+                    canvas.Children.Add(vert.Rect);
+                    Canvas.SetTop(vert.NameTextBlock, vert.RectCenter.Y + TextBoxIndent - vert.Rect.Height / 2);
+                    Canvas.SetLeft(vert.NameTextBlock, vert.RectCenter.X - vert.Rect.Width / 2);
+                    canvas.Children.Add(vert.NameTextBlock);
+                }
+                
 
             }
             DrawConnections(canvas, graph);

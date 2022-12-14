@@ -12,7 +12,7 @@ namespace Graph
         {
             AnimaztionPainter animaztionPainter = new AnimaztionPainter(AnimaztionPainter.AlgorithmType.Prim);
 
-            List<Connection> resultConn = new List<Connection>();
+            List<Connection> usedE = new List<Connection>();
             //неиспользованные ребра
             List<Connection> notUsedE = new List<Connection>(graph.Connections);
 
@@ -27,6 +27,7 @@ namespace Graph
             int randomNumber =rand.Next(0, numberV);
             Vertice randVertice = notUsedV[randomNumber];
             usedV.Add(randVertice);
+            animaztionPainter.Shapes.Add(randVertice.Rect);
             notUsedV.Remove(randVertice);
 
             while (notUsedV.Count > 0)
@@ -50,24 +51,30 @@ namespace Graph
                     }
                 }
 
+                animaztionPainter.Shapes.Add(notUsedE[minE].Line);
+
                 //заносим новую вершину в список использованных и удаляем ее из списка неиспользованных
                 if (usedV.IndexOf(notUsedE[minE].Vertice1) != -1)
                 {
                     usedV.Add(notUsedE[minE].Vertice2);
+                    animaztionPainter.Shapes.Add(notUsedE[minE].Vertice2.Rect);
                     notUsedV.Remove(notUsedE[minE].Vertice2);
                 }
                 else
                 {
                     usedV.Add(notUsedE[minE].Vertice1);
+                    animaztionPainter.Shapes.Add(notUsedE[minE].Vertice1.Rect);
+                    
                     notUsedV.Remove(notUsedE[minE].Vertice1);
                 }
                 //заносим новое ребро в дерево и удаляем его из списка неиспользованных
-                resultConn.Add(notUsedE[minE]);
+                usedE.Add(notUsedE[minE]);
                 notUsedE.RemoveAt(minE);
             }
 
+            animaztionPainter.ShowAnimation();
             //Animize
-            return resultConn;
+            return usedE;
         }
     }
 }

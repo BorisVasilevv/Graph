@@ -22,13 +22,14 @@ namespace Graph
         }
         MyGraph MainGraph = MainWindow.MainGraph;
         private Canvas _canvas = MainWindow.MainCanvas;
-        public List<Shape> Shapes;
+        public List<Shape> Shapes { get; private set; }
 
         AlgorithmType _type;
 
         public AnimaztionPainter(AlgorithmType type)
         {
             _type = type;
+            Shapes = new List<Shape>();
         }
 
 
@@ -74,10 +75,24 @@ namespace Graph
             //}
 
             BtnReturn.Click += BtnReturn_Click;
-            if (_type == AlgorithmType.Traversal) BtnNext.Click += BtnNextTraversal_Click;
-            else if (_type == AlgorithmType.Prim) BtnNext.Click += BtnNextPrim_Click;
-            else if (_type == AlgorithmType.FordFarkenson) BtnNext.Click += BtnNextFordFarkenson_Click;
-            else if (_type == AlgorithmType.Dijkstra) BtnNext.Click += BtnNextDijkstra_Click;
+            if (_type == AlgorithmType.Traversal)
+            {
+                BtnNext.Click += BtnNextTraversal_Click;
+                _canvas.Children.Add(BtnReturn);
+                Canvas.SetZIndex(BtnReturn, 20);
+            }
+            else if (_type == AlgorithmType.Prim)
+            {
+                BtnNext.Click += BtnNextPrim_Click;
+            }
+            else if (_type == AlgorithmType.FordFarkenson)
+            {
+                BtnNext.Click += BtnNextFordFarkenson_Click;
+            }
+            else if (_type == AlgorithmType.Dijkstra)
+            {
+                BtnNext.Click += BtnNextDijkstra_Click;
+            }
 
             _canvas.MouseMove -= AddVerticeTool.clearSelection;
             _canvas.MouseMove -= DeleteConnectionTool.clearSelection;
@@ -91,13 +106,13 @@ namespace Graph
             MainWindow.IsProgramReady = false;
             _canvas.Children.Add(BtnNext);
             Canvas.SetZIndex(BtnNext, 20);
-            _canvas.Children.Add(BtnReturn);
-            Canvas.SetZIndex(BtnReturn, 20);
+            
         }
 
         private void BtnReturn_Click(object sender, RoutedEventArgs e)
         {
-
+            if (_canvas.Children.Contains(BtnNext)) _canvas.Children.Remove(BtnNext);
+            _canvas.Children.Remove(BtnReturn);
             _canvas.MouseMove += AddVerticeTool.clearSelection;
             _canvas.MouseMove += DeleteConnectionTool.clearSelection;
             _canvas.MouseMove += ChangeDataTool.TextBlockSelected;
@@ -110,8 +125,7 @@ namespace Graph
                 v.Rect.MouseMove += MainWindow.ToolAddVertice.RectangleMouseMove;
 
             MainWindow.IsProgramReady = true;
-            if (_canvas.Children.Contains(BtnNext)) _canvas.Children.Remove(BtnNext);
-            _canvas.Children.Remove(BtnReturn);
+            
 
         }
 
@@ -135,8 +149,36 @@ namespace Graph
         private void BtnNextPrim_Click(object sender, RoutedEventArgs e)
         {
 
-            
+            if (_counter < _shapes.Count)
+            {
+                _shapes[_counter].Effect = new DropShadowEffect() { Color = Colors.Black };
+                
+                
+            }
+            if (_counter == _shapes.Count)
+            {
+                _canvas.Children.Clear();
+                DrawHelper.DrawGraph(_canvas, MainGraph);
+                DrawHelper.BtnReturn.Click += MainWindow.BtnReturn_Click;
+                _canvas.Children.Remove(BtnReturn);
 
+                _canvas.MouseMove += AddVerticeTool.clearSelection;
+                _canvas.MouseMove += DeleteConnectionTool.clearSelection;
+                _canvas.MouseMove += ChangeDataTool.TextBlockSelected;
+                _canvas.MouseDown += MainWindow.ToolAddVertice.rectMouseDown;
+                BtnNext.Click -= BtnNextTraversal_Click;
+                foreach (Shape shape in _shapes)
+                    shape.Effect = null;
+
+                foreach (var v in MainGraph.AllVertices)
+                    v.Rect.MouseMove += MainWindow.ToolAddVertice.RectangleMouseMove;
+
+                MainWindow.IsProgramReady = true;
+
+                _canvas.Children.Add(DrawHelper.BtnReturn);
+                Canvas.SetZIndex(DrawHelper.BtnReturn, 20);
+            }
+            _counter++;
         }
 
 

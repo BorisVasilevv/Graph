@@ -13,13 +13,16 @@ namespace Graph
         static MyGraph MainGraph= MainWindow.MainGraph;
         public static void DFS(List<Vertice> LV, List<Connection> LC)//я хз, надо тестить
         {
+
+            AnimaztionPainter animaztionPainter = new AnimaztionPainter(AnimaztionPainter.AlgorithmType.Traversal);
+
             Stack<Vertice> vertices = new Stack<Vertice>();
             vertices.Push(LV[0]);
             List<Vertice> used = new List<Vertice>();
-            List<Shape> shapes= new List<Shape>();
+
             Vertice v = vertices.Pop();
             used.Add(v);
-            shapes.Add(v.Rect);
+            animaztionPainter.Shapes.Add(v.Rect);
             do
             {
                 foreach (Connection con in LC)
@@ -36,8 +39,8 @@ namespace Graph
                     }
                     if (con.Vertice1.Id == vertCompare.Id && !vertices.Contains(con.Vertice2)  && !used.Contains(con.Vertice2))
                     {
-                        if (!shapes.Contains(con.Vertice1.Rect))  shapes.Add(con.Vertice1.Rect);
-                        if (!shapes.Contains(con.Line))  shapes.Add(con.Line);
+                        if (!animaztionPainter.Shapes.Contains(con.Vertice1.Rect)) animaztionPainter.Shapes.Add(con.Vertice1.Rect);
+                        if (!animaztionPainter.Shapes.Contains(con.Line)) animaztionPainter.Shapes.Add(con.Line);
                         
                         vertices.Push(con.Vertice2);
                     }
@@ -45,23 +48,25 @@ namespace Graph
                 }
                 Vertice vert=vertices.Pop();
                 used.Add(vert);
-                if(!shapes.Contains(vert.Rect)) shapes.Add(vert.Rect);
+                if(!animaztionPainter.Shapes.Contains(vert.Rect)) animaztionPainter.Shapes.Add(vert.Rect);
             } while (vertices.Count!=0);
 
-            AnimaztionPainter animaztionPainter = new AnimaztionPainter(AnimaztionPainter.AlgorithmType.Traversal);
-            animaztionPainter.Shapes=shapes;
+  
+           
             animaztionPainter.ShowAnimation();
         }
 
         public static void BFS(List<Vertice> LV, List<Connection> LC)//аналогично - тестить
         {
-            List<Shape> shapes = new List<Shape>();
+
+            AnimaztionPainter animaztionPainter = new AnimaztionPainter(AnimaztionPainter.AlgorithmType.Traversal);
+
             List<Vertice> visitedV = new List<Vertice>();
             List<Vertice> notVisitedV = new List<Vertice>(LV);
             int vertCount = notVisitedV.Count;
             visitedV.Add(LV[0]);
             notVisitedV.Remove(LV[0]);
-            shapes.Add(LV[0].Rect);
+            animaztionPainter.Shapes.Add(LV[0].Rect);
             Vertice verticeNow = LV[0];
             Queue<Vertice> qVertice = new Queue<Vertice>();
             while (visitedV.Count!=vertCount)
@@ -71,11 +76,11 @@ namespace Graph
                 foreach(Vertice vert in notVisitedV)
                 {
                     Connection conn = Connection.SearchConnection(verticeNow, vert,MainGraph.Connections);
-                    if (conn != null&&!(shapes.Contains(vert.Rect)&& shapes.Contains(verticeNow.Rect)))
+                    if (conn != null&&!(animaztionPainter.Shapes.Contains(vert.Rect)&& animaztionPainter.Shapes.Contains(verticeNow.Rect)))
                     {
                         connections.Add(conn);
-                        if(!shapes.Contains(conn.Line)) shapes.Add(conn.Line);
-                        if (!shapes.Contains(vert.Rect)) shapes.Add(vert.Rect);
+                        if(!animaztionPainter.Shapes.Contains(conn.Line)) animaztionPainter.Shapes.Add(conn.Line);
+                        if (!animaztionPainter.Shapes.Contains(vert.Rect)) animaztionPainter.Shapes.Add(vert.Rect);
                         if (!visitedV.Contains(vert)) visitedV.Add(vert);
                         qVertice.Enqueue(vert);
                     }                  
@@ -86,8 +91,8 @@ namespace Graph
                 notVisitedV.Remove(vertice);
             }
 
-            AnimaztionPainter animaztionPainter = new AnimaztionPainter(AnimaztionPainter.AlgorithmType.Traversal);
-            animaztionPainter.Shapes = shapes;
+            
+  
             animaztionPainter.ShowAnimation();
         }
 

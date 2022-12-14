@@ -85,7 +85,7 @@ namespace Graph
 
         public static string FullFileNamePath = null;
         public static MyGraph MainGraph;
-        private static MyGraph _mainGraphCopy;
+        public  static MyGraph MainGraphCopy;
         private void btnFileName_Click(object sender, RoutedEventArgs e)
         {
 
@@ -244,19 +244,13 @@ namespace Graph
 
         private void btnMinTree_Click(object sender, RoutedEventArgs e)
         {
-            _mainGraphCopy=new MyGraph(MainGraph);
+            MainGraphCopy=new MyGraph(MainGraph);
             bool IsGraphConnected = true;
             if (IsProgramReady)
             {
                 if (IsGraphConnected)
                 {
-                    MainGraph.Connections = PrimAlghoritm.AlgorithmByPrim(MainGraph);
-                    MainCanvas.Children.Clear();
-                    DrawHelper.DrawGraph(MainCanvas, MainGraph);
-                    DrawHelper.BtnReturn.Click += BtnReturn_Click;
-
-                    MainCanvas.Children.Add(DrawHelper.BtnReturn);
-                    Canvas.SetZIndex(DrawHelper.BtnReturn, 20);
+                    MainGraph.Connections = PrimAlghoritm.AlgorithmByPrim(MainGraph);                  
                 }
 
             }
@@ -264,7 +258,7 @@ namespace Graph
 
         private void btnMinWay_Click(object sender, RoutedEventArgs e)
         {
-            _mainGraphCopy = new MyGraph(MainGraph);
+            MainGraphCopy = new MyGraph(MainGraph);
 
             if (IsProgramReady)
             {
@@ -277,12 +271,12 @@ namespace Graph
         public static void BtnReturn_Click(object sender, RoutedEventArgs e)
         {
             MainCanvas.Children.Clear();
-            MainGraph = _mainGraphCopy == null? MainGraph: _mainGraphCopy;
+            MainGraph = MainGraphCopy == null? MainGraph: MainGraphCopy;
             
             DrawHelper.DrawGraph(MainCanvas, MainGraph);
             DrawHelper.BtnReturn.Click-= BtnReturn_Click;
 
-            _mainGraphCopy = null;
+            MainGraphCopy = null;
         }
      
 
