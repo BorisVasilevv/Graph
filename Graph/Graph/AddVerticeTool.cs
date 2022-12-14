@@ -11,9 +11,11 @@ namespace Graph
 {
     public class AddVerticeTool
     {
-        public static List<Vertice> AllVertices {get; set;}
+        //public static List<Vertice> AllVertices {get; set;}
+
         private Rectangle NewVerticeRect;
         public static Rectangle SelectedRectangle;
+        public static Graph MainGraph=MainWindow.MainGraph; 
 
 
         public void rectMouseDown(object sender, MouseButtonEventArgs e)
@@ -43,7 +45,7 @@ namespace Graph
                 point.X = mouseX;
                 point.Y = mouseY;
                 vertice.Rect = NewVerticeRect;
-                AllVertices.Add(vertice);
+                MainGraph.AllVertices.Add(vertice);
                 vertice.RectCenter = point;
 
                 TextBlock textBlock = new TextBlock() { Text = (vertice.Id+1).ToString() };
@@ -71,7 +73,7 @@ namespace Graph
             DrawSelection();
             if (SelectedRectangle != null && e.LeftButton == MouseButtonState.Pressed)
             {
-                Vertice vertice = Vertice.SearchVertice(SelectedRectangle);
+                Vertice vertice = Vertice.SearchVertice(SelectedRectangle, MainGraph.AllVertices);
                 if (vertice != null)
                 {
                     Point point = new Point();
@@ -84,14 +86,14 @@ namespace Graph
                     vertice.RectCenter = point;
                     Canvas.SetTop(vertice.VerticeNameTextBlock, mouseY + 20);
                     Canvas.SetLeft(vertice.VerticeNameTextBlock, mouseX - SelectedRectangle.Height / 2);
-                    AddConnectionTool.DrawConnections(MainWindow.MainCanvas, AddConnectionTool.Connections);
+                    DrawGraphHelper.DrawConnections(MainWindow.MainCanvas, MainGraph.Connections);
                 }
             }
         }
 
         public static void clearSelection(object sender, MouseEventArgs e)
         {
-            foreach (Vertice vertice in AllVertices)
+            foreach (Vertice vertice in MainGraph.AllVertices)
             {
                 if (!vertice.Rect.IsMouseOver)
                 {

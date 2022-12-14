@@ -20,7 +20,7 @@ namespace Graph
             Prim,
             Dijkstra
         }
-
+        Graph MainGraph = MainWindow.MainGraph;
         private Canvas _canvas = MainWindow.MainCanvas;
         public List<Shape> Shapes;
         AlgorithmType _type;
@@ -82,7 +82,7 @@ namespace Graph
             _canvas.MouseMove -= ChangeDataTool.TextBlockSelected;
             _canvas.MouseMove -= MainWindow.ToolAddVertice.newRectMouseMove;
             _canvas.MouseDown -= MainWindow.ToolAddVertice.rectMouseDown;
-            foreach (var v in AddVerticeTool.AllVertices)
+            foreach (var v in MainGraph.AllVertices)
                 v.Rect.MouseMove -= MainWindow.ToolAddVertice.RectangleMouseMove;
 
 
@@ -104,7 +104,7 @@ namespace Graph
             foreach (Shape shape in _shapes)
                 shape.Effect = null;
 
-            foreach (var v in AddVerticeTool.AllVertices)
+            foreach (var v in MainGraph.AllVertices)
                 v.Rect.MouseMove += MainWindow.ToolAddVertice.RectangleMouseMove;
 
             MainWindow.IsProgramReady = true;

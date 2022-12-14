@@ -13,11 +13,11 @@ namespace Graph
 {
     public class AddConnectionTool
     {
-        public static List<Connection> Connections { get; set; }
+        //public static List<Connection> Connections { get; set; }
         public static Connection NewConnection { get; set; }
         private static Rectangle Rect1 = null;
         private static Rectangle Rect2 = null;
-
+        static Graph MainGraph=MainWindow.MainGraph;
 
         public AddVerticeTool ToolAddVertice = MainWindow.ToolAddVertice;
 
@@ -36,8 +36,8 @@ namespace Graph
                 else if (Rect1!=null&&!Rect1.Equals(AddVerticeTool.SelectedRectangle) && e.LeftButton == MouseButtonState.Pressed)
                 {
                     Rect2 = AddVerticeTool.SelectedRectangle;
-                    NewConnection.Vertice1 = Vertice.SearchVertice(Rect1);
-                    NewConnection.Vertice2 = Vertice.SearchVertice(Rect2);
+                    NewConnection.Vertice1 = Vertice.SearchVertice(Rect1, MainGraph.AllVertices);
+                    NewConnection.Vertice2 = Vertice.SearchVertice(Rect2, MainGraph.AllVertices);
                     NewConnection.Length = 1;
                     TextBlock textBlock = new TextBlock();
                     NewConnection.BlockText = textBlock;
@@ -45,12 +45,12 @@ namespace Graph
                     NewConnection.BlockText.MouseDown += ChangeDataTool.TextBlock_MouseDown;
 
 
-                    if (!Connection.ConnectionRepeat(Connections, NewConnection))
+                    if (!Connection.ConnectionRepeat(MainGraph.Connections, NewConnection))
                     {
-                        Connections.Add(NewConnection);
+                        MainGraph.Connections.Add(NewConnection);
                         Rect1 = Rect2 = null;
                     }
-                    DrawConnections(MainWindow.MainCanvas, Connections);
+                    DrawGraphHelper.DrawConnections(MainWindow.MainCanvas, MainGraph.Connections);
                     
                     MainWindow.MainCanvas.MouseDown -= addConnection;
                 }
@@ -60,7 +60,7 @@ namespace Graph
 
         public static bool IsConnectionNewTest(Connection connectionToTest)
         {
-            foreach (Connection connection in Connections)
+            foreach (Connection connection in MainGraph.Connections)
             {
                 if ((connection.Vertice1.Id == connectionToTest.Vertice1.Id && connection.Vertice2.Id == connectionToTest.Vertice2.Id)
                     || (connection.Vertice1.Id == connectionToTest.Vertice2.Id && connection.Vertice2.Id == connectionToTest.Vertice1.Id))
@@ -71,37 +71,6 @@ namespace Graph
             return true;
         }
 
-        public static void DrawConnections(Canvas canvas, List<Connection> connections)
-        {
-            foreach (Connection connection in connections)
-            {
-                if (connection.Line != null) canvas.Children.Remove(connection.Line); //удаление линии при перетаскивании прямоугольника
-                Polyline line = new Polyline();
-                PointCollection points = new PointCollection();
-                Point point1 = connection.Vertice1.RectCenter;
-                Point point2 = connection.Vertice2.RectCenter;
-                double minX = point1.X < point2.X ? point1.X : point2.X;
-                double minY = point1.Y < point2.Y ? point1.Y : point2.Y;
-                Point textBlockCenter= new Point(minX+Math.Abs(point1.X-point2.X)/2, minY+Math.Abs(point1.Y-point2.Y)/2);
-                if (connection.BlockText != null) canvas.Children.Remove(connection.BlockText);
-                canvas.Children.Add(connection.BlockText);
-                Canvas.SetZIndex(connection.BlockText, 0);
-                Canvas.SetLeft(connection.BlockText, textBlockCenter.X);
-                Canvas.SetTop(connection.BlockText, textBlockCenter.Y-15);
-                //connection.BlockText.VerticalAlignment =VerticalAlignment.Center;
-                //connection.BlockText.HorizontalAlignment =HorizontalAlignment.Center;
-                //connection.BlockText.Margin = new Thickness(textBlockCenter.X, textBlockCenter.Y, 800- textBlockCenter.X, 450- textBlockCenter.Y);
-                points.Add(point1);
-                points.Add(point2);
-                line.Fill = Brushes.Blue;
-                line.Stroke = Brushes.Blue;
-
-
-                line.Points = points;
-                Canvas.SetZIndex(line, 1);
-                connection.Line = line;
-                canvas.Children.Add(line);
-            }
-        }
+       
     }
 }

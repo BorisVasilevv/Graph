@@ -45,27 +45,27 @@ namespace Graph
             return false;
         }
 
-        public static Connection SearchConnection(Polyline line)
+        public static Connection SearchConnection(Polyline line, List<Connection> connectionsWhereSeadch)
         {
-            foreach (Connection connect in AddConnectionTool.Connections)
+            foreach (Connection connect in connectionsWhereSeadch)
             {
                 if (connect.Line == line) return connect;
             }
             return null;
         }
 
-        public static Connection SearchConnection(TextBlock textBlock)
+        public static Connection SearchConnection(TextBlock textBlock, List<Connection> connectionsWhereSeadch)
         {
-            foreach (Connection connect in AddConnectionTool.Connections)
+            foreach (Connection connect in connectionsWhereSeadch)
             {
                 if (connect.BlockText == textBlock) return connect;
             }
             return null;
         }
 
-        public static Connection SearchConnection(Vertice vertice1, Vertice vertice2)
+        public static Connection SearchConnection(Vertice vertice1, Vertice vertice2, List<Connection> connectionsWhereSeadch)
         {
-            foreach (Connection connection in AddConnectionTool.Connections)
+            foreach (Connection connection in connectionsWhereSeadch)
             {
                 if ((connection.Vertice1.Id == vertice1.Id && connection.Vertice2.Id == vertice2.Id)
                     || (connection.Vertice2.Id == vertice1.Id && connection.Vertice1.Id == vertice2.Id))

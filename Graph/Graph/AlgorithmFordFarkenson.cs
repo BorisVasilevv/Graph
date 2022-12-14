@@ -134,7 +134,7 @@ namespace Graph
         };
 
 
-        public static void Algorithm(Vertice start, Vertice end)
+        public static void Algorithm(Vertice start, Vertice end, Graph mainGraph)
         {
             string path = MainWindow.FullFileNamePath;
             string[][] graph2 = File.ReadAllLines(path).Select(x => x.Split(";")).ToArray();
@@ -147,6 +147,7 @@ namespace Graph
                     graph[i, j] = Int32.Parse(graph2[i][j]);
                 }
             }
+
 
             TextBlock.Text = $"The maximum possible\nflow is {FordFulkerson(graph, start.Id, end.Id)}";
             MainWindow.MainCanvas.Children.Add(TextBlock);

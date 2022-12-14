@@ -16,7 +16,7 @@ namespace Graph
     {
 
         public static Vertice Start, End;
-
+        public static Graph MainGraph=MainWindow.MainGraph;
         static TextBlock TextBlock = new TextBlock
         {
             Height = 20,
@@ -26,16 +26,16 @@ namespace Graph
             Margin = new Thickness(200, 20, 0, 0)
         };
 
-        public static Action<Vertice, Vertice> Function;
+        public static Action<Vertice, Vertice, Graph> Function;
 
-        public static void ChooseVertices(Action<Vertice, Vertice> func)
+        public static void ChooseVertices(Action<Vertice, Vertice, Graph> func)
         {
             TextBlock.Text = "Выберите стартовую вершину";
             MainWindow.MainCanvas.Children.Add(TextBlock);
             Canvas.SetZIndex(TextBlock, 20);
             Function = func;
             MainWindow.MainCanvas.MouseDown += ChooseVertice_MouseDown;
-
+            MainGraph = MainWindow.MainGraph;
         }
 
         private static void ChooseVertice_MouseDown(object sender, MouseButtonEventArgs e)
@@ -45,19 +45,20 @@ namespace Graph
             {
                 if (Start == null)
                 {
-                    Start = Vertice.SearchVertice(rect);
+                    Start = Vertice.SearchVertice(rect, MainGraph.AllVertices);
                     TextBlock.Text = "Выберите конечную вершину";
                 }
                 else if (End == null && Start.Rect != rect)
                 {
-                    End = Vertice.SearchVertice(rect);
+                    End = Vertice.SearchVertice(rect, MainGraph.AllVertices);
                     MainWindow.MainCanvas.MouseDown -= ChooseVertice_MouseDown;
                     MainWindow.IsProgramReady = true;
                     MainWindow.MainCanvas.Children.Remove(TextBlock);
-                    Function.Invoke(Start, End);
+                    Function.Invoke(Start, End,MainGraph);
                     Function = null;
                     Start = null;
                     End = null;
+                    MainGraph = null;
                 }
             }
             

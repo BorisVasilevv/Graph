@@ -33,18 +33,18 @@ namespace Graph
         public List<int> ConnectionIds = new List<int>();
 
 
-        public static Vertice SearchVertice(int id)
+        public static Vertice SearchVertice(int id, List<Vertice> vertices)
         {
-            foreach (Vertice vertice in AddVerticeTool.AllVertices)
+            foreach (Vertice vertice in vertices)
             {
                 if (vertice.Id == id)
                     return vertice;
             }
             return null;
         }
-        public static Vertice SearchVertice(Rectangle rect)
+        public static Vertice SearchVertice(Rectangle rect, List<Vertice> vertices)
         {
-            foreach (Vertice vertice in AddVerticeTool.AllVertices)
+            foreach (Vertice vertice in vertices)
             {
                 if (vertice.Rect == rect)
                     return vertice;

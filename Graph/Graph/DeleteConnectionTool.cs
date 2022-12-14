@@ -13,6 +13,7 @@ namespace Graph
 {
     public class DeleteConnectionTool
     {
+        static Graph MainGraph=MainWindow.MainGraph;
         public static Polyline SelectLine;
         private static void SelectedLine(Canvas canvas)
         {
@@ -33,7 +34,7 @@ namespace Graph
         public static void clearSelection(object sender, MouseEventArgs e)
         {
             SelectedLine(MainWindow.MainCanvas);
-            foreach (Connection connect in AddConnectionTool.Connections)
+            foreach (Connection connect in MainGraph.Connections)
             {
                 if (!connect.Line.IsMouseOver)
                 {
@@ -48,8 +49,8 @@ namespace Graph
             
             if (SelectLine != null)
             {
-                TextBlock textBlock = Connection.SearchConnection(SelectLine).BlockText;
-                AddConnectionTool.Connections.Remove(Connection.SearchConnection(SelectLine));
+                TextBlock textBlock = Connection.SearchConnection(SelectLine, MainGraph.Connections).BlockText;
+                MainGraph.Connections.Remove(Connection.SearchConnection(SelectLine, MainGraph.Connections));
                 MainWindow.MainCanvas.Children.Remove(SelectLine);
                 MainWindow.MainCanvas.Children.Remove(textBlock);
                 MainWindow.MainCanvas.MouseDown -= deleteLine;

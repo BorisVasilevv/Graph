@@ -39,24 +39,21 @@ namespace Graph
 
 
 
-        public static void Algorithm(Vertice start, Vertice end)
+        public static void Algorithm(Vertice start, Vertice end, Graph graph)
         {
-            var g = new Graph();
+            var g = new GraphD();
 
-            var connections = AddConnectionTool.Connections;
-
-            var vertices = AddVerticeTool.AllVertices;
 
             //добавление вершин
-            foreach ( var vertex in vertices )
+            foreach ( var vertex in graph.AllVertices)
             {
                 g.AddVertex(vertex.Id.ToString());
             }
 
             //добавление ребер
-            for (int i = 0; i < connections.Count; i++)
+            for (int i = 0; i < graph.Connections.Count; i++)
             {
-                g.AddEdge(connections[i].Vertice1.Id.ToString(), connections[i].Vertice2.Id.ToString(), connections[i].Length);
+                g.AddEdge(graph.Connections[i].Vertice1.Id.ToString(), graph.Connections[i].Vertice2.Id.ToString(), graph.Connections[i].Length);
             }
           
             var dijkstra = new Dijkstra(g);
@@ -66,21 +63,22 @@ namespace Graph
             for (int i = 0; i < path.Count - 1; i++)
             {
                 connections1.Add(
-                    Connection.SearchConnection(vertices[path[i]], vertices[path[i + 1]]));
+                    Connection.SearchConnection(graph.AllVertices[path[i]], graph.AllVertices[path[i + 1]], graph.Connections));
             }
 
             List<Vertice> vertices1 = new List<Vertice>();
-            foreach (var vertise in vertices)
+            foreach (var vertise in graph.AllVertices)
             {
                 if (path.Contains(vertise.Id))
                     vertices1.Add(vertise);
             }
-
+            graph.Connections = connections1;
+            graph.AllVertices = vertices1;
             
 
             MainWindow.MainCanvas.Children.Clear();
 
-            DrawGraphHelper.DrawGraph(MainWindow.MainCanvas, vertices1, connections1);
+            DrawGraphHelper.DrawGraph(MainWindow.MainCanvas, graph);
 
             MainWindow.IsProgramReady = true;
             MainWindow.BtnReturn.Click += MainWindow.BtnReturn_Click;
@@ -185,7 +183,7 @@ namespace Graph
         /// <summary>
         /// Граф
         /// </summary>
-        public class Graph
+        public class GraphD
         {
             /// <summary>
             /// Список вершин графа
@@ -195,7 +193,7 @@ namespace Graph
             /// <summary>
             /// Конструктор
             /// </summary>
-            public Graph()
+            public GraphD()
             {
                 Vertices = new List<GraphVertex>();
             }
@@ -287,7 +285,7 @@ namespace Graph
         /// </summary>
         public class Dijkstra
         {
-            Graph graph;
+            GraphD graph;
 
             List<GraphVertexInfo> infos;
 
@@ -295,7 +293,7 @@ namespace Graph
             /// Конструктор
             /// </summary>
             /// <param name="graph">Граф</param>
-            public Dijkstra(Graph graph)
+            public Dijkstra(GraphD graph)
             {
                 this.graph = graph;
             }

@@ -14,16 +14,17 @@ namespace Graph
 {
     public class DeleteVerticeTool
     {
+        static Graph MainGraph= MainWindow.MainGraph;
 
         public static void DeleteVertice(object sender, MouseEventArgs e)
         {
             Rectangle selectedRectangle = AddVerticeTool.SelectedRectangle;
             if (selectedRectangle != null)
             { 
-                Vertice vert = Vertice.SearchVertice(selectedRectangle);
-                List<Connection> connectToDel= AddConnectionTool.Connections.Where(x => x.Vertice1!=null && x.Vertice2!=null && x.Vertice1.Id == vert.Id || x.Vertice2.Id == vert.Id).ToList();
-                AddConnectionTool.Connections = AddConnectionTool.Connections.Where(x => x.Vertice1 != null && x.Vertice2 != null && x.Vertice1.Id!=vert.Id&&x.Vertice2.Id!=vert.Id).ToList();
-                AddVerticeTool.AllVertices.Remove(vert);
+                Vertice vert = Vertice.SearchVertice(selectedRectangle, MainGraph.AllVertices);
+                List<Connection> connectToDel= MainGraph.Connections.Where(x => x.Vertice1!=null && x.Vertice2!=null && x.Vertice1.Id == vert.Id || x.Vertice2.Id == vert.Id).ToList();
+                MainGraph.Connections = MainGraph.Connections.Where(x => x.Vertice1 != null && x.Vertice2 != null && x.Vertice1.Id!=vert.Id&&x.Vertice2.Id!=vert.Id).ToList();
+                MainGraph.AllVertices.Remove(vert);
 
                 foreach (Connection conn in connectToDel)
                 {

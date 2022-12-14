@@ -22,7 +22,7 @@ namespace Graph
 
         static TextBox TextBox = new TextBox();
 
-
+        static Graph MainGraph = MainWindow.MainGraph;
         private static TextBlock SelectedTextBlock;
 
         private static TextBlock TextBlockToChange;
@@ -41,7 +41,7 @@ namespace Graph
             {
                 
                 TextBlockToChange = SelectedTextBlock;
-                connectionToChange = Connection.SearchConnection(TextBlockToChange);
+                connectionToChange = Connection.SearchConnection(TextBlockToChange,MainGraph.Connections);
                 TextBlock.Text = $"Введите навую длинну или\nпропускную способность " +
                     $"\nмежду {connectionToChange.Vertice1.VerticeNameTextBlock.Text} и " +
                     $"{connectionToChange.Vertice2.VerticeNameTextBlock.Text}";
@@ -49,11 +49,11 @@ namespace Graph
             else if(TextBlockToChange == null)
             {
                 TextBlockToChange = SelectedTextBlock;
-                connectionToChange = Connection.SearchConnection(TextBlockToChange);
+                connectionToChange = Connection.SearchConnection(TextBlockToChange, MainGraph.Connections);
             }
             else
             {
-                connectionToChange = Connection.SearchConnection(TextBlockToChange);
+                connectionToChange = Connection.SearchConnection(TextBlockToChange, MainGraph.Connections);
             }
 
 
@@ -157,7 +157,7 @@ namespace Graph
                 }
                 else
                 {
-                    Connection connectionToChange = Connection.SearchConnection(TextBlockToChange);
+                    Connection connectionToChange = Connection.SearchConnection(TextBlockToChange, MainGraph.Connections);
                     connectionToChange.Length = number;
                     connectionToChange.BlockText.Text = inputStr;
                     btnExit_Click(sender, e);
@@ -189,7 +189,7 @@ namespace Graph
         public static void TextBlockSelected(object sender, MouseEventArgs e)
         {
             bool isSelect = false;
-            foreach (Connection connection in AddConnectionTool.Connections)
+            foreach (Connection connection in MainGraph.Connections)
             {
                 if (connection.BlockText.IsMouseOver)
                 {

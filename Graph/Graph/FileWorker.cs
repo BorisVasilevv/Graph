@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using static Graph.DijkstraAlgorithm;
 
 namespace Graph
 {
@@ -9,7 +10,7 @@ namespace Graph
 
         public static string FilePath { get; set; }
 
-        public static (List<Vertice>, List<Connection>) Read(string filePath)
+        public static Graph Read(string filePath)
         {
             List<Vertice> vertice = new List<Vertice>();
             List<Connection> connections = new List<Connection>();
@@ -39,20 +40,23 @@ namespace Graph
                 }
                 vertice[i].ConnectionIds = new List<int>(connectionsForVertice);
             }
-            return (vertice, connections);
+            return new Graph(vertice, connections);
         }
 
-        public static void WriteToFile(List<Vertice> vertices, string filePath)
+        public static void WriteToFile(Graph graph, string filePath)
         {
             List<string[]> stringsVertices = new List<string[]>();
-            for (int i = 0; i < vertices.Count; i++)
+            for (int i = 0; i < graph.AllVertices.Count; i++)
             {
-                string[] arrayConnection = new string[vertices.Count];
-                for (int j = 0; j < vertices.Count; j++)
+                string[] arrayConnection = new string[graph.AllVertices.Count];
+                for (int j = 0; j < graph.AllVertices.Count; j++)
                 {
                     Connection checkConnection = null;
                     if (i == j) arrayConnection[j] = "0";
-                    else checkConnection = Connection.SearchConnection(Vertice.SearchVertice(vertices[i].Id), Vertice.SearchVertice(vertices[j].Id));
+                    else checkConnection = Connection.SearchConnection(
+                        Vertice.SearchVertice(graph.AllVertices[i].Id, graph.AllVertices), 
+                        Vertice.SearchVertice(graph.AllVertices[j].Id, graph.AllVertices),
+                        graph.Connections);
 
                     if (checkConnection != null) arrayConnection[j] = checkConnection.Length.ToString();
                     else arrayConnection[j] = "0";

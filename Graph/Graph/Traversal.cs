@@ -10,7 +10,7 @@ namespace Graph
 {
     public class Traversal
     {
-
+        static Graph MainGraph= MainWindow.MainGraph;
         public static void DFS(List<Vertice> LV, List<Connection> LC)//я хз, надо тестить
         {
             Stack<Vertice> vertices = new Stack<Vertice>();
@@ -70,7 +70,7 @@ namespace Graph
                 List<Connection> connections = new List<Connection>();
                 foreach(Vertice vert in notVisitedV)
                 {
-                    Connection conn = Connection.SearchConnection(verticeNow, vert);
+                    Connection conn = Connection.SearchConnection(verticeNow, vert,MainGraph.Connections);
                     if (conn != null&&!(shapes.Contains(vert.Rect)&& shapes.Contains(verticeNow.Rect)))
                     {
                         connections.Add(conn);

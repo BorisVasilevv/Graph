@@ -8,17 +8,17 @@ namespace Graph
 {
     class PrimAlghoritm
     {
-        public static List<Connection> AlgorithmByPrim(List<Connection> connections)
+        public static List<Connection> AlgorithmByPrim(Graph graph)
         {
 
             List<Connection> resultConn = new List<Connection>();
             //неиспользованные ребра
-            List<Connection> notUsedE = new List<Connection>(connections);
+            List<Connection> notUsedE = new List<Connection>(graph.Connections);
 
             //использованные вершины
             List<Vertice> usedV = new List<Vertice>();
             //неиспользованные вершины
-            List<Vertice> notUsedV = new List<Vertice>(AddVerticeTool.AllVertices);
+            List<Vertice> notUsedV = new List<Vertice>(graph.AllVertices);
 
             int numberV=notUsedV.Count;
             //выбираем случайную начальную вершину

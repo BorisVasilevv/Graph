@@ -79,7 +79,8 @@ namespace Graph
         }
 
         public static string FullFileNamePath = null;
-
+        public static Graph MainGraph;
+        private static Graph _mainGraphCopy;
         private void btnFileName_Click(object sender, RoutedEventArgs e)
         {
 
@@ -88,12 +89,15 @@ namespace Graph
             FullFileNamePath= FileToWork;
             IsProgramReady = true;
             canvas1.Children.Clear();
-            (AddVerticeTool.AllVertices, AddConnectionTool.Connections) = FileWorker.Read(FileToWork);
+
+            MainGraph = FileWorker.Read(FileToWork);
+ 
+
             canvas1.MouseMove += AddVerticeTool.clearSelection;
             canvas1.MouseMove += DeleteConnectionTool.clearSelection;
             canvas1.MouseMove += ChangeDataTool.TextBlockSelected;
 
-            DrawGraphHelper.DrawGraph(MainCanvas, AddVerticeTool.AllVertices, AddConnectionTool.Connections);
+            DrawGraphHelper.DrawGraph(MainCanvas, MainGraph);
         }
 
 
@@ -123,8 +127,8 @@ namespace Graph
             Canvas.SetTop(textBox, 30);
             Canvas.SetLeft(textBox, 200);
             canvas1.Children.Add(textBox);
-            AddVerticeTool.AllVertices = new List<Vertice>();
-            AddConnectionTool.Connections = new List<Connection>();
+            MainGraph.AllVertices = new List<Vertice>();
+            MainGraph.Connections = new List<Connection>();
             canvas1.MouseMove += AddVerticeTool.clearSelection;
             canvas1.MouseMove += DeleteConnectionTool.clearSelection;
             canvas1.MouseMove += ChangeDataTool.TextBlockSelected;
@@ -164,7 +168,7 @@ namespace Graph
         {
             if (IsProgramReady)
             {
-                FileWorker.WriteToFile(AddVerticeTool.AllVertices, FileToWork);
+                FileWorker.WriteToFile(MainGraph, FileToWork);
             }
         }
 
@@ -206,7 +210,7 @@ namespace Graph
         {
             MainCanvas.Children.Remove(BtnSearchDepth);
             MainCanvas.Children.Remove(BtnSearchWidth);
-            Traversal.BFS(AddVerticeTool.AllVertices, AddConnectionTool.Connections);
+            Traversal.BFS(MainGraph.AllVertices, MainGraph.Connections);
             
         }
 
@@ -214,7 +218,7 @@ namespace Graph
         {
             MainCanvas.Children.Remove(BtnSearchDepth);
             MainCanvas.Children.Remove(BtnSearchWidth);
-            Traversal.DFS(AddVerticeTool.AllVertices, AddConnectionTool.Connections);
+            Traversal.DFS(MainGraph.AllVertices, MainGraph.Connections);
         }
 
         Button BtnSearchDepth = new Button
@@ -259,21 +263,18 @@ namespace Graph
             Background = new SolidColorBrush(Colors.White)
         };
 
-        static List<Connection> _copyConnection;
-        static List<Vertice> _copyVertice;
 
         private void btnMinTree_Click(object sender, RoutedEventArgs e)
         {
-            _copyConnection = new List<Connection>(AddConnectionTool.Connections);
-            _copyVertice = new List<Vertice>(AddVerticeTool.AllVertices);
+            _mainGraphCopy=new Graph(MainGraph);
             bool IsGraphConnected = true;
             if (IsProgramReady)
             {
                 if (IsGraphConnected)
                 {
-                    List<Connection> connections = PrimAlghoritm.AlgorithmByPrim(_copyConnection);
+                    MainGraph.Connections = PrimAlghoritm.AlgorithmByPrim(MainGraph);
                     MainCanvas.Children.Clear();
-                    DrawGraphHelper.DrawGraph(MainCanvas, AddVerticeTool.AllVertices, connections);
+                    DrawGraphHelper.DrawGraph(MainCanvas, MainGraph);
                     BtnReturn.Click += BtnReturn_Click;
 
                     MainCanvas.Children.Add(BtnReturn);
@@ -285,8 +286,8 @@ namespace Graph
 
         private void btnMinWay_Click(object sender, RoutedEventArgs e)
         {
-            _copyConnection = new List<Connection>(AddConnectionTool.Connections);
-            _copyVertice = new List<Vertice>(AddVerticeTool.AllVertices);
+            _mainGraphCopy = new Graph(MainGraph);
+
             if (IsProgramReady)
             {
                 IsProgramReady = false;
@@ -298,12 +299,12 @@ namespace Graph
         public static void BtnReturn_Click(object sender, RoutedEventArgs e)
         {
             MainCanvas.Children.Clear();
-            AddConnectionTool.Connections = _copyConnection==null? AddConnectionTool.Connections: _copyConnection;
-            AddVerticeTool.AllVertices = _copyVertice == null ? AddVerticeTool.AllVertices : _copyVertice;
-            DrawGraphHelper.DrawGraph(MainCanvas, AddVerticeTool.AllVertices, AddConnectionTool.Connections);
+            MainGraph = _mainGraphCopy == null? MainGraph: _mainGraphCopy;
+            
+            DrawGraphHelper.DrawGraph(MainCanvas, MainGraph);
             BtnReturn.Click-=BtnReturn_Click;
-            _copyVertice = null;
-            _copyConnection = null;
+
+            _mainGraphCopy = null;
         }
 
 
