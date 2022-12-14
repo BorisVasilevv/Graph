@@ -78,17 +78,17 @@ namespace Graph
 
             MainWindow.MainCanvas.Children.Clear();
 
-            DrawGraphHelper.DrawGraph(MainWindow.MainCanvas, graph);
+            DrawHelper.DrawGraph(MainWindow.MainCanvas, graph);
 
             MainWindow.IsProgramReady = true;
-            MainWindow.BtnReturn.Click += MainWindow.BtnReturn_Click;
+            DrawHelper.BtnReturn.Click += MainWindow.BtnReturn_Click;
             foreach (Connection connection in connections1)
             {
                 result += connection.Length;
             }
-            AnswerBlock.Text = $"Min way from {start.VerticeNameTextBlock.Text} to {end.VerticeNameTextBlock.Text} \nResult: {result}" ;
-            MainWindow.MainCanvas.Children.Add(MainWindow.BtnReturn);
-            Canvas.SetZIndex(MainWindow.BtnReturn, 20);
+            AnswerBlock.Text = $"Min way from {start.NameTextBlock.Text} to {end.NameTextBlock.Text} \nResult: {result}" ;
+            MainWindow.MainCanvas.Children.Add(DrawHelper.BtnReturn);
+            Canvas.SetZIndex(DrawHelper.BtnReturn, 20);
             MainWindow.MainCanvas.Children.Add(AnswerRect);
             Canvas.SetZIndex(AnswerRect, 18);
             Canvas.SetTop(AnswerRect, MainWindow.MainCanvas.Height - AnswerRect.Height);

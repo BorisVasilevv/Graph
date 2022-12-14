@@ -31,6 +31,9 @@ namespace Graph
         public MainWindow()
         {
             InitializeComponent();
+
+
+
             ToolAddVertice = new AddVerticeTool();
             MainCanvas = canvas1;
             TextBlock textBlock = new TextBlock();
@@ -38,7 +41,7 @@ namespace Graph
             textBlock.HorizontalAlignment = HorizontalAlignment.Left;
             textBlock.Width = 735;
             textBlock.Height = 30;
-            textBlock.Text = "Выберите Файл для работы";
+            textBlock.Text = "Choose file to work";
 
 
             canvas1.Children.Add(textBlock);
@@ -50,25 +53,27 @@ namespace Graph
             btn.VerticalAlignment = VerticalAlignment.Top;
             btn.HorizontalAlignment = HorizontalAlignment.Left;
             canvas1.Children.Add(btn);
-            Canvas.SetLeft(btn, 100);
-            Canvas.SetTop(btn, 40);
-            btn.Content = "Новый файл";
+            Canvas.SetLeft(btn, 110);
+            Canvas.SetTop(btn, 20);
+            btn.Content = "New File";
             btn.Click += btnCreateNewFile_Click;
             int buttonCounter = 1;
+            const int ButtonIndent = 10;
             foreach (string file in allFiles)
             {
                 string extension = System.IO.Path.GetExtension(file);
-                string mainNameOfFile = System.IO.Path.GetFileName(file);
+                
                 if (extension == ".csv")
                 {
+                    string mainNameOfFile = System.IO.Path.GetFileNameWithoutExtension(file);
                     Button button = new Button();
                     button.Width = 100;
                     button.Height = 30;
                     button.VerticalAlignment = VerticalAlignment.Top;
                     button.HorizontalAlignment = HorizontalAlignment.Left;
                     canvas1.Children.Add(button);
-                    Canvas.SetLeft(button, 100 * (buttonCounter / 10 + 1));
-                    Canvas.SetTop(button, 40 * (buttonCounter % 10 + 1));
+                    Canvas.SetLeft(button, (button.Width + ButtonIndent) * (buttonCounter / 10 + 1));
+                    Canvas.SetTop(button, (button.Height + ButtonIndent) * (buttonCounter % 10 + 1)-2*ButtonIndent);
                     buttonCounter++;
                     button.Content = mainNameOfFile;
                     button.Click += btnFileName_Click;
@@ -97,11 +102,11 @@ namespace Graph
             canvas1.MouseMove += DeleteConnectionTool.clearSelection;
             canvas1.MouseMove += ChangeDataTool.TextBlockSelected;
 
-            DrawGraphHelper.DrawGraph(MainCanvas, MainGraph);
+            DrawHelper.DrawGraph(MainCanvas, MainGraph);
         }
 
-
         
+
 
         private void btnCreateNewFile_Click(object sender, RoutedEventArgs e)
         {
@@ -127,8 +132,7 @@ namespace Graph
             Canvas.SetTop(textBox, 30);
             Canvas.SetLeft(textBox, 200);
             canvas1.Children.Add(textBox);
-            MainGraph.AllVertices = new List<Vertice>();
-            MainGraph.Connections = new List<Connection>();
+            MainGraph = new MyGraph(new List<Vertice>(), new List<Connection>());
             canvas1.MouseMove += AddVerticeTool.clearSelection;
             canvas1.MouseMove += DeleteConnectionTool.clearSelection;
             canvas1.MouseMove += ChangeDataTool.TextBlockSelected;
@@ -190,62 +194,36 @@ namespace Graph
         {
             if (IsProgramReady)
             {
-                BtnSearchDepth.Click += BtnSearchDetpth_Click;
-                BtnSearchWidth.Click += BtnSearchWidth_Click;
-                if (!MainCanvas.Children.Contains(BtnSearchDepth))
+                DrawHelper.BtnSearchDepth.Click += BtnSearchDetpth_Click;
+                DrawHelper.BtnSearchWidth.Click += BtnSearchWidth_Click;
+                if (!MainCanvas.Children.Contains(DrawHelper.BtnSearchDepth))
                 {
-                    MainCanvas.Children.Add(BtnSearchDepth);
-                    Canvas.SetZIndex(BtnSearchDepth, 20);
+                    MainCanvas.Children.Add(DrawHelper.BtnSearchDepth);
+                    Canvas.SetZIndex(DrawHelper.BtnSearchDepth, 20);
                 }
 
-                if (!MainCanvas.Children.Contains(BtnSearchWidth))
+                if (!MainCanvas.Children.Contains(DrawHelper.BtnSearchWidth))
                 {
-                    MainCanvas.Children.Add(BtnSearchWidth);
-                    Canvas.SetZIndex(BtnSearchWidth, 20);
+                    MainCanvas.Children.Add(DrawHelper.BtnSearchWidth);
+                    Canvas.SetZIndex(DrawHelper.BtnSearchWidth, 20);
                 }
             }
         }
 
         private void BtnSearchWidth_Click(object sender, RoutedEventArgs e)
         {
-            MainCanvas.Children.Remove(BtnSearchDepth);
-            MainCanvas.Children.Remove(BtnSearchWidth);
+            MainCanvas.Children.Remove(DrawHelper.BtnSearchDepth);
+            MainCanvas.Children.Remove(DrawHelper.BtnSearchWidth);
             Traversal.BFS(MainGraph.AllVertices, MainGraph.Connections);
             
         }
 
         private void BtnSearchDetpth_Click(object sender, RoutedEventArgs e)
         {
-            MainCanvas.Children.Remove(BtnSearchDepth);
-            MainCanvas.Children.Remove(BtnSearchWidth);
+            MainCanvas.Children.Remove(DrawHelper.BtnSearchDepth);
+            MainCanvas.Children.Remove(DrawHelper.BtnSearchWidth);
             Traversal.DFS(MainGraph.AllVertices, MainGraph.Connections);
         }
-
-        Button BtnSearchDepth = new Button
-        {
-            Content = "In depth",
-            Height = 20,
-            Width = 100,
-            Background = new SolidColorBrush(Colors.Gray),
-            Margin = new Thickness(80, 170, 0, 0),
-            VerticalAlignment = VerticalAlignment.Center,
-            HorizontalContentAlignment = HorizontalAlignment.Center
-
-        };
-
-        Button BtnSearchWidth = new Button
-        {
-            Content = "In Width",
-            Height = 20,
-            Width = 100,
-            Background = new SolidColorBrush(Colors.Gray),
-            Margin = new Thickness(80, 190, 0, 0),
-            VerticalAlignment = VerticalAlignment.Center,
-            HorizontalContentAlignment = HorizontalAlignment.Center
-
-        };
-
-
 
         private void btnMaxFlow_Click(object sender, RoutedEventArgs e)
         {
@@ -274,11 +252,11 @@ namespace Graph
                 {
                     MainGraph.Connections = PrimAlghoritm.AlgorithmByPrim(MainGraph);
                     MainCanvas.Children.Clear();
-                    DrawGraphHelper.DrawGraph(MainCanvas, MainGraph);
-                    BtnReturn.Click += BtnReturn_Click;
+                    DrawHelper.DrawGraph(MainCanvas, MainGraph);
+                    DrawHelper.BtnReturn.Click += BtnReturn_Click;
 
-                    MainCanvas.Children.Add(BtnReturn);
-                    Canvas.SetZIndex(BtnReturn, 20);
+                    MainCanvas.Children.Add(DrawHelper.BtnReturn);
+                    Canvas.SetZIndex(DrawHelper.BtnReturn, 20);
                 }
 
             }
@@ -301,28 +279,12 @@ namespace Graph
             MainCanvas.Children.Clear();
             MainGraph = _mainGraphCopy == null? MainGraph: _mainGraphCopy;
             
-            DrawGraphHelper.DrawGraph(MainCanvas, MainGraph);
-            BtnReturn.Click-=BtnReturn_Click;
+            DrawHelper.DrawGraph(MainCanvas, MainGraph);
+            DrawHelper.BtnReturn.Click-= BtnReturn_Click;
 
             _mainGraphCopy = null;
         }
-
-
-
-        public static Button BtnReturn = new Button
-        {
-            Content = "To original graph",
-            Height = 20,
-            Width = 125,
-            Background = new SolidColorBrush(Colors.Gray),
-            Margin = new Thickness(650, 350, 0, 0),
-            VerticalAlignment = VerticalAlignment.Center,
-            HorizontalContentAlignment = HorizontalAlignment.Center
-        };
-
-
-
-
+     
 
 
         private void btnDeleteConnection_Click(object sender, RoutedEventArgs e)

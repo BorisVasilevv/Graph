@@ -16,12 +16,13 @@ using System.Windows.Shapes;
 
 namespace Graph
 {
-    public class DrawGraphHelper
+    public class DrawHelper
     {
         const int LeftIndent = 100;
         const int TopIndent = 40;
         const int RectOnOneLine = 11;
         const int RectBetweenIndent = 60;
+        const int TextBoxIndent = 35;
         public static void DrawGraph(Canvas canvas, MyGraph graph)
         {
 
@@ -50,15 +51,13 @@ namespace Graph
                 textBlock.TextAlignment = TextAlignment.Center;
                 Canvas.SetZIndex(textBlock, 2);
                 canvas.Children.Add(textBlock);
-                Canvas.SetTop(textBlock, TopIndent+ RectBetweenIndent * (i / RectOnOneLine) + 30);
+                Canvas.SetTop(textBlock, TopIndent+ RectBetweenIndent * (i / RectOnOneLine) + TextBoxIndent);
                 Canvas.SetLeft(textBlock, LeftIndent + RectBetweenIndent * (i % RectOnOneLine));
-                graph.AllVertices[i].VerticeNameTextBlock = textBlock;
+                graph.AllVertices[i].NameTextBlock = textBlock;
 
             }
             DrawConnections(canvas, graph.Connections);
         }
-
-
 
         public static void DrawConnections(Canvas canvas, List<Connection> connections)
         {
@@ -92,5 +91,58 @@ namespace Graph
                 canvas.Children.Add(line);
             }
         }
+
+        public static Button BtnReturn = new Button
+        {
+            Content = "To original graph",
+            Height = 20,
+            Width = 125,
+            Background = new SolidColorBrush(Colors.Gray),
+            Margin = new Thickness(650, 350, 0, 0),
+            VerticalAlignment = VerticalAlignment.Center,
+            HorizontalContentAlignment = HorizontalAlignment.Center
+        };
+
+        public static Button BtnSearchDepth = new Button
+        {
+            Content = "In depth",
+            Height = 20,
+            Width = 100,
+            Background = new SolidColorBrush(Colors.Gray),
+            Margin = new Thickness(80, 170, 0, 0),
+            VerticalAlignment = VerticalAlignment.Center,
+            HorizontalContentAlignment = HorizontalAlignment.Center
+
+        };
+
+        public static Button BtnSearchWidth = new Button
+        {
+            Content = "In Width",
+            Height = 20,
+            Width = 100,
+            Background = new SolidColorBrush(Colors.Gray),
+            Margin = new Thickness(80, 190, 0, 0),
+            VerticalAlignment = VerticalAlignment.Center,
+            HorizontalContentAlignment = HorizontalAlignment.Center
+
+        };
+
+        public static TextBlock TextBlock = new TextBlock
+        {
+            Height = 40,
+            Width = 200,
+            HorizontalAlignment = HorizontalAlignment.Center,
+            VerticalAlignment = VerticalAlignment.Center,
+            Margin = new Thickness(655, 375, 0, 0)
+        };
+
+        public static Rectangle AnswerRect = new Rectangle
+        {
+            Height = 100,
+            Width = 150,
+            Fill = new SolidColorBrush(Colors.Brown),
+            HorizontalAlignment = HorizontalAlignment.Left,
+            VerticalAlignment = VerticalAlignment.Bottom
+        };
     }
 }

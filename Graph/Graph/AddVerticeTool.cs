@@ -11,13 +11,13 @@ namespace Graph
 {
     public class AddVerticeTool
     {
-        //public static List<Vertice> AllVertices {get; set;}
+
 
         private Rectangle NewVerticeRect;
         public static Rectangle SelectedRectangle;
-        public static MyGraph MainGraph=MainWindow.MainGraph; 
+        public static MyGraph MainGraph = MainWindow.MainGraph;
 
-
+        const int IndentFromCenter = 10;
         public void rectMouseDown(object sender, MouseButtonEventArgs e)
         {
             MainWindow.MainCanvas.MouseMove -= newRectMouseMove;
@@ -31,6 +31,7 @@ namespace Graph
             Point point = new Point();
             double mouseX = e.GetPosition(MainWindow.MainCanvas).X;
             double mouseY = e.GetPosition(MainWindow.MainCanvas).Y;
+
             if (NewVerticeRect == null)
             {
                 Vertice vertice = new Vertice();
@@ -48,7 +49,7 @@ namespace Graph
                 MainGraph.AllVertices.Add(vertice);
                 vertice.RectCenter = point;
 
-                TextBlock textBlock = new TextBlock() { Text = (vertice.Id+1).ToString() };
+                TextBlock textBlock = new TextBlock() { Text = (vertice.Id + 1).ToString() };
 
                 textBlock.Height = 20;
                 textBlock.Width = 50;
@@ -57,12 +58,16 @@ namespace Graph
                 textBlock.TextAlignment = TextAlignment.Center;
                 Canvas.SetZIndex(textBlock, 2);
                 MainWindow.MainCanvas.Children.Add(textBlock);
-                Canvas.SetTop(textBlock, mouseY  + 20);
+                Canvas.SetTop(textBlock, mouseY + IndentFromCenter);
                 Canvas.SetLeft(textBlock, mouseX - NewVerticeRect.Height / 2);
-                vertice.VerticeNameTextBlock = textBlock;
+                vertice.NameTextBlock = textBlock;
             }
+
             Canvas.SetLeft(NewVerticeRect, mouseX - NewVerticeRect.Width / 2);
             Canvas.SetTop(NewVerticeRect, mouseY - NewVerticeRect.Height / 2);
+            TextBlock text = Vertice.SearchVertice(NewVerticeRect, MainGraph.AllVertices).NameTextBlock;
+            Canvas.SetTop(text, mouseY +  IndentFromCenter);
+            Canvas.SetLeft(text, mouseX - NewVerticeRect.Width / 2);
         }
 
         public void RectangleMouseMove(object sender, MouseEventArgs e)
@@ -78,15 +83,15 @@ namespace Graph
                 {
                     Point point = new Point();
                     point.X = mouseX;
-                    point.Y = mouseY + SelectedRectangle.Height / 4;
+                    point.Y = mouseY;
                     Canvas.SetLeft(SelectedRectangle, mouseX - SelectedRectangle.Width / 2);
-                    Canvas.SetTop(SelectedRectangle, mouseY - SelectedRectangle.Height / 4);
+                    Canvas.SetTop(SelectedRectangle, mouseY - SelectedRectangle.Height / 2);
 
 
                     vertice.RectCenter = point;
-                    Canvas.SetTop(vertice.VerticeNameTextBlock, mouseY + 20);
-                    Canvas.SetLeft(vertice.VerticeNameTextBlock, mouseX - SelectedRectangle.Height / 2);
-                    DrawGraphHelper.DrawConnections(MainWindow.MainCanvas, MainGraph.Connections);
+                    Canvas.SetTop(vertice.NameTextBlock, mouseY + IndentFromCenter);
+                    Canvas.SetLeft(vertice.NameTextBlock, mouseX - SelectedRectangle.Width / 2);
+                    DrawHelper.DrawConnections(MainWindow.MainCanvas, MainGraph.Connections);
                 }
             }
         }

@@ -24,7 +24,7 @@ namespace Graph
             Id=_counter++;
         }
 
-        public TextBlock VerticeNameTextBlock { get; set; }
+        public TextBlock NameTextBlock { get; set; }
 
         public Rectangle Rect { get; set; }
 

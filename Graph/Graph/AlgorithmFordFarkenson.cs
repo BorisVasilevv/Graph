@@ -15,8 +15,6 @@ namespace Graph
 {
     public class AlgorithmFordFarkenson
     {
-
-
         static bool Bfs(int[,] rGraph, int s, int t, int[] parent)
         {
             int V = (int)Math.Sqrt(rGraph.Length);
@@ -114,26 +112,6 @@ namespace Graph
             return max_flow;
         }
 
-
-        static TextBlock TextBlock = new TextBlock
-        {
-            Height = 40,
-            Width = 200,
-            HorizontalAlignment = HorizontalAlignment.Center,
-            VerticalAlignment = VerticalAlignment.Center,
-            Margin = new Thickness(655, 375, 0, 0)
-        };
-
-        static Rectangle AnswerRect = new Rectangle
-        {
-            Height = 100,
-            Width = 150,
-            Fill = new SolidColorBrush(Colors.Brown),
-            HorizontalAlignment = HorizontalAlignment.Left,
-            VerticalAlignment = VerticalAlignment.Bottom
-        };
-
-
         public static void Algorithm(Vertice start, Vertice end, MyGraph mainGraph)
         {
             string path = MainWindow.FullFileNamePath;
@@ -148,17 +126,18 @@ namespace Graph
                 }
             }
 
-
-            TextBlock.Text = $"The maximum possible\nflow is {FordFulkerson(graph, start.Id, end.Id)}";
-            MainWindow.MainCanvas.Children.Add(TextBlock);
-            Canvas.SetZIndex(TextBlock, 20);
-            MainWindow.MainCanvas.Children.Add(AnswerRect);
-            Canvas.SetZIndex(AnswerRect, 18);
-            Canvas.SetTop(AnswerRect, MainWindow.MainCanvas.Height - AnswerRect.Height);
-            Canvas.SetLeft(AnswerRect, MainWindow.MainCanvas.Width - AnswerRect.Width);
-            MainWindow.MainCanvas.Children.Add(MainWindow.BtnReturn);
-            MainWindow.BtnReturn.Click += MainWindow.BtnReturn_Click;
-            Canvas.SetZIndex(MainWindow.BtnReturn, 20);
+            TextBlock textBlock = DrawHelper.TextBlock;
+            textBlock.Text = $"The maximum possible\nflow is {FordFulkerson(graph, start.Id, end.Id)}";
+            MainWindow.MainCanvas.Children.Add(textBlock);
+            Canvas.SetZIndex(textBlock, 20);
+            Rectangle answerRect=DrawHelper.AnswerRect;
+            MainWindow.MainCanvas.Children.Add(answerRect);
+            Canvas.SetZIndex(answerRect, 18);
+            Canvas.SetTop(answerRect, MainWindow.MainCanvas.Height - answerRect.Height);
+            Canvas.SetLeft(answerRect, MainWindow.MainCanvas.Width - answerRect.Width);
+            MainWindow.MainCanvas.Children.Add(DrawHelper.BtnReturn);
+            DrawHelper.BtnReturn.Click += MainWindow.BtnReturn_Click;
+            Canvas.SetZIndex(DrawHelper.BtnReturn, 20);
         }
 
 

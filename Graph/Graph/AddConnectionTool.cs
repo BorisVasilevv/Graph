@@ -50,7 +50,7 @@ namespace Graph
                         MainGraph.Connections.Add(NewConnection);
                         Rect1 = Rect2 = null;
                     }
-                    DrawGraphHelper.DrawConnections(MainWindow.MainCanvas, MainGraph.Connections);
+                    DrawHelper.DrawConnections(MainWindow.MainCanvas, MainGraph.Connections);
                     
                     MainWindow.MainCanvas.MouseDown -= addConnection;
                 }

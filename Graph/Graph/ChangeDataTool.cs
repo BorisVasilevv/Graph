@@ -43,8 +43,8 @@ namespace Graph
                 TextBlockToChange = SelectedTextBlock;
                 connectionToChange = Connection.SearchConnection(TextBlockToChange,MainGraph.Connections);
                 TextBlock.Text = $"Введите навую длинну или\nпропускную способность " +
-                    $"\nмежду {connectionToChange.Vertice1.VerticeNameTextBlock.Text} и " +
-                    $"{connectionToChange.Vertice2.VerticeNameTextBlock.Text}";
+                    $"\nмежду {connectionToChange.Vertice1.NameTextBlock.Text} и " +
+                    $"{connectionToChange.Vertice2.NameTextBlock.Text}";
             }
             else if(TextBlockToChange == null)
             {
@@ -89,8 +89,8 @@ namespace Graph
                 TextBlock.Height = 60;
                 TextBlock.Width = 150;
                 TextBlock.Text =  $"Введите навую длинну или\nпропускную способность " +
-                    $"\nмежду {connectionToChange.Vertice1.VerticeNameTextBlock.Text} и " +
-                    $"{connectionToChange.Vertice2.VerticeNameTextBlock.Text}";
+                    $"\nмежду {connectionToChange.Vertice1.NameTextBlock.Text} и " +
+                    $"{connectionToChange.Vertice2.NameTextBlock.Text}";
                 Canvas.SetTop(TextBlock, 20);
                 Canvas.SetLeft(TextBlock, Length - RectToAddData.Width);
                 Canvas.SetZIndex(TextBlock, 10);

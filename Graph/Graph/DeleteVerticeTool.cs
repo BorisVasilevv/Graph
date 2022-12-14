@@ -32,7 +32,7 @@ namespace Graph
                     MainWindow.MainCanvas.Children.Remove(conn.BlockText);
                 }
                 MainWindow.MainCanvas.Children.Remove(selectedRectangle);
-                MainWindow.MainCanvas.Children.Remove(vert.VerticeNameTextBlock);
+                MainWindow.MainCanvas.Children.Remove(vert.NameTextBlock);
 
             }
             MainWindow.MainCanvas.MouseDown -= DeleteVertice;
