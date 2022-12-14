@@ -214,7 +214,7 @@ namespace Graph
         {
             MainCanvas.Children.Remove(DrawHelper.BtnSearchDepth);
             MainCanvas.Children.Remove(DrawHelper.BtnSearchWidth);
-            Traversal.BFS(MainGraph.AllVertices, MainGraph.Connections);
+            Traversal.WidthTraversal(MainGraph);
             
         }
 
@@ -222,7 +222,7 @@ namespace Graph
         {
             MainCanvas.Children.Remove(DrawHelper.BtnSearchDepth);
             MainCanvas.Children.Remove(DrawHelper.BtnSearchWidth);
-            Traversal.DFS(MainGraph.AllVertices, MainGraph.Connections);
+            Traversal.DepthTraversal(MainGraph);
         }
 
         private void btnMaxFlow_Click(object sender, RoutedEventArgs e)

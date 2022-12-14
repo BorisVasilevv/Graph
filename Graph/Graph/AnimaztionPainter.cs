@@ -111,8 +111,11 @@ namespace Graph
 
         private void BtnReturn_Click(object sender, RoutedEventArgs e)
         {
+            BtnReturn.Click -= BtnReturn_Click;
             if (_canvas.Children.Contains(BtnNext)) _canvas.Children.Remove(BtnNext);
             _canvas.Children.Remove(BtnReturn);
+
+
             _canvas.MouseMove += AddVerticeTool.clearSelection;
             _canvas.MouseMove += DeleteConnectionTool.clearSelection;
             _canvas.MouseMove += ChangeDataTool.TextBlockSelected;
@@ -125,7 +128,9 @@ namespace Graph
                 v.Rect.MouseMove += MainWindow.ToolAddVertice.RectangleMouseMove;
 
             MainWindow.IsProgramReady = true;
-            
+
+            while (_canvas.Children.Contains(BtnNext)) _canvas.Children.Remove(BtnNext);
+            while (_canvas.Children.Contains(BtnReturn)) _canvas.Children.Remove(BtnReturn);
 
         }
 
@@ -139,9 +144,10 @@ namespace Graph
             if (_counter < _shapes.Count)
             {
                 _shapes[_counter].Effect = new DropShadowEffect() { Color = Colors.Black };
-                _counter++;
-                if (_counter == _shapes.Count) _canvas.Children.Remove(BtnNext);
+                
             }
+            _counter++;
+            if (_counter >= _shapes.Count) _canvas.Children.Remove(BtnNext);
 
         }
 
