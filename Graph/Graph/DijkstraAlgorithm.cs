@@ -37,12 +37,12 @@ namespace Graph
             //Text = result.ToString()
         };
 
-
+        static MyGraph GraphToWork;
 
         public static void Algorithm(Vertice start, Vertice end, MyGraph graph)
         {
             var g = new GraphD();
-
+            GraphToWork = graph;
 
             //добавление вершин
             foreach ( var vertex in graph.AllVertices)
@@ -72,16 +72,15 @@ namespace Graph
                 if (path.Contains(vertise.Id))
                     vertices1.Add(vertise);
             }
-            graph.Connections = connections1;
-            graph.AllVertices = vertices1;
+            MainWindow.MainGraph = new MyGraph( vertices1, connections1);
             
 
             MainWindow.MainCanvas.Children.Clear();
 
-            DrawHelper.DrawGraph(MainWindow.MainCanvas, graph);
+            DrawHelper.DrawGraph(MainWindow.MainCanvas, MainWindow.MainGraph);
 
             MainWindow.IsProgramReady = true;
-            DrawHelper.BtnReturn.Click += MainWindow.BtnReturn_Click;
+            DrawHelper.BtnReturn.Click += BtnReturn_Click;
             foreach (Connection connection in connections1)
             {
                 result += connection.Length;
@@ -100,7 +99,12 @@ namespace Graph
 
 
 
-
+        public static void BtnReturn_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.MainCanvas.Children.Clear();
+            MainWindow.MainGraph = GraphToWork;
+            DrawHelper.DrawGraph(MainWindow.MainCanvas, GraphToWork);
+        }
 
         /// <summary>
         /// Ребро графа

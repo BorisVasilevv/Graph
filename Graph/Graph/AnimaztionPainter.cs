@@ -23,7 +23,9 @@ namespace Graph
         MyGraph MainGraph = MainWindow.MainGraph;
         private Canvas _canvas = MainWindow.MainCanvas;
         public List<Shape> Shapes;
+
         AlgorithmType _type;
+
         public AnimaztionPainter(AlgorithmType type)
         {
             _type = type;
@@ -133,12 +135,7 @@ namespace Graph
         private void BtnNextPrim_Click(object sender, RoutedEventArgs e)
         {
 
-            if (_counter < _shapes.Count)
-            {
-                _shapes[_counter].Effect = new DropShadowEffect() { Color = Colors.Black };
-                _counter++;
-                if (_counter == _shapes.Count) _canvas.Children.Remove(BtnNext);
-            }
+            
 
         }
 

@@ -10,6 +10,7 @@ namespace Graph
     {
         public static List<Connection> AlgorithmByPrim(MyGraph graph)
         {
+            AnimaztionPainter animaztionPainter = new AnimaztionPainter(AnimaztionPainter.AlgorithmType.Prim);
 
             List<Connection> resultConn = new List<Connection>();
             //неиспользованные ребра

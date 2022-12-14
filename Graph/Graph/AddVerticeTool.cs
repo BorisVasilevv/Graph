@@ -91,7 +91,8 @@ namespace Graph
                     vertice.RectCenter = point;
                     Canvas.SetTop(vertice.NameTextBlock, mouseY + IndentFromCenter);
                     Canvas.SetLeft(vertice.NameTextBlock, mouseX - SelectedRectangle.Width / 2);
-                    DrawHelper.DrawConnections(MainWindow.MainCanvas, MainGraph.Connections);
+                    MainGraph = MainWindow.MainGraph;
+                    DrawHelper.DrawConnections(MainWindow.MainCanvas, MainGraph);
                 }
             }
         }

@@ -56,12 +56,12 @@ namespace Graph
                 graph.AllVertices[i].NameTextBlock = textBlock;
 
             }
-            DrawConnections(canvas, graph.Connections);
+            DrawConnections(canvas, graph);
         }
 
-        public static void DrawConnections(Canvas canvas, List<Connection> connections)
+        public static void DrawConnections(Canvas canvas, MyGraph graph)
         {
-            foreach (Connection connection in connections)
+            foreach (Connection connection in graph.Connections)
             {
                 if (connection.Line != null) canvas.Children.Remove(connection.Line); //удаление линии при перетаскивании прямоугольника
                 Polyline line = new Polyline();
@@ -144,5 +144,6 @@ namespace Graph
             HorizontalAlignment = HorizontalAlignment.Left,
             VerticalAlignment = VerticalAlignment.Bottom
         };
+
     }
 }
