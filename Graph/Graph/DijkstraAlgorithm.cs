@@ -33,7 +33,7 @@ namespace Graph
             Width = 150,
             HorizontalAlignment = HorizontalAlignment.Left,
             VerticalAlignment = VerticalAlignment.Bottom,
-            Margin = new Thickness(655, 375, 0, 0),
+            Margin = new Thickness(655, 375, 0, 0)
             //Text = result.ToString()
         };
 
@@ -88,7 +88,7 @@ namespace Graph
             {
                 result += connection.Length;
             }
-            AnswerBlock.Text = "Result: " + result.ToString();
+            AnswerBlock.Text = $"Min way from {start.VerticeNameTextBlock.Text} to {end.VerticeNameTextBlock.Text} \nResult: {result}" ;
             MainWindow.MainCanvas.Children.Add(MainWindow.BtnReturn);
             Canvas.SetZIndex(MainWindow.BtnReturn, 20);
             MainWindow.MainCanvas.Children.Add(AnswerRect);

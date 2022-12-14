@@ -11,7 +11,7 @@ namespace Graph
         public static List<Connection> AlgorithmByPrim(List<Connection> connections)
         {
 
-            List<Connection> MST = new List<Connection>();
+            List<Connection> resultConn = new List<Connection>();
             //неиспользованные ребра
             List<Connection> notUsedE = new List<Connection>(connections);
 
@@ -61,10 +61,10 @@ namespace Graph
                     notUsedV.Remove(notUsedE[minE].Vertice1);
                 }
                 //заносим новое ребро в дерево и удаляем его из списка неиспользованных
-                MST.Add(notUsedE[minE]);
+                resultConn.Add(notUsedE[minE]);
                 notUsedE.RemoveAt(minE);
             }
-            return MST;
+            return resultConn;
         }
     }
 }

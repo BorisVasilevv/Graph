@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace Graph
@@ -116,11 +117,20 @@ namespace Graph
 
         static TextBlock TextBlock = new TextBlock
         {
-            Height = 20,
+            Height = 40,
             Width = 200,
             HorizontalAlignment = HorizontalAlignment.Center,
             VerticalAlignment = VerticalAlignment.Center,
-            Margin = new Thickness(200, 20, 0, 0)
+            Margin = new Thickness(655, 375, 0, 0)
+        };
+
+        static Rectangle AnswerRect = new Rectangle
+        {
+            Height = 100,
+            Width = 150,
+            Fill = new SolidColorBrush(Colors.Brown),
+            HorizontalAlignment = HorizontalAlignment.Left,
+            VerticalAlignment = VerticalAlignment.Bottom
         };
 
 
@@ -138,10 +148,13 @@ namespace Graph
                 }
             }
 
-            TextBlock.Text = $"The maximum possible flow is {FordFulkerson(graph, start.Id, end.Id)}";
+            TextBlock.Text = $"The maximum possible\nflow is {FordFulkerson(graph, start.Id, end.Id)}";
             MainWindow.MainCanvas.Children.Add(TextBlock);
             Canvas.SetZIndex(TextBlock, 20);
-
+            MainWindow.MainCanvas.Children.Add(AnswerRect);
+            Canvas.SetZIndex(AnswerRect, 18);
+            Canvas.SetTop(AnswerRect, MainWindow.MainCanvas.Height - AnswerRect.Height);
+            Canvas.SetLeft(AnswerRect, MainWindow.MainCanvas.Width - AnswerRect.Width);
             MainWindow.MainCanvas.Children.Add(MainWindow.BtnReturn);
             MainWindow.BtnReturn.Click += MainWindow.BtnReturn_Click;
             Canvas.SetZIndex(MainWindow.BtnReturn, 20);
