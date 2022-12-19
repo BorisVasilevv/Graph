@@ -187,8 +187,6 @@ namespace Graph
             if (IsUserCanUseButtons)
             {
                 canvas1.MouseDown += DeleteVerticeTool.DeleteVertice;
-                FileWorker.WriteToFile(MainGraph,FileToWork);
-                MainGraph = FileWorker.Read(FileToWork);
             }
         }
 
