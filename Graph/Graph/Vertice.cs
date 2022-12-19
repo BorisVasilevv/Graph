@@ -16,8 +16,8 @@ namespace Graph
 
     public class Vertice
     {
-        static int _counter=0;
-        public readonly int Id;
+        public static int _counter=0;
+        public int Id;
 
         public Vertice()
         {

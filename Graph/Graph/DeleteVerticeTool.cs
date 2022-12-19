@@ -19,9 +19,15 @@ namespace Graph
         public static void DeleteVertice(object sender, MouseEventArgs e)
         {
             Rectangle selectedRectangle = AddVerticeTool.SelectedRectangle;
+            int delId;
             if (selectedRectangle != null)
             { 
                 Vertice vert = Vertice.SearchVertice(selectedRectangle, MainGraph.AllVertices);
+                delId= vert.Id;
+                foreach(Vertice vrt in MainGraph.AllVertices)
+                {
+                    if (vrt.Id > vert.Id) vrt.Id--;
+                }
                 List<Connection> connectToDel= MainGraph.Connections.Where(x => x.Vertice1!=null && x.Vertice2!=null && x.Vertice1.Id == vert.Id || x.Vertice2.Id == vert.Id).ToList();
                 MainGraph.Connections = MainGraph.Connections.Where(x => x.Vertice1 != null && x.Vertice2 != null && x.Vertice1.Id!=vert.Id&&x.Vertice2.Id!=vert.Id).ToList();
                 MainGraph.AllVertices.Remove(vert);
@@ -36,6 +42,7 @@ namespace Graph
 
             }
             MainWindow.MainCanvas.MouseDown -= DeleteVertice;
+
         }
     }
 }
