@@ -23,7 +23,7 @@ namespace Graph
     {
         public static Canvas MainCanvas;
         public static string FileToWork = "..\\..\\..\\..\\";
-        public static bool IsUserCanUSeButton = false;
+        public static bool IsUserCanUseButtons = false;
         public static AddVerticeTool ToolAddVertice;
         public AddConnectionTool ToolAddConnedtion;
 
@@ -92,7 +92,7 @@ namespace Graph
             Button btn = (Button)sender;
             FileToWork += btn.Content.ToString() + Extension;
             FullFileNamePath = FileToWork;
-            IsUserCanUSeButton = true;
+            IsUserCanUseButtons = true;
             canvas1.Children.Clear();
 
             MainGraph = FileWorker.Read(FileToWork);
@@ -141,7 +141,7 @@ namespace Graph
 
         private void btnCreateVertice_Click(object sender, RoutedEventArgs e)
         {
-            if (IsUserCanUSeButton)
+            if (IsUserCanUseButtons)
             {
                 canvas1.MouseMove += ToolAddVertice.newRectMouseMove;
                 canvas1.MouseDown += ToolAddVertice.rectMouseDown;
@@ -150,7 +150,7 @@ namespace Graph
 
         private void btnAddConnection_Click(object sender, RoutedEventArgs e)
         {
-            if (IsUserCanUSeButton)
+            if (IsUserCanUseButtons)
             {
                 canvas1.MouseDown += AddConnectionTool.addConnection;
             }
@@ -162,7 +162,7 @@ namespace Graph
             {
                 string nameToNewFile = textBox.Text;
                 FileToWork = "..\\..\\..\\..\\" + nameToNewFile + ".csv";
-                IsUserCanUSeButton = true;
+                IsUserCanUseButtons = true;
                 canvas1.Children.Clear();
             }
         }
@@ -170,7 +170,7 @@ namespace Graph
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (IsUserCanUSeButton)
+            if (IsUserCanUseButtons)
             {
                 FileWorker.WriteToFile(MainGraph, FileToWork);
             }
@@ -184,7 +184,7 @@ namespace Graph
 
         private void btnDeleteVertice_Click(object sender, RoutedEventArgs e)
         {
-            if (IsUserCanUSeButton)
+            if (IsUserCanUseButtons)
             {
                 canvas1.MouseDown += DeleteVerticeTool.DeleteVertice;
             }
@@ -192,7 +192,7 @@ namespace Graph
 
         private void btnTraversal_Click(object sender, RoutedEventArgs e)
         {
-            if (IsUserCanUSeButton)
+            if (IsUserCanUseButtons)
             {
                 DrawHelper.BtnSearchDepth.Click += BtnSearchDetpth_Click;
                 DrawHelper.BtnSearchWidth.Click += BtnSearchWidth_Click;
@@ -212,24 +212,30 @@ namespace Graph
 
         private void BtnSearchWidth_Click(object sender, RoutedEventArgs e)
         {
-            MainCanvas.Children.Remove(DrawHelper.BtnSearchDepth);
-            MainCanvas.Children.Remove(DrawHelper.BtnSearchWidth);
-            Traversal.WidthTraversal(MainGraph);
+            if (IsUserCanUseButtons)
+            {
+                MainCanvas.Children.Remove(DrawHelper.BtnSearchDepth);
+                MainCanvas.Children.Remove(DrawHelper.BtnSearchWidth);
+                Traversal.WidthTraversal(MainGraph);
+            }
 
         }
 
         private void BtnSearchDetpth_Click(object sender, RoutedEventArgs e)
         {
-            MainCanvas.Children.Remove(DrawHelper.BtnSearchDepth);
-            MainCanvas.Children.Remove(DrawHelper.BtnSearchWidth);
-            Traversal.DepthTraversal(MainGraph);
+            if (IsUserCanUseButtons)
+            {
+                MainCanvas.Children.Remove(DrawHelper.BtnSearchDepth);
+                MainCanvas.Children.Remove(DrawHelper.BtnSearchWidth);
+                Traversal.DepthTraversal(MainGraph);
+            }
         }
 
         private void btnMaxFlow_Click(object sender, RoutedEventArgs e)
         {
-            if (IsUserCanUSeButton)
+            if (IsUserCanUseButtons)
             {
-                IsUserCanUSeButton = false;
+                IsUserCanUseButtons = false;
                 ChoseStartEndHelper.ChooseVertices(AlgorithmFordFarkenson.FordFarkensonAlgorithm);
             }
         }
@@ -246,7 +252,7 @@ namespace Graph
         {
             MainGraphCopy = new MyGraph(MainGraph);
             bool IsGraphConnected = true;
-            if (IsUserCanUSeButton)
+            if (IsUserCanUseButtons)
             {
                 if (IsGraphConnected)
                 {
@@ -260,9 +266,9 @@ namespace Graph
         {
             MainGraphCopy = new MyGraph(MainGraph);
 
-            if (IsUserCanUSeButton)
+            if (IsUserCanUseButtons)
             {
-                IsUserCanUSeButton = false;
+                IsUserCanUseButtons = false;
                 ChoseStartEndHelper.ChooseVertices(DijkstraAlgorithm.Algorithm);
 
             }
@@ -292,7 +298,7 @@ namespace Graph
 
         private void btnDeleteConnection_Click(object sender, RoutedEventArgs e)
         {
-            if (IsUserCanUSeButton)
+            if (IsUserCanUseButtons)
             {
                 canvas1.MouseDown += DeleteConnectionTool.deleteLine;
             }
@@ -300,7 +306,7 @@ namespace Graph
 
         private void btnLogger_Click(object sender, RoutedEventArgs e)
         {
-            if (IsUserCanUSeButton)
+            if (IsUserCanUseButtons)
             {
                 Logger.ShowAllLogToUser(canvas1);
             }

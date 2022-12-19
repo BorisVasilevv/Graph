@@ -30,7 +30,7 @@ namespace Graph
 
         public Point RectCenter { get; set; }
 
-        public List<int> ConnectionIds = new List<int>();
+        //public List<int> ConnectionIds = new List<int>();
 
 
         public static Vertice SearchVertice(int id, List<Vertice> vertices)

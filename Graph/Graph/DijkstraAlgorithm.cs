@@ -42,7 +42,7 @@ namespace Graph
         public static void Algorithm(Vertice start, Vertice end, MyGraph graph)
         {
             Logger logger = new Logger();
-            logger.AddText("Начат алгоритм поиска минимального пути");
+            logger.AddLine("Начат алгоритм поиска минимального пути");
 
             var g = new GraphD();
             GraphToWork = graph;
@@ -82,7 +82,7 @@ namespace Graph
 
             DrawHelper.DrawGraph(MainWindow.MainCanvas, MainWindow.MainGraph);
 
-            MainWindow.IsUserCanUSeButton = true;
+            MainWindow.IsUserCanUseButtons = true;
             DrawHelper.BtnReturn.Click += BtnReturn_Click;
             foreach (Connection connection in connections1)
             {
@@ -139,7 +139,7 @@ namespace Graph
         /// <summary>
         /// Вершина графа
         /// </summary>
-        public class GraphVertex : Vertice
+        public class GraphVertex
         {
             /// <summary>
             /// Название вершины
@@ -195,14 +195,14 @@ namespace Graph
             /// <summary>
             /// Список вершин графа
             /// </summary>
-            public List<GraphVertex> Vertices { get; }
+            public List<GraphVertex> Verticess { get; }
 
             /// <summary>
             /// Конструктор
             /// </summary>
             public GraphD()
             {
-                Vertices = new List<GraphVertex>();
+                Verticess = new List<GraphVertex>();
             }
 
             /// <summary>
@@ -211,7 +211,7 @@ namespace Graph
             /// <param name="vertexName">Имя вершины</param>
             public void AddVertex(string vertexName)
             {
-                Vertices.Add(new GraphVertex(vertexName));
+                Verticess.Add(new GraphVertex(vertexName));
             }
 
             /// <summary>
@@ -221,7 +221,7 @@ namespace Graph
             /// <returns>Найденная вершина</returns>
             public GraphVertex FindVertex(string vertexName)
             {
-                foreach (var v in Vertices)
+                foreach (var v in Verticess)
                 {
                     if (v.Name.Equals(vertexName))
                     {
@@ -312,7 +312,7 @@ namespace Graph
             void InitInfo()
             {
                 infos = new List<GraphVertexInfo>();
-                foreach (var v in graph.Vertices)
+                foreach (var v in graph.Verticess)
                 {
                     infos.Add(new GraphVertexInfo(v));
                 }
@@ -388,7 +388,7 @@ namespace Graph
                     }
 
                     SetSumToNextVertex(current);
-                    logger.AddText($"Нашли минимальный путь от вершины {current.Vertex.Name} к следующей вершине, найденной выше, равный: {current.EdgesWeightSum}");
+                    logger.AddLine($"Нашли минимальный путь от вершины {current.Vertex.Name} к следующей вершине, найденной выше, равный: {current.EdgesWeightSum}");
                 }
 
                 return GetPath(startVertex, finishVertex, logger);
@@ -425,7 +425,7 @@ namespace Graph
                 while (startVertex != endVertex)
                 {
                     endVertex = GetVertexInfo(endVertex).PreviousVertex;
-                    logger.AddText($"");
+                    logger.AddLine($"");
                     path = $"{endVertex.ToString()};{path}";
                 }
 
