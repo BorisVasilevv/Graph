@@ -340,7 +340,7 @@ namespace Graph
             /// Поиск непосещенной вершины с минимальным значением суммы
             /// </summary>
             /// <returns>Информация о вершине</returns>
-            public GraphVertexInfo FindUnvisitedVertexWithMinSum()
+            public GraphVertexInfo FindUnvisitedVertexWithMinSum(Logger logger)
             {
                 var minValue = int.MaxValue;
                 GraphVertexInfo minVertexInfo = null;
@@ -352,7 +352,7 @@ namespace Graph
                         minValue = i.EdgesWeightSum;
                     }
                 }
-                //Logger.Add($"Нашли минимальный путь (такой-то) до вершины: {}") не надо
+                //logger.AddText($"Нашли вершину: {minVertexInfo.Vertex.Name}, до которой путь будет минимальным");
                 return minVertexInfo;
             }
 
@@ -381,14 +381,14 @@ namespace Graph
                 first.EdgesWeightSum = 0;
                 while (true)
                 {
-                    var current = FindUnvisitedVertexWithMinSum();
+                    var current = FindUnvisitedVertexWithMinSum(logger);
                     if (current == null)
                     {
                         break;
                     }
 
                     SetSumToNextVertex(current);
-                    logger.AddText($"Нашли короткий путь от элемента {current.Vertex.Name} следующему элементу {current.Vertex.Name}, равный: {current.Vertex.Name}");
+                    logger.AddText($"Нашли минимальный путь от вершины {current.Vertex.Name} к следующей вершине, найденной выше, равный: {current.EdgesWeightSum}");
                 }
 
                 return GetPath(startVertex, finishVertex, logger);
