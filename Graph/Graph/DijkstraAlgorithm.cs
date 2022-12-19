@@ -91,7 +91,7 @@ namespace Graph
             }
 
             AnswerBlock.Text = $"Min way from {start.NameTextBlock.Text} to {end.NameTextBlock.Text} \nResult: {result}" ;
-
+            result = 0;
             MainWindow.MainCanvas.Children.Add(DrawHelper.BtnReturn);
 
             Canvas.SetZIndex(DrawHelper.BtnReturn, 20);
