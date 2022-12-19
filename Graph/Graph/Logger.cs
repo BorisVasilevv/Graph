@@ -24,13 +24,20 @@ namespace Graph
         static StringBuilder sb = new StringBuilder();
         static Button BtnReturn = new Button { Width = 70, Height = 30, Content = "RETURN", Margin = new Thickness(710, 45, 0, 0) };
         static private double _canvasHeight;
-        private static int _count = 0;
+
         static Canvas _canvas;
         public void AddText(string text)
         {
-            _count++;
+            
+          
             sb.Append(text);
             //sb.Append("\n");
+        }
+
+        public void AddLine(string text)
+        {
+            sb.Append(text);
+            sb.Append("\n");
         }
 
 
@@ -43,9 +50,15 @@ namespace Graph
             LoggerRect.Width = canvas.Width;
             LoggerRect.Height = canvas.Height;
 
-            LoggerTextBlock.Height = 20*_count;
+            int amountOfStrings = 0;
+            foreach(char c in sb.ToString())
+            {
+                if (c == '\n') amountOfStrings++;
+            }
+            LoggerTextBlock.Height = 20*amountOfStrings;
             LoggerTextBlock.Width = canvas.Width;
             LoggerTextBlock.Margin = new Thickness(85, 5, 0, 0);
+            LoggerTextBlock.Text=sb.ToString();
 
             canvas.Children.Add(LoggerRect);
             canvas.Children.Add(LoggerTextBlock);

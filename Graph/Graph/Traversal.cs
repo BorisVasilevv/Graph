@@ -14,50 +14,14 @@ namespace Graph
         public static void DepthTraversal(MyGraph graph)//я хз, надо тестить
         {
 
-            //
-
-            //Stack<Vertice> vertices = new Stack<Vertice>();
-            //vertices.Push(LV[0]);
-            //List<Vertice> used = new List<Vertice>();
-
-            //Vertice v = vertices.Pop();
-            //used.Add(v);
-            //animaztionPainter.Shapes.Add(v.Rect);
-            //do
-            //{
-            //    foreach (Connection con in LC)
-            //    {
-            //        Vertice vertCompare;
-
-            //        if(vertices.Count==0)
-            //        {
-            //            vertCompare = v;
-            //        }
-            //        else
-            //        {
-            //            vertCompare = vertices.Peek();
-            //        }
-            //        if (con.Vertice1.Id == vertCompare.Id && !vertices.Contains(con.Vertice2)  && !used.Contains(con.Vertice2))
-            //        {
-            //            if (!animaztionPainter.Shapes.Contains(con.Vertice1.Rect)) animaztionPainter.Shapes.Add(con.Vertice1.Rect);
-            //            if (!animaztionPainter.Shapes.Contains(con.Line)) animaztionPainter.Shapes.Add(con.Line);
-
-            //            vertices.Push(con.Vertice2);
-            //        }
-
-            //    }
-            //    Vertice vert=vertices.Pop();
-            //    used.Add(vert);
-            //    if(!animaztionPainter.Shapes.Contains(vert.Rect)) animaztionPainter.Shapes.Add(vert.Rect);
-            //} while (vertices.Count!=0);
-
-            //animaztionPainter.ShowAnimation();
+            Logger logger = new Logger();
+            logger.AddText("Начат алгоритм обхода в глубину");
 
             AnimaztionPainter animaztionPainter = new AnimaztionPainter(AnimaztionPainter.AlgorithmType.Traversal);
             Stack<Vertice> stack = new Stack<Vertice>();
             List<Vertice> notVisitedV = new List<Vertice>(graph.AllVertices);
             notVisitedV.Reverse();
-
+            logger.AddText($"Добавляем в стек вершину с номером {graph.AllVertices[0].Id+1}");
             stack.Push(graph.AllVertices[0]);
    
             while (stack.Count != 0)
@@ -69,37 +33,17 @@ namespace Graph
                 }
 
                 animaztionPainter.Shapes.Add(vert.Rect);
-                //foreach (Connection connection in graph.Connections)
-                //{
-                //    if(connection.Vertice1== vert&& notVisitedV.Contains(connection.Vertice2))
-                //    {
-                //        //if (!animaztionPainter.Shapes.Contains(connection.Line)) animaztionPainter.Shapes.Add(connection.Line);
-
-                //        stack.Push(connection.Vertice2);
-                //        notVisitedV.Remove(connection.Vertice2);
-                //    }
-                //    else if(connection.Vertice2==vert&& notVisitedV.Contains(connection.Vertice1))
-                //    {
-                //        //if (!animaztionPainter.Shapes.Contains(connection.Line)) animaztionPainter.Shapes.Add(connection.Line);
-
-                //        stack.Push(connection.Vertice1);
-                //        notVisitedV.Remove(connection.Vertice1);
-
-                //    }
-
-                //}
-
-
-
+                
                 foreach (Vertice vertice in notVisitedV)
                 {
                     if (Connection.SearchConnection(vertice, vert, graph.Connections) != null)
                     {
-
+                        logger.AddText($"Добавляем в стек вершину с номером {vertice.Id + 1}");
                         stack.Push(vertice);
 
                     }
                 }
+                logger.AddText($"Удаляем из стека вершину с номером {vert.Id + 1}");
                 notVisitedV.Remove(vert);
                 if (!animaztionPainter.Shapes.Contains(vert.Rect)) animaztionPainter.Shapes.Add(vert.Rect);
             }
