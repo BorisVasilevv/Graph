@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Canvas x:Name="canvas1" Background="LightGray" Height="450" Width="800" >
+        <Canvas x:Name="canvas1" Background="LightGray" Height="450" Width="800">
         </Canvas>
 
         <Rectangle HorizontalAlignment="Left" Height="450" VerticalAlignment="Top" Width="80" Fill="Brown"></Rectangle>

@@ -29,7 +29,7 @@ namespace Graph
                     if (lengthConnection != 0)
                     {
                         Connection newConn = new Connection(lengthConnection, vertice[i], vertice[j]);
-                        vertice[i].ConnectionIds.Add(vertice[j].Id);
+
                         if (!Connection.ConnectionRepeat(connections, newConn))
                         {
                             connections.Add(newConn);
@@ -38,7 +38,7 @@ namespace Graph
                     }
 
                 }
-                vertice[i].ConnectionIds = new List<int>(connectionsForVertice);
+
             }
             return new MyGraph(vertice, connections);
         }

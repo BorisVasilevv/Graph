@@ -20,7 +20,7 @@ namespace Graph
             
         public Connection()
         {
-            this.BlockText = new TextBlock();
+            this.BlockText = new TextBlock() { Text="1"};
             BlockText.MouseDown += ChangeDataTool.TextBlock_MouseDown;
 
         }            
@@ -30,7 +30,7 @@ namespace Graph
             this.Length = length;
             Vertice1 = vertice1;
             Vertice2 = vertice2;
-            this.BlockText = new TextBlock();
+            this.BlockText = new TextBlock() { Text = "1" };
             this.BlockText.Text = length.ToString();
             BlockText.MouseDown += ChangeDataTool.TextBlock_MouseDown;
         }
