@@ -29,8 +29,7 @@ namespace Graph
         public void newRectMouseMove(object sender, MouseEventArgs e)
         {
 
-            if (MainGraph.AllVertices.Count==0) LieIndentificator=1;
-            else if (LieIndentificator == 0) LieIndentificator = MainGraph.AllVertices.Count;
+            
             
             Point point = new Point();
             double mouseX = e.GetPosition(MainWindow.MainCanvas).X;
@@ -53,7 +52,7 @@ namespace Graph
                 MainGraph.AllVertices.Add(vertice);
                 vertice.RectCenter = point;
 
-                TextBlock textBlock = new TextBlock() { Text = (LieIndentificator++).ToString() };
+                TextBlock textBlock = new TextBlock() { Text = (vertice.Id+1).ToString() };
 
                 textBlock.Height = 20;
                 textBlock.Width = 50;
