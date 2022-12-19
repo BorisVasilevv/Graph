@@ -41,6 +41,9 @@ namespace Graph
 
         public static void Algorithm(Vertice start, Vertice end, MyGraph graph)
         {
+            Logger logger = new Logger();
+            logger.AddText("Начат алгоритм поиска минимального пути");
+
             var g = new GraphD();
             GraphToWork = graph;
 
@@ -57,7 +60,7 @@ namespace Graph
             }
           
             var dijkstra = new Dijkstra(g);
-            var path = dijkstra.FindShortestPath(start.Id.ToString(), end.Id.ToString());
+            var path = dijkstra.FindShortestPath(start.Id.ToString(), end.Id.ToString(), logger);
 
             List<Connection> connections1 = new List<Connection>();
             for (int i = 0; i < path.Count - 1; i++)
@@ -223,6 +226,7 @@ namespace Graph
                     if (v.Name.Equals(vertexName))
                     {
                         return v;
+                        //Logger.add($"Выбрали вершину: {v.Name}")
                     }
                 }
 
@@ -336,7 +340,7 @@ namespace Graph
             /// Поиск непосещенной вершины с минимальным значением суммы
             /// </summary>
             /// <returns>Информация о вершине</returns>
-            public GraphVertexInfo FindUnvisitedVertexWithMinSum()
+            public GraphVertexInfo FindUnvisitedVertexWithMinSum(Logger logger)
             {
                 var minValue = int.MaxValue;
                 GraphVertexInfo minVertexInfo = null;
@@ -348,7 +352,7 @@ namespace Graph
                         minValue = i.EdgesWeightSum;
                     }
                 }
-
+                //logger.AddText($"Нашли вершину: {minVertexInfo.Vertex.Name}, до которой путь будет минимальным");
                 return minVertexInfo;
             }
 
@@ -358,9 +362,9 @@ namespace Graph
             /// <param name="startName">Название стартовой вершины</param>
             /// <param name="finishName">Название финишной вершины</param>
             /// <returns>Кратчайший путь</returns>
-            public List<int> FindShortestPath(string startName, string finishName)
+            public List<int> FindShortestPath(string startName, string finishName, Logger logger)
             {
-                return FindShortestPath(graph.FindVertex(startName), graph.FindVertex(finishName))
+                return FindShortestPath(graph.FindVertex(startName), graph.FindVertex(finishName), logger)
                     .Split(';').ToList().Select(int.Parse).ToList<int>();
             }
 
@@ -370,23 +374,24 @@ namespace Graph
             /// <param name="startVertex">Стартовая вершина</param>
             /// <param name="finishVertex">Финишная вершина</param>
             /// <returns>Кратчайший путь</returns>
-            public string FindShortestPath(GraphVertex startVertex, GraphVertex finishVertex)
+            public string FindShortestPath(GraphVertex startVertex, GraphVertex finishVertex, Logger logger)
             {
                 InitInfo();
                 var first = GetVertexInfo(startVertex);
                 first.EdgesWeightSum = 0;
                 while (true)
                 {
-                    var current = FindUnvisitedVertexWithMinSum();
+                    var current = FindUnvisitedVertexWithMinSum(logger);
                     if (current == null)
                     {
                         break;
                     }
 
                     SetSumToNextVertex(current);
+                    logger.AddText($"Нашли минимальный путь от вершины {current.Vertex.Name} к следующей вершине, найденной выше, равный: {current.EdgesWeightSum}");
                 }
 
-                return GetPath(startVertex, finishVertex);
+                return GetPath(startVertex, finishVertex, logger);
             }
 
             /// <summary>
@@ -414,12 +419,13 @@ namespace Graph
             /// <param name="startVertex">Начальная вершина</param>
             /// <param name="endVertex">Конечная вершина</param>
             /// <returns>Путь</returns>
-            string GetPath(GraphVertex startVertex, GraphVertex endVertex)
+            string GetPath(GraphVertex startVertex, GraphVertex endVertex, Logger logger)
             {
                 var path = endVertex.ToString();
                 while (startVertex != endVertex)
                 {
                     endVertex = GetVertexInfo(endVertex).PreviousVertex;
+                    logger.AddText($"");
                     path = $"{endVertex.ToString()};{path}";
                 }
 
