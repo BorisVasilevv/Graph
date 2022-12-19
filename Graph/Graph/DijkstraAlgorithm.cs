@@ -79,7 +79,7 @@ namespace Graph
 
             DrawHelper.DrawGraph(MainWindow.MainCanvas, MainWindow.MainGraph);
 
-            MainWindow.IsProgramReady = true;
+            MainWindow.IsUserCanUSeButton = true;
             DrawHelper.BtnReturn.Click += BtnReturn_Click;
             foreach (Connection connection in connections1)
             {

@@ -34,7 +34,7 @@ namespace Graph
         public static void TextBlock_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             TextBox.Text = "";
-            MainWindow.IsProgramReady = false;
+            MainWindow.IsUserCanUSeButton = false;
 
             Connection connectionToChange ;
             if (TextBlockToChange != null && TextBlockToChange != SelectedTextBlock)
@@ -126,7 +126,7 @@ namespace Graph
 
         public static void btnExit_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.IsProgramReady = true;
+            MainWindow.IsUserCanUSeButton = true;
             MainWindow.MainCanvas.Children.Remove(TextBlock);
             MainWindow.MainCanvas.Children.Remove(BtnReadyToAddData);
             MainWindow.MainCanvas.Children.Remove(BtnExit);

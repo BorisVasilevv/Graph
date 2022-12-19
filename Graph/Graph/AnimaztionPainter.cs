@@ -103,7 +103,7 @@ namespace Graph
                 v.Rect.MouseMove -= MainWindow.ToolAddVertice.RectangleMouseMove;
 
 
-            MainWindow.IsProgramReady = false;
+            MainWindow.IsUserCanUSeButton = false;
             _canvas.Children.Add(BtnNext);
             Canvas.SetZIndex(BtnNext, 20);
             
@@ -127,7 +127,7 @@ namespace Graph
             foreach (var v in MainGraph.AllVertices)
                 v.Rect.MouseMove += MainWindow.ToolAddVertice.RectangleMouseMove;
 
-            MainWindow.IsProgramReady = true;
+            MainWindow.IsUserCanUSeButton = true;
 
             while (_canvas.Children.Contains(BtnNext)) _canvas.Children.Remove(BtnNext);
             while (_canvas.Children.Contains(BtnReturn)) _canvas.Children.Remove(BtnReturn);
@@ -179,7 +179,7 @@ namespace Graph
                 foreach (var v in MainGraph.AllVertices)
                     v.Rect.MouseMove += MainWindow.ToolAddVertice.RectangleMouseMove;
 
-                MainWindow.IsProgramReady = true;
+                MainWindow.IsUserCanUSeButton = true;
 
                 _canvas.Children.Add(DrawHelper.BtnReturn);
                 Canvas.SetZIndex(DrawHelper.BtnReturn, 20);

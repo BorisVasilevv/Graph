@@ -52,7 +52,7 @@ namespace Graph
                 {
                     End = Vertice.SearchVertice(rect, MainGraph.AllVertices);
                     MainWindow.MainCanvas.MouseDown -= ChooseVertice_MouseDown;
-                    MainWindow.IsProgramReady = true;
+                    MainWindow.IsUserCanUSeButton = true;
                     MainWindow.MainCanvas.Children.Remove(TextBlock);
                     Function.Invoke(Start, End,MainGraph);
                     Function = null;
