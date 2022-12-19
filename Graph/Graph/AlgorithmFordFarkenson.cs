@@ -15,6 +15,8 @@ namespace Graph
 {
     public class AlgorithmFordFarkenson
     {
+      
+
         static bool Bfs(int[,] rGraph, int s, int t, int[] parent)
         {
             int V = (int)Math.Sqrt(rGraph.Length);
@@ -64,7 +66,7 @@ namespace Graph
 
         // Returns the maximum flow
         // from s to t in the given graph
-        static int FordFulkerson(int[,] graph, int s, int t)
+        static int FordFulkerson(ref int[,] graph, int s, int t)
         {
             int V = (int)Math.Sqrt(graph.Length);
 
@@ -101,12 +103,17 @@ namespace Graph
                 {
                     u = parent[v];
                     rGraph[u, v] -= path_flow;
-                    rGraph[v, u] += path_flow;
+                    //rGraph[v, u] += path_flow;
                 }
 
                 // Add path flow to overall flow
                 max_flow += path_flow;
             }
+
+            for (u = 0; u < V; u++)
+                for (v = 0; v < V; v++)
+                    graph[u, v] -= rGraph[u, v];
+
 
             // Return the overall flow
             return max_flow;
@@ -148,7 +155,8 @@ namespace Graph
             }
 
             TextBlock textBlock = DrawHelper.TextBlock;
-            textBlock.Text = $"The maximum possible\nflow is {FordFulkerson(graph, start.Id, end.Id)}";
+            
+            textBlock.Text = $"The maximum possible\nflow is {FordFulkerson(ref graph, start.Id, end.Id)}";
             MainWindow.MainCanvas.Children.Add(textBlock);
             Canvas.SetZIndex(textBlock, 20);
             Rectangle answerRect=DrawHelper.AnswerRect;
@@ -159,6 +167,15 @@ namespace Graph
             MainWindow.MainCanvas.Children.Add(DrawHelper.BtnReturn);
             DrawHelper.BtnReturn.Click += MainWindow.BtnReturn_Click;
             Canvas.SetZIndex(DrawHelper.BtnReturn, 20);
+
+
+            foreach(Connection conn in mainGraph.Connections)
+            {
+                int a = graph[conn.Vertice1.Id, conn.Vertice2.Id];
+                int b = graph[conn.Vertice2.Id, conn.Vertice1.Id];
+
+                conn.BlockText.Text = $"{Math.Max(a,b)}/{conn.BlockText.Text}";
+            }
         }
 
 

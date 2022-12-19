@@ -25,12 +25,12 @@ namespace Graph
         static Button BtnReturn = new Button { Width = 70, Height = 30, Content = "RETURN", Margin = new Thickness(710, 45, 0, 0) };
         static private double _canvasHeight;
         private static int _count = 0;
-
+        static Canvas _canvas;
         public void AddText(string text)
         {
             _count++;
             sb.Append(text);
-            sb.Append("\n");
+            //sb.Append("\n");
         }
 
 
@@ -39,7 +39,7 @@ namespace Graph
             MainWindow.IsUserCanUSeButton = false;
             LoggerTextBlock.MouseWheel += LoggerTextBlock_MouseWheel;
             BtnReturn.Click += BtnReturn_Click;
-
+            _canvas = canvas;
             LoggerRect.Width = canvas.Width;
             LoggerRect.Height = canvas.Height;
 
@@ -61,6 +61,9 @@ namespace Graph
         private static void BtnReturn_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.IsUserCanUSeButton = true;
+            _canvas.Children.Remove(LoggerRect);
+            _canvas.Children.Remove(LoggerTextBlock);
+            _canvas.Children.Remove(BtnReturn);
         }
 
 

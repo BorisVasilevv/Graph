@@ -277,6 +277,15 @@ namespace Graph
             DrawHelper.BtnReturn.Click -= BtnReturn_Click;
 
             MainGraphCopy = null;
+
+            if (MainGraph.Connections[0].BlockText.Text!= MainGraph.Connections[0].Length.ToString())
+            {
+                foreach(Connection connection in MainGraph.Connections)
+                {
+                    connection.BlockText.Text = connection.Length.ToString();
+                }
+            }
+
         }
 
 
