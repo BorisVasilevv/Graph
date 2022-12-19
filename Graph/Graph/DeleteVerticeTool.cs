@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using static Graph.DijkstraAlgorithm;
 
 
 namespace Graph
@@ -36,6 +37,9 @@ namespace Graph
 
             }
             MainWindow.MainCanvas.MouseDown -= DeleteVertice;
+
+
+            
         }
     }
 }
