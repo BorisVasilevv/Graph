@@ -42,7 +42,7 @@ namespace Graph
         public static void Algorithm(Vertice start, Vertice end, MyGraph graph)
         {
             Logger logger = new Logger();
-            logger.AddText("Начат алгоритм поиска минимального пути");
+            logger.AddLine("Начат алгоритм поиска минимального пути");
 
             var g = new GraphD();
             GraphToWork = graph;
@@ -388,7 +388,7 @@ namespace Graph
                     }
 
                     SetSumToNextVertex(current);
-                    logger.AddText($"Нашли минимальный путь от вершины {current.Vertex.Name} к следующей вершине, найденной выше, равный: {current.EdgesWeightSum}");
+                    logger.AddLine($"Нашли минимальный путь от вершины {current.Vertex.Name} к следующей вершине, найденной выше, равный: {current.EdgesWeightSum}");
                 }
 
                 return GetPath(startVertex, finishVertex, logger);
@@ -425,7 +425,7 @@ namespace Graph
                 while (startVertex != endVertex)
                 {
                     endVertex = GetVertexInfo(endVertex).PreviousVertex;
-                    logger.AddText($"");
+                    logger.AddLine($"");
                     path = $"{endVertex.ToString()};{path}";
                 }
 
