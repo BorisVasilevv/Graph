@@ -21,15 +21,20 @@ namespace Graph
             //неиспользованные вершины
             List<Vertice> notUsedV = new List<Vertice>(graph.AllVertices);
 
+            Logger logger = new Logger();
+
             int numberV=notUsedV.Count;
+
+            
             //выбираем случайную начальную вершину
             Random rand = new Random();
             int randomNumber =rand.Next(0, numberV);
             Vertice randVertice = notUsedV[randomNumber];
+            logger.AddLine($"Выбираем случайную начальную вершину\nНа этот раз это вершина {randVertice.NameTextBlock.Text}");
             usedV.Add(randVertice);
             animaztionPainter.Shapes.Add(randVertice.Rect);
             notUsedV.Remove(randVertice);
-
+            logger.AddLine($"Удалим вершину {randVertice.NameTextBlock.Text} из списка непосещённых");
             while (notUsedV.Count > 0)
             {
                 int minE = -1; //номер наименьшего ребра
@@ -74,6 +79,7 @@ namespace Graph
 
             animaztionPainter.ShowAnimation();
             //Animize
+            MainWindow.IsUserCanUseButtons = true;
             return usedE;
         }
     }

@@ -26,24 +26,23 @@ namespace Graph
         static private double _canvasHeight;
 
         static Canvas _canvas;
+
         public void AddText(string text)
-        {
-            
-          
+        {                  
             sb.Append(text);
-            //sb.Append("\n");
         }
 
         public void AddLine(string text)
         {
             sb.Append(text);
             sb.Append("\n");
+            
         }
 
 
         public static void ShowAllLogToUser(Canvas canvas)
         {
-            MainWindow.IsUserCanUSeButton = false;
+            MainWindow.IsUserCanUseButtons = false;
             LoggerTextBlock.MouseWheel += LoggerTextBlock_MouseWheel;
             BtnReturn.Click += BtnReturn_Click;
             _canvas = canvas;
@@ -52,10 +51,11 @@ namespace Graph
 
             int amountOfStrings = 0;
             foreach(char c in sb.ToString())
-            {
                 if (c == '\n') amountOfStrings++;
-            }
-            LoggerTextBlock.Height = 20*amountOfStrings;
+            
+
+
+            LoggerTextBlock.Height = 16.1* amountOfStrings;
             LoggerTextBlock.Width = canvas.Width;
             LoggerTextBlock.Margin = new Thickness(85, 5, 0, 0);
             LoggerTextBlock.Text=sb.ToString();
@@ -73,14 +73,17 @@ namespace Graph
 
         private static void BtnReturn_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.IsUserCanUSeButton = true;
+            MainWindow.IsUserCanUseButtons = true;
             _canvas.Children.Remove(LoggerRect);
             _canvas.Children.Remove(LoggerTextBlock);
             _canvas.Children.Remove(BtnReturn);
+            _diff = 0;
+            LoggerTextBlock.Margin = new Thickness(85, 5, 0, 0);
         }
 
 
         private static int _diff;
+        const int ChangeLength = 40; 
         private static void LoggerTextBlock_MouseWheel(object sender, MouseWheelEventArgs e)
         {
 
@@ -93,16 +96,18 @@ namespace Graph
 
                 if (delta > 0 &&  _diff< 0)
                 {
+                    //delta = 120;
                     // The user scrolled up.
-                    thickness.Top += delta;
-                    _diff += delta;
+                    thickness.Top += ChangeLength;
+                    _diff += ChangeLength;
 
                 }
                 else if (delta < 0 && LoggerTextBlock.Height - _canvasHeight - Math.Abs(_diff) > 0)
                 {
+                    //delta = -120;
                     // The user scrolled down.
-                    thickness.Top += delta;
-                    _diff += delta;
+                    thickness.Top -= ChangeLength;
+                    _diff -= ChangeLength;
                 }
                 
                 LoggerTextBlock.Margin = thickness;

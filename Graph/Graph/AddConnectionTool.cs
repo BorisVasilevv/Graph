@@ -39,11 +39,6 @@ namespace Graph
                     NewConnection.Vertice1 = Vertice.SearchVertice(Rect1, MainGraph.AllVertices);
                     NewConnection.Vertice2 = Vertice.SearchVertice(Rect2, MainGraph.AllVertices);
                     NewConnection.Length = 1;
-                    TextBlock textBlock = new TextBlock();
-                    NewConnection.BlockText = textBlock;
-                    NewConnection.BlockText.Text = "1";
-                    NewConnection.BlockText.MouseDown += ChangeDataTool.TextBlock_MouseDown;
-
 
                     if (!Connection.ConnectionRepeat(MainGraph.Connections, NewConnection))
                     {

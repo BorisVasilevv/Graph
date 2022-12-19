@@ -156,7 +156,7 @@ namespace Graph
 
             TextBlock textBlock = DrawHelper.TextBlock;
             
-            textBlock.Text = $"The maximum possible\nflow is {FordFulkerson(ref graph, start.Id, end.Id)}";
+            textBlock.Text = $"The max flow beetween\n{start.Id+1} and {end.Id+1} is {FordFulkerson(ref graph, start.Id, end.Id)}";
             MainWindow.MainCanvas.Children.Add(textBlock);
             Canvas.SetZIndex(textBlock, 20);
             Rectangle answerRect=DrawHelper.AnswerRect;

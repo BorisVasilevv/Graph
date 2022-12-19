@@ -14,6 +14,7 @@ namespace Graph
 {
     public class ChangeDataTool
     {
+        const int ButtonLoggerIndent = 20;
         static Button BtnReadyToAddData = new Button();
 
         static Button BtnExit = new Button();
@@ -34,7 +35,7 @@ namespace Graph
         public static void TextBlock_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             TextBox.Text = "";
-            MainWindow.IsUserCanUSeButton = false;
+            MainWindow.IsUserCanUseButtons = false;
 
             Connection connectionToChange ;
             if (TextBlockToChange != null && TextBlockToChange != SelectedTextBlock)
@@ -81,7 +82,7 @@ namespace Graph
                 TextBox.VerticalAlignment = VerticalAlignment.Top;
                 TextBox.HorizontalAlignment = HorizontalAlignment.Center;
                 Canvas.SetZIndex(TextBox, 10);
-                Canvas.SetTop(TextBox, 80);
+                Canvas.SetTop(TextBox, 80+ButtonLoggerIndent);
                 Canvas.SetLeft(TextBox, Length - RectToAddData.Width);
                 MainWindow.MainCanvas.Children.Add(TextBox);
 
@@ -91,14 +92,14 @@ namespace Graph
                 TextBlock.Text =  $"Введите навую длинну или\nпропускную способность " +
                     $"\nмежду {connectionToChange.Vertice1.NameTextBlock.Text} и " +
                     $"{connectionToChange.Vertice2.NameTextBlock.Text}";
-                Canvas.SetTop(TextBlock, 20);
+                Canvas.SetTop(TextBlock, 20+ ButtonLoggerIndent);
                 Canvas.SetLeft(TextBlock, Length - RectToAddData.Width);
                 Canvas.SetZIndex(TextBlock, 10);
                 MainWindow.MainCanvas.Children.Add(TextBlock);
 
                 BtnExit.Height = 20;
                 BtnExit.Width = 150;
-                Canvas.SetTop(BtnExit, 150);
+                Canvas.SetTop(BtnExit, 150 + ButtonLoggerIndent);
                 Canvas.SetLeft(BtnExit, Length - RectToAddData.Width);
                 BtnExit.Content = "Отмена";
                 BtnExit.HorizontalContentAlignment = HorizontalAlignment.Center;
@@ -110,7 +111,7 @@ namespace Graph
 
                 BtnReadyToAddData.Height = 20;
                 BtnReadyToAddData.Width = 150;
-                Canvas.SetTop(BtnReadyToAddData, 120);
+                Canvas.SetTop(BtnReadyToAddData, 120 + ButtonLoggerIndent);
                 Canvas.SetLeft(BtnReadyToAddData, Length - RectToAddData.Width);
                 BtnReadyToAddData.Content = "Готово";
                 BtnReadyToAddData.HorizontalContentAlignment = HorizontalAlignment.Center;
@@ -126,7 +127,7 @@ namespace Graph
 
         public static void btnExit_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.IsUserCanUSeButton = true;
+            MainWindow.IsUserCanUseButtons = true;
             MainWindow.MainCanvas.Children.Remove(TextBlock);
             MainWindow.MainCanvas.Children.Remove(BtnReadyToAddData);
             MainWindow.MainCanvas.Children.Remove(BtnExit);
