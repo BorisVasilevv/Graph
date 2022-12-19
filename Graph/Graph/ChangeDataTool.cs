@@ -180,7 +180,7 @@ namespace Graph
             TextBlockTellUser = new TextBlock();
             TextBlockTellUser.Height = 40;
             TextBlockTellUser.Width = 150;
-            Canvas.SetTop(TextBlockTellUser, 180);
+            Canvas.SetTop(TextBlockTellUser, 180+ ButtonLoggerIndent);
             Canvas.SetLeft(TextBlockTellUser, Length - RectToAddData.Width);
             Canvas.SetZIndex(TextBlockTellUser, 10);
             TextBlockTellUser.Text = "Введённые данные \nнекорректны";

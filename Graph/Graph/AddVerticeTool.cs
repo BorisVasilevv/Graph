@@ -16,7 +16,7 @@ namespace Graph
         private Rectangle NewVerticeRect;
         public static Rectangle SelectedRectangle;
         public static MyGraph MainGraph = MainWindow.MainGraph;
-
+        static int LieIndentificator = 0;
         const int IndentFromCenter = 10;
         public void rectMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -28,6 +28,10 @@ namespace Graph
 
         public void newRectMouseMove(object sender, MouseEventArgs e)
         {
+
+            if (MainGraph.AllVertices.Count==0) LieIndentificator=1;
+            else if (LieIndentificator == 0) LieIndentificator = MainGraph.AllVertices.Count;
+            
             Point point = new Point();
             double mouseX = e.GetPosition(MainWindow.MainCanvas).X;
             double mouseY = e.GetPosition(MainWindow.MainCanvas).Y;
@@ -49,7 +53,7 @@ namespace Graph
                 MainGraph.AllVertices.Add(vertice);
                 vertice.RectCenter = point;
 
-                TextBlock textBlock = new TextBlock() { Text = (vertice.Id + 1).ToString() };
+                TextBlock textBlock = new TextBlock() { Text = (LieIndentificator++).ToString() };
 
                 textBlock.Height = 20;
                 textBlock.Width = 50;
