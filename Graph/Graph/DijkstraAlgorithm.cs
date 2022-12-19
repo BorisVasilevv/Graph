@@ -83,13 +83,17 @@ namespace Graph
             DrawHelper.DrawGraph(MainWindow.MainCanvas, MainWindow.MainGraph);
 
             MainWindow.IsUserCanUseButtons = true;
-            DrawHelper.BtnReturn.Click += BtnReturn_Click;
+            DrawHelper.BtnReturn.Click += BtnReturn_Click;
+
             foreach (Connection connection in connections1)
             {
                 result += connection.Length;
             }
-            AnswerBlock.Text = $"Min way from {start.NameTextBlock.Text} to {end.NameTextBlock.Text} \nResult: {result}" ;
-            MainWindow.MainCanvas.Children.Add(DrawHelper.BtnReturn);
+
+            AnswerBlock.Text = $"Min way from {start.NameTextBlock.Text} to {end.NameTextBlock.Text} \nResult: {result}" ;
+
+            MainWindow.MainCanvas.Children.Add(DrawHelper.BtnReturn);
+
             Canvas.SetZIndex(DrawHelper.BtnReturn, 20);
             MainWindow.MainCanvas.Children.Add(AnswerRect);
             Canvas.SetZIndex(AnswerRect, 18);
@@ -352,7 +356,8 @@ namespace Graph
                         minValue = i.EdgesWeightSum;
                     }
                 }
-                //logger.AddText($"Нашли вершину: {minVertexInfo.Vertex.Name}, до которой путь будет минимальным");
+                if(minVertexInfo != null)
+                    logger.AddLine($"Нашли вершину: {int.Parse(minVertexInfo.Vertex.Name) + 1}, до которой путь будет минимальным");
                 return minVertexInfo;
             }
 
@@ -388,7 +393,7 @@ namespace Graph
                     }
 
                     SetSumToNextVertex(current);
-                    logger.AddLine($"Нашли минимальный путь от вершины {current.Vertex.Name} к следующей вершине, найденной выше, равный: {current.EdgesWeightSum}");
+                    logger.AddLine($"Нашли минимальный путь от вершины {int.Parse(current.Vertex.Name)+1} к следующей вершине, найденной выше, равный: {current.EdgesWeightSum}");
                 }
 
                 return GetPath(startVertex, finishVertex, logger);
@@ -422,10 +427,19 @@ namespace Graph
             string GetPath(GraphVertex startVertex, GraphVertex endVertex, Logger logger)
             {
                 var path = endVertex.ToString();
+                logger.AddLine($"Восстанавливаем путь, для заданных начальной и конечной вершин:");
                 while (startVertex != endVertex)
                 {
                     endVertex = GetVertexInfo(endVertex).PreviousVertex;
-                    logger.AddLine($"");
+                    if (path.Length > 1)
+                    {
+                        List<int> path1 = path.Split(';').ToList().Select(x => int.Parse(x)).ToList<int>();
+                        logger.AddLine($"Взяли путь от вершины {int.Parse(endVertex.Name) + 1} до вершины {path1.Last()+1}");
+                    }
+                    else
+                    {
+                        logger.AddLine($"Взяли путь от вершины {int.Parse(endVertex.Name) + 1} до вершины {int.Parse(path)+1}");
+                    }
                     path = $"{endVertex.ToString()};{path}";
                 }
 
