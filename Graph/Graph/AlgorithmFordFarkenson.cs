@@ -15,7 +15,6 @@ namespace Graph
 {
     public class AlgorithmFordFarkenson
     {
-      
 
         static bool Bfs(int[,] rGraph, int s, int t, int[] parent)
         {
@@ -68,20 +67,31 @@ namespace Graph
         // from s to t in the given graph
         static int FordFulkerson(ref int[,] graph, int s, int t)
         {
+            List<int> logVert = new List<int>();
+
+            Logger logger = new Logger();
+
             int V = (int)Math.Sqrt(graph.Length);
 
             int u, v;
 
             int[,] rGraph = new int[V, V];
 
+            logger.AddLine("создаем еще один двумерный массив.");
+
             for (u = 0; u < V; u++)
                 for (v = 0; v < V; v++)
                     rGraph[u, v] = graph[u, v];
 
+            logger.AddLine("копируем первый двумерный массив во второй.");
+
             int[] parent = new int[V];
 
-            int max_flow = 0; // There is no flow initially
+            //logger.AddLine("создаем массив, где индекс - вершина, а значение - откуда можем попасть");
 
+            int max_flow = 0; // There is no flow initially
+            logger.AddLine("для каждого  существующего пути будем искать максимальный поток.");
+            logger.AddLine("создаем переменную максимального потока для выбранного пути.");
             // Augment the flow while there is path from source
             // to sink
             while (Bfs(rGraph, s, t, parent))
@@ -90,13 +100,15 @@ namespace Graph
                 // along the path filled by BFS. Or we can say
                 // find the maximum flow through the path found.
                 int path_flow = int.MaxValue;
+                logger.AddLine("идем по одному из путей и для каждого ребра проверяем, является\nли его пропускная способность минимальной на нашем пути.");
+                logger.AddLine("если она минимальная, то присваиваем это значение нашей переменной максимального потока для выбранного пути.");
                 for (v = t; v != s; v = parent[v])
                 {
                     u = parent[v];
                     path_flow
                         = Math.Min(path_flow, rGraph[u, v]);
                 }
-
+                logger.AddLine("максимальный поток на пути из вершин:");
                 // update residual capacities of the edges and
                 // reverse edges along the path
                 for (v = t; v != s; v = parent[v])
@@ -104,8 +116,17 @@ namespace Graph
                     u = parent[v];
                     rGraph[u, v] -= path_flow;
                     //rGraph[v, u] += path_flow;
+                    if (!logVert.Contains(v))
+                        logVert.Add(v);
+                    if (!logVert.Contains(u))
+                        logVert.Add(u);
                 }
-
+                for (int i = logVert.Count - 1; i >= 0; i--)
+                {
+                    logger.AddLine($"{logVert[i] + 1}");
+                }
+                logVert.Clear();
+                logger.AddLine($"равен: {path_flow}.");
                 // Add path flow to overall flow
                 max_flow += path_flow;
             }
@@ -116,13 +137,17 @@ namespace Graph
 
 
             // Return the overall flow
+            logger.AddLine($"складываем наши максимальные потоки всех существующих путей из вершины {s + 1} в вершину {t + 1} и получаем: {max_flow}.\n");
             return max_flow;
         }
 
         public static void FordFarkensonAlgorithm(Vertice start, Vertice end, MyGraph mainGraph)
         {
 
-
+            foreach(Connection conn in mainGraph.Connections)
+            {
+                conn.BlockText.MouseDown -= ChangeDataTool.TextBlock_MouseDown;
+            }
 
             string[][] stringsVertices = new string[mainGraph.AllVertices.Count][];
             for (int i = 0; i < mainGraph.AllVertices.Count; i++)
@@ -140,9 +165,8 @@ namespace Graph
                     if (checkConnection != null) arrayConnection[j] = checkConnection.Length.ToString();
                     else arrayConnection[j] = "0";
                 }
-                stringsVertices[i]=arrayConnection;
+                stringsVertices[i] = arrayConnection;
             }
-
 
 
             int[,] graph = new int[stringsVertices.Length, stringsVertices.Length];
@@ -154,30 +178,48 @@ namespace Graph
                 }
             }
 
+            Logger logger = new Logger();
+            logger.AddLine("Начат алгоритм поиска максимального потока.");
+            logger.AddLine("выбираем вершину стока и вершину истока.");
+            logger.AddLine("копируем наш граф в двумерный массив.");
+
             TextBlock textBlock = DrawHelper.TextBlock;
-            
-            textBlock.Text = $"The max flow beetween\n{start.Id+1} and {end.Id+1} is {FordFulkerson(ref graph, start.Id, end.Id)}";
+
+            textBlock.Text = $"The max flow beetwen\n{start.NameTextBlock.Text} and {end.NameTextBlock.Text} is {FordFulkerson(ref graph, start.Id, end.Id)}";
             MainWindow.MainCanvas.Children.Add(textBlock);
             Canvas.SetZIndex(textBlock, 20);
-            Rectangle answerRect=DrawHelper.AnswerRect;
+            Rectangle answerRect = DrawHelper.AnswerRect;
             MainWindow.MainCanvas.Children.Add(answerRect);
             Canvas.SetZIndex(answerRect, 18);
             Canvas.SetTop(answerRect, MainWindow.MainCanvas.Height - answerRect.Height);
             Canvas.SetLeft(answerRect, MainWindow.MainCanvas.Width - answerRect.Width);
             MainWindow.MainCanvas.Children.Add(DrawHelper.BtnReturn);
-            DrawHelper.BtnReturn.Click += MainWindow.BtnReturn_Click;
+            DrawHelper.BtnReturn.Click += BtnReturn_Click; ;
             Canvas.SetZIndex(DrawHelper.BtnReturn, 20);
 
+            
 
-            foreach(Connection conn in mainGraph.Connections)
+
+            foreach (Connection conn in mainGraph.Connections)
             {
+
                 int a = graph[conn.Vertice1.Id, conn.Vertice2.Id];
                 int b = graph[conn.Vertice2.Id, conn.Vertice1.Id];
 
-                conn.BlockText.Text = $"{Math.Max(a,b)}/{conn.BlockText.Text}";
+                conn.BlockText.Text = $"{Math.Max(a, b)}/{conn.BlockText.Text}";
             }
         }
 
+        private static void BtnReturn_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.BtnReturn_Click(sender, e);
 
+
+            foreach (Connection connection in MainWindow.MainGraph.Connections)
+            {
+                connection.BlockText.Text = connection.Length.ToString();
+                connection.BlockText.MouseDown += ChangeDataTool.TextBlock_MouseDown;
+            }                                    
+        }
     }
 }

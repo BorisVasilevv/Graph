@@ -16,7 +16,6 @@ namespace Graph
 
             Logger logger = new Logger();
             logger.AddLine("Начат алгоритм обхода в глубину");
-
             AnimaztionPainter animaztionPainter = new AnimaztionPainter(AnimaztionPainter.AlgorithmType.Traversal);
             Stack<Vertice> stack = new Stack<Vertice>();
             List<Vertice> notVisitedV = new List<Vertice>(graph.AllVertices);
