@@ -21,7 +21,7 @@ namespace Graph
             List<Vertice> notVisitedV = new List<Vertice>(graph.AllVertices);
             notVisitedV.Reverse();
             logger.AddLine($"В списке непосещённых вершин находятся все вершины");
-            logger.AddLine($"Добавляем в стек вершину с номером {graph.AllVertices[0].Id+1}");
+            logger.AddLine($"Добавляем в стек вершину с номером {graph.AllVertices[0].NameTextBlock.Text}");
 
             stack.Push(graph.AllVertices[0]);
    
@@ -35,12 +35,12 @@ namespace Graph
                 }
 
                 animaztionPainter.Shapes.Add(vert.Rect);
-                logger.AddLine($"Обходим все соединения связывающие вершину {vert.NameTextBlock.Text}\nДобавляем в стек все вершины из списка непосещеных связанных с {vert.Id + 1}");
+                logger.AddLine($"Обходим все соединения связывающие вершину {vert.NameTextBlock.Text}\nДобавляем в стек все вершины из списка непосещеных связанных с {vert.NameTextBlock.Text}");
                 foreach (Vertice vertice in notVisitedV)
                 {
                     if (Connection.SearchConnection(vertice, vert, graph.Connections) != null)
                     {
-                        logger.AddLine($"Добавляем в стек вершину с номером {vertice.Id + 1}");
+                        logger.AddLine($"Добавляем в стек вершину с номером {vertice.NameTextBlock.Text}");
                         stack.Push(vertice);
 
                     }
