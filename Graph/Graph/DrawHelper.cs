@@ -128,7 +128,7 @@ namespace Graph
         //    DrawGraph(canvas, graph);
         //}
 
-        Button BtnNext = new Button
+        public static Button BtnNext = new Button
         {
             Content = "Next",
             Height = 20,

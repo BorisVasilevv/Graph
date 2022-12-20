@@ -45,6 +45,7 @@ namespace Graph
         public void ShowAnimation()
         {
             if (BtnReturn == null) BtnReturn = DrawHelper.BtnReturn;
+            if (BtnNext == null) BtnNext = DrawHelper.BtnNext;
             _shapes = Shapes;
             
 
