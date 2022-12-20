@@ -18,6 +18,7 @@ namespace Graph
         public static MyGraph MainGraph = MainWindow.MainGraph;
         static int LieIndentificator = 0;
         const int IndentFromCenter = 10;
+        static int _counter = 0;
         public void rectMouseDown(object sender, MouseButtonEventArgs e)
         {
             MainWindow.MainCanvas.MouseMove -= newRectMouseMove;
@@ -29,8 +30,8 @@ namespace Graph
         public void newRectMouseMove(object sender, MouseEventArgs e)
         {
 
-            
-            
+
+            if (_counter == 0) _counter = MainGraph.AllVertices.Count;
             Point point = new Point();
             double mouseX = e.GetPosition(MainWindow.MainCanvas).X;
             double mouseY = e.GetPosition(MainWindow.MainCanvas).Y;
@@ -52,7 +53,7 @@ namespace Graph
                 MainGraph.AllVertices.Add(vertice);
                 vertice.RectCenter = point;
 
-                TextBlock textBlock = new TextBlock() { Text = (Vertice._counter++).ToString() };
+                TextBlock textBlock = new TextBlock() { Text = (++_counter).ToString() };
 
                 textBlock.Height = 20;
                 textBlock.Width = 50;
