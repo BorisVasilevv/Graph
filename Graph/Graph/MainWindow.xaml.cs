@@ -36,6 +36,9 @@ namespace Graph
 
             ToolAddVertice = new AddVerticeTool();
             MainCanvas = canvas1;
+
+            canvas1.Height = BigWindow.Height;
+            canvas1.Width= BigWindow.Width;
             TextBlock textBlock = new TextBlock();
             textBlock.VerticalAlignment = VerticalAlignment.Top;
             textBlock.HorizontalAlignment = HorizontalAlignment.Left;
@@ -237,14 +240,6 @@ namespace Graph
             }
         }
 
-        Canvas dopCanvas = new Canvas
-        {
-            Height = 450,
-            Width = 800,
-            Background = new SolidColorBrush(Colors.White)
-        };
-
-
         private void btnMinTree_Click(object sender, RoutedEventArgs e)
         {
             MainGraphCopy = new MyGraph(MainGraph);
@@ -277,15 +272,6 @@ namespace Graph
             DrawHelper.BtnReturn.Click -= BtnReturn_Click;
 
             MainGraphCopy = null;
-
-            //if (MainGraph.Connections[0].BlockText.Text!= MainGraph.Connections[0].Length.ToString())
-            //{
-            //    foreach(Connection connection in MainGraph.Connections)
-            //    {
-            //        connection.BlockText.Text = connection.Length.ToString();
-            //    }
-            //}
-
         }
 
 

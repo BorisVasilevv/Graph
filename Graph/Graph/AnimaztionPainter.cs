@@ -84,6 +84,8 @@ namespace Graph
             else if (_type == AlgorithmType.Prim)
             {
                 BtnNext.Click += BtnNextPrim_Click;
+                _canvas.Children.Add(BtnReturn);
+                Canvas.SetZIndex(BtnReturn, 20);
             }
             else if (_type == AlgorithmType.FordFarkenson)
             {
@@ -185,7 +187,10 @@ namespace Graph
             _counter++;
         }
 
+        public static void ReturnFunctionality()
+        {
 
+        }
 
 
         private void BtnNextFordFarkenson_Click(object sender, RoutedEventArgs e)

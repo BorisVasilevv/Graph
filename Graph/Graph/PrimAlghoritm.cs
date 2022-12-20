@@ -84,10 +84,6 @@ namespace Graph
             }
 
 
-            MainWindow.MainCanvas.Children.Add(DrawHelper.BtnReturn);
-            DrawHelper.BtnReturn.Click += BtnReturn_Click;
-            Canvas.SetZIndex(DrawHelper.BtnReturn, 20);
-
             animaztionPainter.ShowAnimation();
             //Animize
             MainWindow.IsUserCanUseButtons = true;
@@ -95,9 +91,6 @@ namespace Graph
             return usedE;
         }
 
-        private static void BtnReturn_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            //отписка из AnimaztionPainter
-        }
+        
     }
 }
