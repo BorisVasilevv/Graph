@@ -24,6 +24,8 @@ namespace Graph
         {
             Logger logger = new Logger();
             logger.AddLine("Начат алгоритм поиска минимального пути");
+            logger.AddLine("Выбираем начальную вершину и конечную");
+
 
             var g = new GraphD();
             GraphToWork = graph;
@@ -333,7 +335,8 @@ namespace Graph
                     }
                 }
                 if(minVertexInfo != null)
-                    logger.AddLine($"Нашли вершину: {int.Parse(minVertexInfo.Vertex.Name) + 1}, до которой путь будет минимальным");
+                    logger.AddLine($"Взяли вершину: {int.Parse(minVertexInfo.Vertex.Name) + 1}");
+                    //н
                 return minVertexInfo;
             }
 
@@ -359,6 +362,7 @@ namespace Graph
             {
                 InitInfo();
                 var first = GetVertexInfo(startVertex);
+                //logger.AddLine($"Для первой вешины устанавливаем значение, равное 0 {}")
                 first.EdgesWeightSum = 0;
                 while (true)
                 {
@@ -367,9 +371,9 @@ namespace Graph
                     {
                         break;
                     }
-
-                    SetSumToNextVertex(current);
-                    logger.AddLine($"Нашли минимальный путь от вершины {int.Parse(current.Vertex.Name)+1} к следующей вершине, найденной выше, равный: {current.EdgesWeightSum}");
+                    
+                    SetSumToNextVertex(current, logger);
+                    //logger.AddLine($"Нашли минимальный путь от вершины {int.Parse(current.Vertex.Name)+1} к следующей вершине {}, равный: {current.EdgesWeightSum}");
                 }
 
                 return GetPath(startVertex, finishVertex, logger);
@@ -379,18 +383,36 @@ namespace Graph
             /// Вычисление суммы весов ребер для следующей вершины
             /// </summary>
             /// <param name="info">Информация о текущей вершине</param>
-            void SetSumToNextVertex(GraphVertexInfo info)
+            void SetSumToNextVertex(GraphVertexInfo info, Logger logger)
             {
+                //logger.AddLine($"{int.Parse(info.Vertex.Name) + 1}");
+                //logger.AddLine($"Которую подсвечиваем, как пройденную");
+
                 info.IsUnvisited = false;
+                //Подсвечиваем вершину, как пройденную
                 foreach (var e in info.Vertex.Edges)
                 {
+                    logger.AddLine($"Взяли путь от вершины: {int.Parse(info.Vertex.Name) + 1}");
+
                     var nextInfo = GetVertexInfo(e.ConnectedVertex);
+
+                    logger.AddLine($"До вершины: {int.Parse(nextInfo.Vertex.Name) + 1}");
+
                     var sum = info.EdgesWeightSum + e.EdgeWeight;
+
+                    logger.AddLine($"Теперь сравниваем, меньше ли он \n{((nextInfo.EdgesWeightSum == int.MaxValue) ? "максимального значения" : nextInfo.EdgesWeightSum)}");
+                    logger.AddLine($"{sum} < {nextInfo.EdgesWeightSum}?");
+
                     if (sum < nextInfo.EdgesWeightSum)
                     {
+                        logger.AddLine($"Да, поэтому над вершиной {int.Parse(nextInfo.Vertex.Name) + 1} \nвместо {nextInfo.EdgesWeightSum} установим: {sum}");
+                        logger.AddLine($"Также установим, что для вершины {int.Parse(nextInfo.Vertex.Name) + 1} \nпредыдущей будет вершина: {int.Parse(info.Vertex.Name) + 1}");
+
                         nextInfo.EdgesWeightSum = sum;
                         nextInfo.PreviousVertex = info.Vertex;
                     }
+                    logger.AddLine($"Нет, поэтому ничего не делаем");
+
                 }
             }
             AnimaztionPainter painter = new AnimaztionPainter(AnimaztionPainter.AlgorithmType.Dijkstra);
@@ -403,22 +425,23 @@ namespace Graph
             string GetPath(GraphVertex startVertex, GraphVertex endVertex, Logger logger)
             {
                 var path = endVertex.ToString();
-                logger.AddLine($"Восстанавливаем путь, для заданных начальной и конечной вершин:");
+                logger.AddLine($"Восстанавливаем путь, \nдля заданных начальной и конечной вершин:");
+                logger.AddLine($"Конечная вершина: {int.Parse(endVertex.Name) + 1}");
+
                 while (startVertex != endVertex)
                 {
                     endVertex = GetVertexInfo(endVertex).PreviousVertex;
-                    if (path.Length > 1)
-                    {
-                        List<int> path1 = path.Split(';').ToList().Select(x => int.Parse(x)).ToList<int>();
-                        logger.AddLine($"Взяли путь от вершины {int.Parse(endVertex.Name) + 1} до вершины {path1.Last()+1}");
-                    }
-                    else
-                    {
-                        logger.AddLine($"Взяли путь от вершины {int.Parse(endVertex.Name) + 1} до вершины {int.Parse(path)+1}");
 
-                    }
+                    logger.AddLine($"Предыдущая для неё: {int.Parse(endVertex.Name) + 1}");
+
                     path = $"{endVertex.ToString()};{path}";
                 }
+
+                List<int> path1 = path.Split(';').ToList().Select(x => int.Parse(x)+1).ToList<int>();
+                var resultPath = String.Join(" -> ", path1.ToArray());
+
+                logger.AddLine($"Минимальный путь: \n{resultPath}");
+
                 logger.AddLine("Алгоритм Дейкстры завершён\n");
 
                 painter.ShowAnimation();
