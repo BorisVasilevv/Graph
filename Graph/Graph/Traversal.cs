@@ -51,6 +51,9 @@ namespace Graph
             }
             logger.AddLine("Алгорит обхода в глубину завершён");
             logger.AddLine(String.Empty);
+
+
+            Logger.ShowAllLogToUser(MainWindow.MainCanvas, MainWindow.MainGrid);
             animaztionPainter.ShowAnimation();
         }
 
@@ -96,6 +99,8 @@ namespace Graph
 
             logger.AddLine("Алгорит обхода в ширину завершён");
             logger.AddLine(String.Empty);
+
+            Logger.ShowAllLogToUser(MainWindow.MainCanvas, MainWindow.MainGrid);
             animaztionPainter.ShowAnimation();
         }
 

@@ -143,10 +143,12 @@ namespace Graph
             for (u = 0; u < V; u++)
                 for (v = 0; v < V; v++)
                     graph[u, v] -= rGraph[u, v];
-            Logger.ShowAllLogToUser(MainWindow.MainCanvas, MainWindow.MainGrid);
+           
             animationHelper.ShowAnimation();
             // Return the overall flow
             logger.AddLine($"складываем наши максимальные потоки всех существующих путей из вершины {s + 1} в вершину {t + 1} и получаем: {max_flow}.\n");
+
+            Logger.ShowAllLogToUser(MainWindow.MainCanvas, MainWindow.MainGrid);
             return max_flow;
         }
 

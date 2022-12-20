@@ -108,7 +108,7 @@ namespace Graph
                     connection.BlockText.MouseDown += ChangeDataTool.TextBlock_MouseDown;
                 }
             }
-
+            
             foreach (var v in MainGraph.AllVertices)
                 v.Rect.MouseMove += MainWindow.ToolAddVertice.RectangleMouseMove;
 
@@ -116,6 +116,7 @@ namespace Graph
 
             while (_canvas.Children.Contains(BtnNext)) _canvas.Children.Remove(BtnNext);
             while (_canvas.Children.Contains(BtnReturn)) _canvas.Children.Remove(BtnReturn);
+            Logger.ClearLogger();
 
         }
 
@@ -146,26 +147,8 @@ namespace Graph
             }
             if (_counter == _shapes.Count)
             {
-                _canvas.Children.Clear();
-                DrawHelper.DrawGraph(_canvas, MainGraph);
-                DrawHelper.BtnReturn.Click += MainWindow.BtnReturn_Click;
-                _canvas.Children.Remove(BtnReturn);
-
-                _canvas.MouseMove += AddVerticeTool.clearSelection;
-                _canvas.MouseMove += DeleteConnectionTool.clearSelection;
-                _canvas.MouseMove += ChangeDataTool.TextBlockSelected;
-                _canvas.MouseDown += MainWindow.ToolAddVertice.rectMouseDown;
                 BtnNext.Click -= BtnNextTraversal_Click;
-                foreach (Shape shape in _shapes)
-                    shape.Effect = null;
-
-                foreach (var v in MainGraph.AllVertices)
-                    v.Rect.MouseMove += MainWindow.ToolAddVertice.RectangleMouseMove;
-
-                MainWindow.IsUserCanUseButtons = true;
-
-                _canvas.Children.Add(DrawHelper.BtnReturn);
-                Canvas.SetZIndex(DrawHelper.BtnReturn, 20);
+                _canvas.Children.Remove(BtnNext);
             }
             _counter++;
         }
