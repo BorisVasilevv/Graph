@@ -27,7 +27,9 @@ namespace Graph
         public static AddVerticeTool ToolAddVertice;
         public AddConnectionTool ToolAddConnedtion;
         public static int LeftIndent;
-
+        public static Grid MainGrid;
+        //<Rectangle x:Name="topRect" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="800" Fill="Brown" 
+        //Margin="0,0,0,0"></Rectangle>
         const string Extension = ".csv";
         public MainWindow()
         {
@@ -36,9 +38,13 @@ namespace Graph
 
             ToolAddVertice = new AddVerticeTool();
             MainCanvas = canvas1;
+            MainGrid = Grid1;
 
             canvas1.Height = BigWindow.Height;
             canvas1.Width= BigWindow.Width;
+
+    
+
             TextBlock textBlock = new TextBlock();
             textBlock.VerticalAlignment = VerticalAlignment.Top;
             textBlock.HorizontalAlignment = HorizontalAlignment.Left;
@@ -55,13 +61,18 @@ namespace Graph
             btn.Height = 30;
             btn.VerticalAlignment = VerticalAlignment.Top;
             btn.HorizontalAlignment = HorizontalAlignment.Left;
+
             canvas1.Children.Add(btn);
+
             Canvas.SetLeft(btn, 110);
-            Canvas.SetTop(btn, 20);
+            Canvas.SetTop(btn, 40);
+
             btn.Content = "New File";
             btn.Click += btnCreateNewFile_Click;
             int buttonCounter = 1;
-            const int ButtonIndent = 10;
+            const int ButtonIndentX = 10;
+            const int ButtonIndentY = 10;
+            const int TopIdent = 20;
             foreach (string file in allFiles)
             {
                 string extension = System.IO.Path.GetExtension(file);
@@ -75,15 +86,15 @@ namespace Graph
                     button.VerticalAlignment = VerticalAlignment.Top;
                     button.HorizontalAlignment = HorizontalAlignment.Left;
                     canvas1.Children.Add(button);
-                    Canvas.SetLeft(button, (button.Width + ButtonIndent) * (buttonCounter / 10 + 1));
-                    Canvas.SetTop(button, (button.Height + ButtonIndent) * (buttonCounter % 10 + 1) - 2 * ButtonIndent);
+                    Canvas.SetLeft(button, (button.Width + ButtonIndentY) * (1+buttonCounter / 10));
+                    Canvas.SetTop(button, TopIdent+(button.Height + ButtonIndentX) * (1+buttonCounter % 10 ) - 2 * ButtonIndentX);
                     buttonCounter++;
                     button.Content = mainNameOfFile;
                     button.Click += btnFileName_Click;
                 }
             }
 
-
+            
         }
 
         public static string FullFileNamePath = null;
@@ -189,33 +200,11 @@ namespace Graph
                 canvas1.MouseDown += DeleteVerticeTool.DeleteVertice;
             }
         }
-
-        private void btnTraversal_Click(object sender, RoutedEventArgs e)
-        {
-            if (IsUserCanUseButtons)
-            {
-                DrawHelper.BtnSearchDepth.Click += BtnSearchDetpth_Click;
-                DrawHelper.BtnSearchWidth.Click += BtnSearchWidth_Click;
-                if (!MainCanvas.Children.Contains(DrawHelper.BtnSearchDepth))
-                {
-                    MainCanvas.Children.Add(DrawHelper.BtnSearchDepth);
-                    Canvas.SetZIndex(DrawHelper.BtnSearchDepth, 20);
-                }
-
-                if (!MainCanvas.Children.Contains(DrawHelper.BtnSearchWidth))
-                {
-                    MainCanvas.Children.Add(DrawHelper.BtnSearchWidth);
-                    Canvas.SetZIndex(DrawHelper.BtnSearchWidth, 20);
-                }
-            }
-        }
-
+        
         private void BtnSearchWidth_Click(object sender, RoutedEventArgs e)
         {
             if (IsUserCanUseButtons)
-            {
-                MainCanvas.Children.Remove(DrawHelper.BtnSearchDepth);
-                MainCanvas.Children.Remove(DrawHelper.BtnSearchWidth);
+            {               
                 Traversal.WidthTraversal(MainGraph);
             }
 
@@ -225,8 +214,6 @@ namespace Graph
         {
             if (IsUserCanUseButtons)
             {
-                MainCanvas.Children.Remove(DrawHelper.BtnSearchDepth);
-                MainCanvas.Children.Remove(DrawHelper.BtnSearchWidth);
                 Traversal.DepthTraversal(MainGraph);
             }
         }
@@ -288,8 +275,8 @@ namespace Graph
         {
             if (IsUserCanUseButtons)
             {
-                DrawHelper.MoveGragh(MainCanvas, MainGraph);
-                Logger.ShowAllLogToUser(canvas1);
+                
+                Logger.ShowAllLogToUser(canvas1,Grid1);
             }
 
         }

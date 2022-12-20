@@ -58,7 +58,7 @@ namespace Graph
                     }
                 }
 
-                logger.AddLine($"Ищем минимальное ребро такое, что\nодин конец уже взятая вершина другой ещё не взятая вершина\n" +
+                logger.AddLine($"Ищем минимальное ребро такое, что\nодин конец уже взятая вершина другой ещё нетт\n" +
                     $"На этот раз это ребро между {notUsedE[minE].Vertice1.NameTextBlock.Text} и {notUsedE[minE].Vertice2.NameTextBlock.Text}");
                 animaztionPainter.Shapes.Add(notUsedE[minE].Line);
 
@@ -88,6 +88,7 @@ namespace Graph
             //Animize
             MainWindow.IsUserCanUseButtons = true;
             logger.AddLine("Алгоритм Прима завершён\n");
+            
             return usedE;
         }
 

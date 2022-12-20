@@ -18,12 +18,11 @@ namespace Graph
 {
     class Logger
     {
-        static Rectangle LoggerRect = new Rectangle() { Fill = new SolidColorBrush(Colors.White) };
         static TextBlock LoggerTextBlock = new TextBlock();
 
         static StringBuilder sb = new StringBuilder();
-        static Button BtnReturn = new Button { Width = 70, Height = 30, Content = "RETURN", Margin = new Thickness(710, 45, 0, 0) };
-        static private double _canvasHeight;
+        
+        
 
         static Canvas _canvas;
         static double TextHeigh = 0; 
@@ -44,26 +43,32 @@ namespace Graph
         static int end = 0;
         static int amountOfStrOnTextBlock;
         static string[] Allstrings;
-        public static void ShowAllLogToUser(Canvas canvas)
+
+
+        //Logger.ShowAllLogToUser(MainWindow.MainCanvas, MainWindow.MainGrid);
+        public static void ShowAllLogToUser(Canvas canvas, Grid grid)
         {
 
             MainWindow.IsUserCanUseButtons = false;
             LoggerTextBlock.MouseWheel += LoggerTextBlock_MouseWheel;
 
-            BtnReturn.Click += BtnReturn_Click;
             _canvas = canvas;
-            LoggerRect.Width = canvas.Width;
-            LoggerRect.Height = canvas.Height/3;
+            
 
             Allstrings = sb.ToString().Split('\n');
             
 
-            amountOfStrOnTextBlock = (int)(LoggerRect.Height / 16.1);
+            amountOfStrOnTextBlock = (int)(canvas.ActualHeight / 16.1);
             end = amountOfStrOnTextBlock;
-            LoggerTextBlock.Height = LoggerRect.Height-5;
+            LoggerTextBlock.Height = canvas.ActualHeight - 5;
+
             TextHeigh = 16.1 * Allstrings.Length;
-            LoggerTextBlock.Width = canvas.Width;
-            LoggerTextBlock.Margin = new Thickness(85, 5, 0, 0);
+
+            LoggerTextBlock.Width = 290;
+
+            LoggerTextBlock.Margin = new Thickness(0, 5, 1, 0);
+            LoggerTextBlock.VerticalAlignment = VerticalAlignment.Top;
+            LoggerTextBlock.HorizontalAlignment = HorizontalAlignment.Right;
 
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = start; i < end; i++)
@@ -75,49 +80,44 @@ namespace Graph
             LoggerTextBlock.Text= stringBuilder.ToString();
 
 
-            canvas.Children.Add(LoggerRect);
-            canvas.Children.Add(LoggerTextBlock);
-            canvas.Children.Add(BtnReturn);
+            grid.Children.Add(LoggerTextBlock);
 
-            Canvas.SetZIndex(LoggerRect, 25);
-            Canvas.SetZIndex(LoggerTextBlock, 26);
-            Canvas.SetZIndex(BtnReturn, 26);
+           
 
-            _canvasHeight = canvas.Height;
+            
         }
 
         private static void BtnReturn_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.IsUserCanUseButtons = true;
-            _canvas.Children.Remove(LoggerRect);
+            //Remove text
             _canvas.Children.Remove(LoggerTextBlock);
-            _canvas.Children.Remove(BtnReturn);
-            _diff = 0;
+            //_diff = 0;
             LoggerTextBlock.Margin = new Thickness(85, 5, 0, 0);
             start = 0;
             end = amountOfStrOnTextBlock;
-            LoggerTextBlock.MouseWheel -= LoggerTextBlock_MouseWheel;
+            //LoggerTextBlock.MouseWheel -= LoggerTextBlock_MouseWheel;
 
         }
 
 
         private static int _diff;
         const int ChangeLength = 40;
-        
+
 
 
         private static void LoggerTextBlock_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            
 
-            if (TextHeigh > _canvasHeight/3)
+
+            if (TextHeigh > LoggerTextBlock.Height)
             {
                 Thickness thickness = LoggerTextBlock.Margin;
                 int delta = e.Delta;
-                
 
-                if (delta > 0 &&  start> 0)
+
+                if (delta > 0 && start > 0)
                 {
                     start -= amountOfStrOnTextBlock / 4;
                     end -= amountOfStrOnTextBlock / 4;
@@ -128,11 +128,11 @@ namespace Graph
 
 
                 }
-                else if (delta < 0 && end <Allstrings.Length)
+                else if (delta < 0 && end < Allstrings.Length)
                 {
                     //delta = -120;
                     // The user scrolled down.
-                    start += amountOfStrOnTextBlock /4;
+                    start += amountOfStrOnTextBlock / 4;
                     end += amountOfStrOnTextBlock / 4;
                 }
 
@@ -142,18 +142,17 @@ namespace Graph
                     end = amountOfStrOnTextBlock;
                 }
 
-                for(int i=start; i<end;i++)
+                for (int i = start; i < end; i++)
                 {
                     if (i >= Allstrings.Length) break;
                     stringBuilder.Append(Allstrings[i]);
                     stringBuilder.Append('\n');
                 }
-                LoggerTextBlock.Text=stringBuilder.ToString();
+                LoggerTextBlock.Text = stringBuilder.ToString();
 
                 LoggerTextBlock.Margin = thickness;
 
             }
-
         }
     }
 }

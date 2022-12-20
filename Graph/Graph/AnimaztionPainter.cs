@@ -43,8 +43,8 @@ namespace Graph
             Height = 20,
             Width = 125,
             Background = new SolidColorBrush(Colors.Gray),
-            Margin = new Thickness(650, 320, 0, 0),
-            VerticalAlignment = VerticalAlignment.Center,
+            Margin = new Thickness(5, 460, 0, 0),
+            VerticalAlignment = VerticalAlignment.Top,
             HorizontalContentAlignment = HorizontalAlignment.Center
 
         };
@@ -56,8 +56,8 @@ namespace Graph
             Height = 20,
             Width = 125,
             Background = new SolidColorBrush(Colors.Gray),
-            Margin = new Thickness(650, 350, 0, 0),
-            VerticalAlignment = VerticalAlignment.Center,
+            Margin = new Thickness(5, 490, 0, 0),
+            VerticalAlignment = VerticalAlignment.Top,
             HorizontalContentAlignment = HorizontalAlignment.Center
 
         };
@@ -71,14 +71,12 @@ namespace Graph
             if (_type == AlgorithmType.Traversal)
             {
                 BtnNext.Click += BtnNextTraversal_Click;
-                _canvas.Children.Add(BtnReturn);
-                Canvas.SetZIndex(BtnReturn, 20);
+                
             }
             else if (_type == AlgorithmType.Prim)
             {
                 BtnNext.Click += BtnNextPrim_Click;
-                _canvas.Children.Add(BtnReturn);
-                Canvas.SetZIndex(BtnReturn, 20);
+                
             }
             else if (_type == AlgorithmType.FordFarkenson)
             {
@@ -88,6 +86,8 @@ namespace Graph
             {
                 BtnNext.Click += BtnNextDijkstra_Click;
             }
+            _canvas.Children.Add(BtnReturn);
+            Canvas.SetZIndex(BtnReturn, 20);
 
             _canvas.MouseMove -= AddVerticeTool.clearSelection;
             _canvas.MouseMove -= DeleteConnectionTool.clearSelection;
@@ -114,8 +114,18 @@ namespace Graph
             _canvas.MouseMove += ChangeDataTool.TextBlockSelected;
             _canvas.MouseDown += MainWindow.ToolAddVertice.rectMouseDown;
             BtnNext.Click -= BtnNextTraversal_Click;
-            foreach (Shape shape in _shapes)
-                shape.Effect = null;
+            if(_shapes!=null)
+                foreach (Shape shape in _shapes)
+                    shape.Effect = null;
+
+            if (ConnectionDescriptions != null)
+            {
+                foreach (Connection connection in MainWindow.MainGraph.Connections)
+                {
+                    connection.BlockText.Text = connection.Length.ToString();
+                    connection.BlockText.MouseDown += ChangeDataTool.TextBlock_MouseDown;
+                }
+            }
 
             foreach (var v in MainGraph.AllVertices)
                 v.Rect.MouseMove += MainWindow.ToolAddVertice.RectangleMouseMove;

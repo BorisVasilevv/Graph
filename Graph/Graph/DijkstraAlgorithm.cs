@@ -17,26 +17,7 @@ namespace Graph
     class DijkstraAlgorithm
     {
         static int result;
-
-        static Rectangle AnswerRect = new Rectangle
-        {
-            Height = 100,
-            Width = 150,
-            Fill = new SolidColorBrush(Colors.Brown),
-            HorizontalAlignment = HorizontalAlignment.Left,
-            VerticalAlignment = VerticalAlignment.Bottom
-        };
-
-        static TextBlock AnswerBlock = new TextBlock
-        {
-            Height = 40,
-            Width = 150,
-            HorizontalAlignment = HorizontalAlignment.Left,
-            VerticalAlignment = VerticalAlignment.Bottom,
-            Margin = new Thickness(655, 375, 0, 0)
-            //Text = result.ToString()
-        };
-
+               
         static MyGraph GraphToWork;
 
         public static void Algorithm(Vertice start, Vertice end, MyGraph graph)
@@ -89,19 +70,19 @@ namespace Graph
             {
                 result += connection.Length;
             }
-
-            AnswerBlock.Text = $"Min way from {start.NameTextBlock.Text} to {end.NameTextBlock.Text} \nResult: {result}" ;
+            TextBlock textBlock = DrawHelper.AnswerBlock;
+            textBlock.Text = $"Min way from {start.NameTextBlock.Text} to {end.NameTextBlock.Text} \nResult: {result}" ;
             result = 0;
             MainWindow.MainCanvas.Children.Add(DrawHelper.BtnReturn);
 
             Canvas.SetZIndex(DrawHelper.BtnReturn, 20);
-            MainWindow.MainCanvas.Children.Add(AnswerRect);
-            Canvas.SetZIndex(AnswerRect, 18);
-            Canvas.SetTop(AnswerRect, MainWindow.MainCanvas.Height - AnswerRect.Height);
-            Canvas.SetLeft(AnswerRect, MainWindow.MainCanvas.Width - AnswerRect.Width);
 
-            MainWindow.MainCanvas.Children.Add(AnswerBlock);
-            Canvas.SetZIndex(AnswerBlock, 19);
+            MainWindow.MainCanvas.Children.Add(DrawHelper.AnswerRect);
+            Canvas.SetZIndex(DrawHelper.AnswerRect, 18);
+            
+
+            MainWindow.MainCanvas.Children.Add(textBlock);
+            Canvas.SetZIndex(textBlock, 19);
         }
 
 

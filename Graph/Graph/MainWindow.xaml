@@ -9,12 +9,14 @@
         Title="MainWindow"
         
         WindowState="Maximized">
-    <Grid>
+    <Grid x:Name="Grid1">
         <Canvas x:Name="canvas1" Background="LightGray" Height="450" Width="800">
         </Canvas>
 
-        <Rectangle HorizontalAlignment="Left" Height="410" VerticalAlignment="Top" Width="80" Fill="Brown"></Rectangle>
-        <Rectangle x:Name="CommentRect" Fill="White" HorizontalAlignment="Right" Stroke="Black" Width="300" Margin="0,0,1,0"></Rectangle>
+        
+        <Rectangle HorizontalAlignment="Left" Height="450" VerticalAlignment="Top" Width="80" Fill="Brown"></Rectangle>
+        <Rectangle x:Name="CommentRect" Fill="White" HorizontalAlignment="Right" Stroke="Black" Width="300" Margin="0,0,0,0"></Rectangle>
+        
 
         <Button 
             x:Name="btnCreateVertice" HorizontalAlignment="Left"  Margin="5,10,0,0" Height="30" 
@@ -33,28 +35,33 @@
             VerticalAlignment="Top" Width="70" Click="btnDeleteConnection_Click" Content="Del Connect">
         </Button>
         <Button 
-            x:Name="btnTraversal" HorizontalAlignment="Left"  Margin="5,170,0,0" Height="30" 
-            VerticalAlignment="Top" Width="70" Click="btnTraversal_Click" Content="Traversal">
+            x:Name="btnInDepth" HorizontalAlignment="Left"  Margin="5,170,0,0" Height="30" 
+            VerticalAlignment="Top" Width="70" Click="BtnSearchDetpth_Click" Content="In depth">
         </Button>
         <Button 
-            x:Name="btnMinWay" HorizontalAlignment="Left"  Margin="5,210,0,0" Height="30" 
+            x:Name="btnInWidth" HorizontalAlignment="Left"  Margin="5,210,0,0" Height="30" 
+            VerticalAlignment="Top" Width="70" Click="BtnSearchWidth_Click" Content="In width">
+        </Button>
+        
+        <Button 
+            x:Name="btnMinWay" HorizontalAlignment="Left"  Margin="5,250,0,0" Height="30" 
             VerticalAlignment="Top" Width="70" Click="btnMinWay_Click" Content="Min Way">
         </Button>
         <Button 
-            x:Name="btnMaxFlow" HorizontalAlignment="Left"  Margin="5,250,0,0" Height="30" 
+            x:Name="btnMaxFlow" HorizontalAlignment="Left"  Margin="5,290,0,0" Height="30" 
             VerticalAlignment="Top" Width="70" Click="btnMaxFlow_Click" Content="Max Flow">
         </Button>
         <Button 
-            x:Name="btnMinTree" HorizontalAlignment="Left"  Margin="5,290,0,0" Height="30" 
+            x:Name="btnMinTree" HorizontalAlignment="Left"  Margin="5,330,0,0" Height="30" 
             VerticalAlignment="Top" Width="70" Click="btnMinTree_Click" Content="Min Tree">
         </Button>
         <Button 
-            x:Name="btnSaveChildren" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top"
-            Width="70" Margin="5,330,0,0" Content="SAVE" Click="btnSave_Click">
+            x:Name="btnSave" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top"
+            Width="70" Margin="5,370,0,0" Content="SAVE" Click="btnSave_Click">
         </Button>
         <Button 
             x:Name="btnExitChildren" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top"
-            Width="70" Margin="5,370,0,0" Content="EXIT" Click="btnExit_click">
+            Width="70" Margin="5,410,0,0" Content="EXIT" Click="btnExit_click">
         </Button>
        
     </Grid>

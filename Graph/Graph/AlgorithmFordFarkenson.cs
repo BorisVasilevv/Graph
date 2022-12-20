@@ -192,7 +192,7 @@ namespace Graph
             logger.AddLine("выбираем вершину стока и вершину истока.");
             logger.AddLine("копируем наш граф в двумерный массив.");
 
-            TextBlock textBlock = DrawHelper.TextBlock;
+            TextBlock textBlock = DrawHelper.AnswerBlock;
 
             textBlock.Text = $"The max flow beetwen\n{start.NameTextBlock.Text} and {end.NameTextBlock.Text} is {FordFulkerson(ref graph, start.Id, end.Id)}";
             MainWindow.MainCanvas.Children.Add(textBlock);
@@ -200,14 +200,6 @@ namespace Graph
             Rectangle answerRect = DrawHelper.AnswerRect;
             MainWindow.MainCanvas.Children.Add(answerRect);
             Canvas.SetZIndex(answerRect, 18);
-            Canvas.SetTop(answerRect, MainWindow.MainCanvas.Height - answerRect.Height);
-            Canvas.SetLeft(answerRect, MainWindow.MainCanvas.Width - answerRect.Width);
-            MainWindow.MainCanvas.Children.Add(DrawHelper.BtnReturn);
-            DrawHelper.BtnReturn.Click += BtnReturn_Click; ;
-            Canvas.SetZIndex(DrawHelper.BtnReturn, 20);
-
-            
-
 
             foreach (Connection conn in mainGraph.Connections)
             {
@@ -219,17 +211,7 @@ namespace Graph
             }
         }
 
-        private static void BtnReturn_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow.BtnReturn_Click(sender, e);
-            MainWindow.IsUserCanUseButtons = true;
-
-            foreach (Connection connection in MainWindow.MainGraph.Connections)
-            {
-                connection.BlockText.Text = connection.Length.ToString();
-                connection.BlockText.MouseDown += ChangeDataTool.TextBlock_MouseDown;
-            }                                    
-        }
+        
     }
 }
 
