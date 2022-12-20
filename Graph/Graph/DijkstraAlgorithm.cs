@@ -64,7 +64,7 @@ namespace Graph
             DrawHelper.DrawGraph(MainWindow.MainCanvas, MainWindow.MainGraph);
 
             MainWindow.IsUserCanUseButtons = true;
-            DrawHelper.BtnReturn.Click += BtnReturn_Click;
+            
 
             foreach (Connection connection in connections1)
             {
@@ -87,12 +87,7 @@ namespace Graph
 
 
 
-        public static void BtnReturn_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow.MainCanvas.Children.Clear();
-            MainWindow.MainGraph = GraphToWork;
-            DrawHelper.DrawGraph(MainWindow.MainCanvas, GraphToWork);
-        }
+        
 
         /// <summary>
         /// Ребро графа
@@ -398,7 +393,7 @@ namespace Graph
                     }
                 }
             }
-
+            AnimaztionPainter painter = new AnimaztionPainter(AnimaztionPainter.AlgorithmType.Dijkstra);
             /// <summary>
             /// Формирование пути
             /// </summary>
@@ -426,6 +421,7 @@ namespace Graph
                 }
                 logger.AddLine("Алгоритм Дейкстры завершён\n");
 
+                painter.ShowAnimation();
                 Logger.ShowAllLogToUser(MainWindow.MainCanvas, MainWindow.MainGrid);
                 return path;
             }

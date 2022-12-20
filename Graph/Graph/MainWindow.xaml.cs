@@ -251,16 +251,7 @@ namespace Graph
             }
         }
 
-        public static void BtnReturn_Click(object sender, RoutedEventArgs e)
-        {
-            MainCanvas.Children.Clear();
-            MainGraph = MainGraphCopy == null ? MainGraph : MainGraphCopy;
-            IsUserCanUseButtons = true;
-            DrawHelper.DrawGraph(MainCanvas, MainGraph);
-            DrawHelper.BtnReturn.Click -= BtnReturn_Click;
-
-            MainGraphCopy = null;
-        }
+        
 
 
 

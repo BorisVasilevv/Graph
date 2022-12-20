@@ -93,8 +93,8 @@ namespace Graph
             //logger.AddLine("создаем массив, где индекс - вершина, а значение - откуда можем попасть");
 
             int max_flow = 0; // There is no flow initially
-            logger.AddLine("для каждого  существующего пути будем искать максимальный поток.");
-            logger.AddLine("создаем переменную максимального потока для выбранного пути.");
+            logger.AddLine("для каждого  существующего пути\nбудем искать максимальный поток.");
+            logger.AddLine("создаем переменную максимального\nпотока для выбранного пути.");
             // Augment the flow while there is path from source
             // to sink
             while (Bfs(rGraph, s, t, parent))
@@ -103,8 +103,8 @@ namespace Graph
                 // along the path filled by BFS. Or we can say
                 // find the maximum flow through the path found.
                 int path_flow = int.MaxValue;
-                logger.AddLine("идем по одному из путей и для каждого ребра проверяем, является\nли его пропускная способность минимальной на нашем пути.");
-                logger.AddLine("если она минимальная, то присваиваем это значение нашей переменной максимального потока для выбранного пути.");
+                logger.AddLine("идем по одному из путей и для каждого ребра\nпроверяем, является ли его пропускная\nспособность минимальной на нашем пути.");
+                logger.AddLine("если она минимальная, то присваиваем это\nзначение нашей переменной максимальног\nпотока для выбранного пути.");
                 for (v = t; v != s; v = parent[v])
                 {
                     u = parent[v];
@@ -143,10 +143,10 @@ namespace Graph
             for (u = 0; u < V; u++)
                 for (v = 0; v < V; v++)
                     graph[u, v] -= rGraph[u, v];
-           
+
             animationHelper.ShowAnimation();
             // Return the overall flow
-            logger.AddLine($"складываем наши максимальные потоки всех существующих путей из вершины {s + 1} в вершину {t + 1} и получаем: {max_flow}.\n");
+            logger.AddLine($"складываем наши максимальные потоки всех\nсуществующих путей из вершины {t + 1} в вершину {s + 1}\nи получаем {max_flow}.\n");
 
             Logger.ShowAllLogToUser(MainWindow.MainCanvas, MainWindow.MainGrid);
             return max_flow;
@@ -155,7 +155,7 @@ namespace Graph
         public static void FordFarkensonAlgorithm(Vertice start, Vertice end, MyGraph mainGraph)
         {
 
-            foreach(Connection conn in mainGraph.Connections)
+            foreach (Connection conn in mainGraph.Connections)
             {
                 conn.BlockText.MouseDown -= ChangeDataTool.TextBlock_MouseDown;
             }
@@ -206,12 +206,12 @@ namespace Graph
             {
                 int a = graph[conn.Vertice1.Id, conn.Vertice2.Id];
                 int b = graph[conn.Vertice2.Id, conn.Vertice1.Id];
-                ResultLength.Add(conn,Math.Max(a, b));
+                ResultLength.Add(conn, Math.Max(a, b));
                 //conn.BlockText.Text = $"{Math.Max(a, b)}/{conn.BlockText.Text}";
             }
-        }    
-        
-        public static Dictionary<Connection,int> ResultLength = new Dictionary<Connection, int>();
+        }
+
+        public static Dictionary<Connection, int> ResultLength = new Dictionary<Connection, int>();
     }
 }
 

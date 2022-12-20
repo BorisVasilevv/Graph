@@ -87,11 +87,7 @@ namespace Graph
 
 
             if(!grid.Children.Contains(LoggerTextBlock)) 
-                grid.Children.Add(LoggerTextBlock);
-
-           
-
-            
+                grid.Children.Add(LoggerTextBlock);                       
         }
 
         private static void BtnReturn_Click(object sender, RoutedEventArgs e)

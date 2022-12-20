@@ -23,16 +23,16 @@ namespace Graph
         MyGraph MainGraph = MainWindow.MainGraph;
         private Canvas _canvas = MainWindow.MainCanvas;
         public List<Shape> Shapes { get; private set; }
-        public List<(Connection,string)> ConnectionDescriptions { get; private set; }
+        public List<(Connection, string)> ConnectionDescriptions { get; private set; }
 
         AlgorithmType _type;
 
         public AnimaztionPainter(AlgorithmType type)
         {
             _type = type;
-            if(type == AlgorithmType.Traversal|| type == AlgorithmType.Prim) 
+            if (type == AlgorithmType.Traversal || type == AlgorithmType.Prim)
                 Shapes = new List<Shape>();
-            if (type==AlgorithmType.FordFarkenson)
+            if (type == AlgorithmType.FordFarkenson)
                 ConnectionDescriptions = new List<(Connection, string)>();
         }
 
@@ -47,18 +47,18 @@ namespace Graph
             if (BtnReturn == null) BtnReturn = DrawHelper.BtnReturn;
             if (BtnNext == null) BtnNext = DrawHelper.BtnNext;
             _shapes = Shapes;
-            
+
 
             BtnReturn.Click += BtnReturn_Click;
             if (_type == AlgorithmType.Traversal)
             {
                 BtnNext.Click += BtnNextTraversal_Click;
-                
+
             }
             else if (_type == AlgorithmType.Prim)
             {
                 BtnNext.Click += BtnNextPrim_Click;
-                
+
             }
             else if (_type == AlgorithmType.FordFarkenson)
             {
@@ -83,24 +83,49 @@ namespace Graph
             MainWindow.IsUserCanUseButtons = false;
             _canvas.Children.Add(BtnNext);
             Canvas.SetZIndex(BtnNext, 20);
-            
+
         }
 
         private void BtnReturn_Click(object sender, RoutedEventArgs e)
         {
             BtnReturn.Click -= BtnReturn_Click;
+            BtnNext.Click -= BtnNextPrim_Click;
+            BtnNext.Click -= BtnNextTraversal_Click;
+            BtnNext.Click -= BtnNextFordFarkenson_Click;
+            BtnNext.Click -= BtnNextDijkstra_Click;
+
             if (_canvas.Children.Contains(BtnNext)) _canvas.Children.Remove(BtnNext);
+            if (_canvas.Children.Contains(DrawHelper.AnswerBlock)) _canvas.Children.Remove(DrawHelper.AnswerBlock);
+            if (_canvas.Children.Contains(DrawHelper.AnswerRect)) _canvas.Children.Remove(DrawHelper.AnswerRect);
+
             _canvas.Children.Remove(BtnReturn);
             _canvas.MouseMove += AddVerticeTool.clearSelection;
             _canvas.MouseMove += DeleteConnectionTool.clearSelection;
             _canvas.MouseMove += ChangeDataTool.TextBlockSelected;
             _canvas.MouseDown += MainWindow.ToolAddVertice.rectMouseDown;
             BtnNext.Click -= BtnNextTraversal_Click;
-            if(_shapes!=null)
-                foreach (Shape shape in _shapes)
-                    shape.Effect = null;
 
-            if (ConnectionDescriptions != null)
+            foreach (Vertice v in MainGraph.AllVertices)
+                v.Rect.MouseMove += MainWindow.ToolAddVertice.RectangleMouseMove;
+            if (_type == AlgorithmType.Traversal || _type == AlgorithmType.Prim)
+            {
+
+                foreach (Shape shape in _shapes)
+                {
+                    if (shape is Rectangle rect)
+                    {
+                        rect.Fill = new SolidColorBrush(Colors.Brown);
+                        rect.Stroke = new SolidColorBrush(Colors.Black);
+                    }
+                    else if (shape is Polyline line)
+                    {
+                        line.Effect = null;
+                    }
+                }
+
+            }
+
+            if (_type == AlgorithmType.FordFarkenson)
             {
                 foreach (Connection connection in MainWindow.MainGraph.Connections)
                 {
@@ -108,9 +133,16 @@ namespace Graph
                     connection.BlockText.MouseDown += ChangeDataTool.TextBlock_MouseDown;
                 }
             }
-            
-            foreach (var v in MainGraph.AllVertices)
-                v.Rect.MouseMove += MainWindow.ToolAddVertice.RectangleMouseMove;
+
+            if (_type == AlgorithmType.Dijkstra)
+            {
+                MainWindow.MainCanvas.Children.Clear();
+                MainGraph = MainWindow.MainGraphCopy == null ? MainGraph : MainWindow.MainGraphCopy;
+                MainWindow.IsUserCanUseButtons = true;
+                DrawHelper.DrawGraph(MainWindow.MainCanvas, MainGraph);
+            }
+
+
 
             MainWindow.IsUserCanUseButtons = true;
 
@@ -129,8 +161,15 @@ namespace Graph
 
             if (_counter < _shapes.Count)
             {
-                _shapes[_counter].Effect = new DropShadowEffect() { Color = Colors.Black };
-                
+                if (_shapes[_counter] is Polyline line)
+                {
+                    line.Effect = new DropShadowEffect() { Color = Colors.Black };
+                }
+                else if (_shapes[_counter] is Rectangle rect)
+                {
+                    rect.Fill = new SolidColorBrush(Colors.Green);
+                    rect.Stroke = new SolidColorBrush(Colors.Green);
+                }
             }
             _counter++;
             if (_counter >= _shapes.Count) _canvas.Children.Remove(BtnNext);
@@ -143,7 +182,7 @@ namespace Graph
 
             if (_counter < _shapes.Count)
             {
-                _shapes[_counter].Effect = new DropShadowEffect() { Color = Colors.Black };               
+                _shapes[_counter].Fill = new SolidColorBrush(Colors.Green);
             }
             if (_counter == _shapes.Count)
             {
@@ -153,10 +192,7 @@ namespace Graph
             _counter++;
         }
 
-        public static void ReturnFunctionality()
-        {
 
-        }
 
 
         private void BtnNextFordFarkenson_Click(object sender, RoutedEventArgs e)
@@ -170,13 +206,13 @@ namespace Graph
             {
                 _canvas.Children.Remove(BtnNext);
 
-                foreach(Connection conn in MainGraph.Connections)
+                foreach (Connection conn in MainGraph.Connections)
                 {
                     conn.BlockText.Text = $"{AlgorithmFordFarkenson.ResultLength[conn]}/{conn.Length}";
                 }
             }
 
-           
+
         }
 
 
