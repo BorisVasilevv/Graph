@@ -106,6 +106,24 @@ namespace Graph
             }
         }
 
+
+        public static void MoveGragh(Canvas canvas, MyGraph graph)
+        {
+            
+            foreach(Vertice vertice in graph.AllVertices)
+            {
+                if (vertice.RectCenter.Y < canvas.Height/3)
+                {
+                    Point p = new Point(vertice.RectCenter.X,vertice.RectCenter.Y+canvas.Height/3);
+
+                    vertice.RectCenter=p;
+                }
+            }
+            canvas.Children.Clear();
+            DrawGraph(canvas, graph);
+        }
+
+
         public static Button BtnReturn = new Button
         {
             Content = "To original graph",

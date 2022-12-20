@@ -32,7 +32,7 @@ namespace Graph
         {
             InitializeComponent();
 
-
+            
 
             ToolAddVertice = new AddVerticeTool();
             MainCanvas = canvas1;
@@ -308,6 +308,7 @@ namespace Graph
         {
             if (IsUserCanUseButtons)
             {
+                DrawHelper.MoveGragh(MainCanvas, MainGraph);
                 Logger.ShowAllLogToUser(canvas1);
             }
 

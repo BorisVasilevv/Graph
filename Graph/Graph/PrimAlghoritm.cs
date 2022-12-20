@@ -25,7 +25,7 @@ namespace Graph
 
             int numberV=notUsedV.Count;
 
-            
+            logger.AddLine("Начат алгоритм Прима");
             //выбираем случайную начальную вершину
             Random rand = new Random();
             int randomNumber =rand.Next(0, numberV);
@@ -39,6 +39,7 @@ namespace Graph
             {
                 int minE = -1; //номер наименьшего ребра
                                //поиск наименьшего ребра
+
                 for (int i = 0; i < notUsedE.Count; i++)
                 {
                     if ((usedV.IndexOf(notUsedE[i].Vertice1) != -1) && (notUsedV.IndexOf(notUsedE[i].Vertice2) != -1) ||
@@ -56,17 +57,21 @@ namespace Graph
                     }
                 }
 
+                logger.AddLine($"Ищем минимальное ребро такое, что\nодин конец уже взятая вершина другой ещё не взятая вершина\n" +
+                    $"На этот раз это ребро между {notUsedE[minE].Vertice1.NameTextBlock.Text} и {notUsedE[minE].Vertice2.NameTextBlock.Text}");
                 animaztionPainter.Shapes.Add(notUsedE[minE].Line);
 
                 //заносим новую вершину в список использованных и удаляем ее из списка неиспользованных
                 if (usedV.IndexOf(notUsedE[minE].Vertice1) != -1)
                 {
+                    logger.AddLine($"Добавляем невыделенную вершину,то есть {notUsedE[minE].Vertice2.NameTextBlock.Text}");
                     usedV.Add(notUsedE[minE].Vertice2);
                     animaztionPainter.Shapes.Add(notUsedE[minE].Vertice2.Rect);
                     notUsedV.Remove(notUsedE[minE].Vertice2);
                 }
                 else
                 {
+                    logger.AddLine($"Добавляем невыделенную вершину, то есть {notUsedE[minE].Vertice1.NameTextBlock.Text}");
                     usedV.Add(notUsedE[minE].Vertice1);
                     animaztionPainter.Shapes.Add(notUsedE[minE].Vertice1.Rect);
                     
@@ -80,6 +85,7 @@ namespace Graph
             animaztionPainter.ShowAnimation();
             //Animize
             MainWindow.IsUserCanUseButtons = true;
+            logger.AddLine("Алгоритм Прима завершён\n");
             return usedE;
         }
     }

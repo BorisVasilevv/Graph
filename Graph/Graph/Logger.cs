@@ -26,6 +26,8 @@ namespace Graph
         static private double _canvasHeight;
 
         static Canvas _canvas;
+        static double TextHeigh = 0; 
+
 
         public void AddText(string text)
         {                  
@@ -38,27 +40,40 @@ namespace Graph
             sb.Append("\n");
             
         }
-
-
+        static int start = 0;
+        static int end = 0;
+        static int amountOfStrOnTextBlock;
+        static string[] Allstrings;
         public static void ShowAllLogToUser(Canvas canvas)
         {
+
             MainWindow.IsUserCanUseButtons = false;
             LoggerTextBlock.MouseWheel += LoggerTextBlock_MouseWheel;
+
             BtnReturn.Click += BtnReturn_Click;
             _canvas = canvas;
             LoggerRect.Width = canvas.Width;
-            LoggerRect.Height = canvas.Height;
+            LoggerRect.Height = canvas.Height/3;
 
-            int amountOfStrings = 0;
-            foreach(char c in sb.ToString())
-                if (c == '\n') amountOfStrings++;
+            Allstrings = sb.ToString().Split('\n');
             
 
-
-            LoggerTextBlock.Height = 16.1* amountOfStrings;
+            amountOfStrOnTextBlock = (int)(LoggerRect.Height / 16.1);
+            end = amountOfStrOnTextBlock;
+            LoggerTextBlock.Height = LoggerRect.Height-5;
+            TextHeigh = 16.1 * Allstrings.Length;
             LoggerTextBlock.Width = canvas.Width;
             LoggerTextBlock.Margin = new Thickness(85, 5, 0, 0);
-            LoggerTextBlock.Text=sb.ToString();
+
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = start; i < end; i++)
+            {
+                if (i >= Allstrings.Length) break;
+                stringBuilder.Append(Allstrings[i]);
+                stringBuilder.Append('\n');
+            }
+            LoggerTextBlock.Text= stringBuilder.ToString();
+
 
             canvas.Children.Add(LoggerRect);
             canvas.Children.Add(LoggerTextBlock);
@@ -79,37 +94,62 @@ namespace Graph
             _canvas.Children.Remove(BtnReturn);
             _diff = 0;
             LoggerTextBlock.Margin = new Thickness(85, 5, 0, 0);
+            start = 0;
+            end = amountOfStrOnTextBlock;
+            LoggerTextBlock.MouseWheel -= LoggerTextBlock_MouseWheel;
+
         }
 
 
         private static int _diff;
-        const int ChangeLength = 40; 
+        const int ChangeLength = 40;
+        
+
+
         private static void LoggerTextBlock_MouseWheel(object sender, MouseWheelEventArgs e)
         {
+            StringBuilder stringBuilder = new StringBuilder();
+            
 
-
-            if (LoggerTextBlock.Height > _canvasHeight)
+            if (TextHeigh > _canvasHeight/3)
             {
                 Thickness thickness = LoggerTextBlock.Margin;
                 int delta = e.Delta;
                 
 
-                if (delta > 0 &&  _diff< 0)
+                if (delta > 0 &&  start> 0)
                 {
+                    start -= amountOfStrOnTextBlock / 4;
+                    end -= amountOfStrOnTextBlock / 4;
                     //delta = 120;
                     // The user scrolled up.
-                    thickness.Top += ChangeLength;
-                    _diff += ChangeLength;
+                    //thickness.Top += ChangeLength;
+                    //_diff += ChangeLength;
+
 
                 }
-                else if (delta < 0 && LoggerTextBlock.Height - _canvasHeight - Math.Abs(_diff) > 0)
+                else if (delta < 0 && end <Allstrings.Length)
                 {
                     //delta = -120;
                     // The user scrolled down.
-                    thickness.Top -= ChangeLength;
-                    _diff -= ChangeLength;
+                    start += amountOfStrOnTextBlock /4;
+                    end += amountOfStrOnTextBlock / 4;
                 }
-                
+
+                if (start < 0)
+                {
+                    start = 0;
+                    end = amountOfStrOnTextBlock;
+                }
+
+                for(int i=start; i<end;i++)
+                {
+                    if (i >= Allstrings.Length) break;
+                    stringBuilder.Append(Allstrings[i]);
+                    stringBuilder.Append('\n');
+                }
+                LoggerTextBlock.Text=stringBuilder.ToString();
+
                 LoggerTextBlock.Margin = thickness;
 
             }

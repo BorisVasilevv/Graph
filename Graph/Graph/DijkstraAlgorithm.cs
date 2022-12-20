@@ -439,10 +439,11 @@ namespace Graph
                     else
                     {
                         logger.AddLine($"Взяли путь от вершины {int.Parse(endVertex.Name) + 1} до вершины {int.Parse(path)+1}");
+
                     }
                     path = $"{endVertex.ToString()};{path}";
                 }
-
+                logger.AddLine("Алгоритм Дейкстры завершён\n");
                 return path;
             }
         }
