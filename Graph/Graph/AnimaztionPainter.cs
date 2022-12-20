@@ -37,33 +37,14 @@ namespace Graph
         }
 
 
-        Button BtnNext = new Button
-        {
-            Content = "Next",
-            Height = 20,
-            Width = 125,
-            Background = new SolidColorBrush(Colors.Gray),
-            Margin = new Thickness(5, 460, 0, 0),
-            VerticalAlignment = VerticalAlignment.Top,
-            HorizontalContentAlignment = HorizontalAlignment.Center
-
-        };
+        Button BtnNext = null;
 
 
-        Button BtnReturn = new Button
-        {
-            Content = "To original graph",
-            Height = 20,
-            Width = 125,
-            Background = new SolidColorBrush(Colors.Gray),
-            Margin = new Thickness(5, 490, 0, 0),
-            VerticalAlignment = VerticalAlignment.Top,
-            HorizontalContentAlignment = HorizontalAlignment.Center
-
-        };
+        Button BtnReturn = null;
 
         public void ShowAnimation()
         {
+            if (BtnReturn == null) BtnReturn = DrawHelper.BtnReturn;
             _shapes = Shapes;
             
 

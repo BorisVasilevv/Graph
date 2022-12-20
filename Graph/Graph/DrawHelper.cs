@@ -114,7 +114,7 @@ namespace Graph
 
         //public static void MoveGragh(Canvas canvas, MyGraph graph)
         //{
-            
+
         //    foreach(Vertice vertice in graph.AllVertices)
         //    {
         //        if (vertice.RectCenter.Y < canvas.Height/3)
@@ -128,6 +128,17 @@ namespace Graph
         //    DrawGraph(canvas, graph);
         //}
 
+        Button BtnNext = new Button
+        {
+            Content = "Next",
+            Height = 20,
+            Width = 125,
+            Background = new SolidColorBrush(Colors.Gray),
+            Margin = new Thickness(5, 460, 0, 0),
+            VerticalAlignment = VerticalAlignment.Top,
+            HorizontalContentAlignment = HorizontalAlignment.Center
+
+        };
 
         public static Button BtnReturn = new Button
         {

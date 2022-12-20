@@ -113,7 +113,7 @@ namespace Graph
 
                     //int connectionMaxFlow = Int32.Parse(Connection.SearchConnection(u, v, mainGraph.Connections).BlockText.Text.ToString());
                     connection = Connection.SearchConnection(u, v, MainGraph.Connections);
-                    connection.BlockText.Text = $"{path_flow}/{graph[u, v]}";
+                    //connection.BlockText.Text = $"{path_flow}/{graph[u, v]}";
                     animationHelper.ConnectionDescriptions.Add((connection, $"{path_flow}/{graph[u, v]}"));
                     //Connection.SearchConnection(u, v, mainGraph.Connections).BlockText.Text = $"{path_flow}/{graph[u, v]}";
                 }
@@ -191,27 +191,20 @@ namespace Graph
             logger.AddLine("Начат алгоритм поиска максимального потока.");
             logger.AddLine("выбираем вершину стока и вершину истока.");
             logger.AddLine("копируем наш граф в двумерный массив.");
-
             TextBlock textBlock = DrawHelper.AnswerBlock;
-
-            textBlock.Text = $"The max flow beetwen\n{start.NameTextBlock.Text} and {end.NameTextBlock.Text} is {FordFulkerson(ref graph, start.Id, end.Id)}";
+            textBlock.Text = $"The max flow beetwen\n{start.NameTextBlock.Text} and {end.NameTextBlock.Text} is {FordFulkerson(ref graph, end.Id, start.Id)}";
             MainWindow.MainCanvas.Children.Add(textBlock);
             Canvas.SetZIndex(textBlock, 20);
             Rectangle answerRect = DrawHelper.AnswerRect;
             MainWindow.MainCanvas.Children.Add(answerRect);
             Canvas.SetZIndex(answerRect, 18);
-
             foreach (Connection conn in mainGraph.Connections)
             {
-
                 int a = graph[conn.Vertice1.Id, conn.Vertice2.Id];
                 int b = graph[conn.Vertice2.Id, conn.Vertice1.Id];
-
                 conn.BlockText.Text = $"{Math.Max(a, b)}/{conn.BlockText.Text}";
             }
-        }
-
-        
+        }       
     }
 }
 
