@@ -34,7 +34,6 @@ namespace Graph
             InitializeComponent();
             LeftIndent = (int)CommentRect.Width + 1;
 
-
             ToolAddVertice = new AddVerticeTool();
             MainCanvas = canvas1;
 

@@ -75,5 +75,17 @@ namespace Graph
             }
             return null;
         }
+        public static Connection SearchConnection(int Id1, int Id2, List<Connection> connectionsWhereSeadch)
+        {
+            foreach (Connection connection in connectionsWhereSeadch)
+            {
+                if ((connection.Vertice1.Id == Id1 && connection.Vertice2.Id == Id2)
+                    || (connection.Vertice2.Id == Id1 && connection.Vertice1.Id == Id2))
+                {
+                    return connection;
+                }
+            }
+            return null;
+        }
     }
 }

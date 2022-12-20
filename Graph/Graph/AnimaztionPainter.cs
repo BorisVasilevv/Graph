@@ -23,13 +23,17 @@ namespace Graph
         MyGraph MainGraph = MainWindow.MainGraph;
         private Canvas _canvas = MainWindow.MainCanvas;
         public List<Shape> Shapes { get; private set; }
+        public List<(Polyline,string)> LineDescription { get; private set; }
 
         AlgorithmType _type;
 
         public AnimaztionPainter(AlgorithmType type)
         {
             _type = type;
-            Shapes = new List<Shape>();
+            if(type == AlgorithmType.Traversal|| type == AlgorithmType.Prim) 
+                Shapes = new List<Shape>();
+            if (type==AlgorithmType.FordFarkenson)
+                LineDescription = new List<(Polyline, string)>();
         }
 
 
@@ -61,18 +65,7 @@ namespace Graph
         public void ShowAnimation()
         {
             _shapes = Shapes;
-            //for (int i = 0; i < Vertices.Count; i++)
-            //{
-            //    if (i == 0)
-            //    {
-            //        _shapes.Add(Vertices[i].Rect);
-            //    }
-            //    else
-            //    {
-            //        _shapes.Add(Connection.SearchConnection(Vertices[i - 1], Vertices[i]).Line);
-            //        _shapes.Add(Vertices[i].Rect);
-            //    }
-            //}
+            
 
             BtnReturn.Click += BtnReturn_Click;
             if (_type == AlgorithmType.Traversal)

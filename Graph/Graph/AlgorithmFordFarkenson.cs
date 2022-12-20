@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Graph;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace Graph
 {
     public class AlgorithmFordFarkenson
     {
-
+        static MyGraph MainGraph = MainWindow.MainGraph;
         static bool Bfs(int[,] rGraph, int s, int t, int[] parent)
         {
             int V = (int)Math.Sqrt(rGraph.Length);
@@ -67,6 +68,7 @@ namespace Graph
         // from s to t in the given graph
         static int FordFulkerson(ref int[,] graph, int s, int t)
         {
+            Connection connection = new Connection();
             List<int> logVert = new List<int>();
 
             Logger logger = new Logger();
@@ -107,6 +109,11 @@ namespace Graph
                     u = parent[v];
                     path_flow
                         = Math.Min(path_flow, rGraph[u, v]);
+
+                    //int connectionMaxFlow = Int32.Parse(Connection.SearchConnection(u, v, mainGraph.Connections).BlockText.Text.ToString());
+                    connection = Connection.SearchConnection(u, v, MainGraph.Connections);
+                    connection.BlockText.Text = $"{path_flow}/{graph[u, v]}";
+                    //Connection.SearchConnection(u, v, mainGraph.Connections).BlockText.Text = $"{path_flow}/{graph[u, v]}";
                 }
                 logger.AddLine("максимальный поток на пути из вершин:");
                 // update residual capacities of the edges and
@@ -223,3 +230,6 @@ namespace Graph
         }
     }
 }
+
+
+
