@@ -25,7 +25,8 @@ namespace Graph
         
 
         static Canvas _canvas;
-        static double TextHeigh = 0; 
+        static double FullTextHeigh = 0; 
+        static double NowTextHeigh = 0;
 
 
         public void AddText(string text)
@@ -62,7 +63,8 @@ namespace Graph
             end = amountOfStrOnTextBlock;
             LoggerTextBlock.Height = canvas.ActualHeight - 5;
 
-            TextHeigh = 16.1 * Allstrings.Length;
+            FullTextHeigh = 16.1 * Allstrings.Length;
+            NowTextHeigh = FullTextHeigh;
 
             LoggerTextBlock.Width = 290;
 
@@ -111,7 +113,7 @@ namespace Graph
             StringBuilder stringBuilder = new StringBuilder();
 
 
-            if (TextHeigh > LoggerTextBlock.Height)
+            if (NowTextHeigh > LoggerTextBlock.Height)
             {
                 Thickness thickness = LoggerTextBlock.Margin;
                 int delta = e.Delta;

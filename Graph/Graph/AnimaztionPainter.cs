@@ -187,15 +187,13 @@ namespace Graph
             {
                 _canvas.Children.Remove(BtnNext);
 
-                //foreach (Connection conn in MainGraph.Connections)
-                //{
-
-                    //int a = MainGraph[conn.Vertice1.Id, conn.Vertice2.Id];
-                   // int b = MainGraph[conn.Vertice2.Id, conn.Vertice1.Id];
-
-                    //conn.BlockText.Text = $"{Math.Max(a, b)}/{conn.BlockText.Text}";
-               //}
+                foreach(Connection conn in MainGraph.Connections)
+                {
+                    conn.BlockText.Text = $"{AlgorithmFordFarkenson.ResultLength[conn]}/{conn.Length}";
+                }
             }
+
+           
         }
 
 

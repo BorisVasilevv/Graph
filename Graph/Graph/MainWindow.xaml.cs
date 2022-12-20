@@ -225,6 +225,7 @@ namespace Graph
                 IsUserCanUseButtons = false;
                 ChoseStartEndHelper.ChooseVertices(AlgorithmFordFarkenson.FordFarkensonAlgorithm);
             }
+            
         }
 
         private void btnMinTree_Click(object sender, RoutedEventArgs e)

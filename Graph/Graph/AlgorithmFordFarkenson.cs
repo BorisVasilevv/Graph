@@ -143,8 +143,8 @@ namespace Graph
             for (u = 0; u < V; u++)
                 for (v = 0; v < V; v++)
                     graph[u, v] -= rGraph[u, v];
-
-
+            Logger.ShowAllLogToUser(MainWindow.MainCanvas, MainWindow.MainGrid);
+            animationHelper.ShowAnimation();
             // Return the overall flow
             logger.AddLine($"складываем наши максимальные потоки всех существующих путей из вершины {s + 1} в вершину {t + 1} и получаем: {max_flow}.\n");
             return max_flow;
@@ -198,13 +198,18 @@ namespace Graph
             Rectangle answerRect = DrawHelper.AnswerRect;
             MainWindow.MainCanvas.Children.Add(answerRect);
             Canvas.SetZIndex(answerRect, 18);
+
+
             foreach (Connection conn in mainGraph.Connections)
             {
                 int a = graph[conn.Vertice1.Id, conn.Vertice2.Id];
                 int b = graph[conn.Vertice2.Id, conn.Vertice1.Id];
-                conn.BlockText.Text = $"{Math.Max(a, b)}/{conn.BlockText.Text}";
+                ResultLength.Add(conn,Math.Max(a, b));
+                //conn.BlockText.Text = $"{Math.Max(a, b)}/{conn.BlockText.Text}";
             }
-        }       
+        }    
+        
+        public static Dictionary<Connection,int> ResultLength = new Dictionary<Connection, int>();
     }
 }
 
