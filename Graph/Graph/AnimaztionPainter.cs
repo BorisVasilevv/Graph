@@ -157,9 +157,7 @@ namespace Graph
 
             if (_counter < _shapes.Count)
             {
-                _shapes[_counter].Effect = new DropShadowEffect() { Color = Colors.Black };
-                
-                
+                _shapes[_counter].Effect = new DropShadowEffect() { Color = Colors.Black };               
             }
             if (_counter == _shapes.Count)
             {

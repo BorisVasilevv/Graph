@@ -1,14 +1,20 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Windows;
 using System.IO;
 using System.Linq;
-using static Graph.DijkstraAlgorithm;
+
 
 namespace Graph
 {
     public static class FileWorker
     {
 
-        public static string FilePath { get; set; }
+
+        const int WordCoordId = 0;
+        const int CoordinateXId = 1;
+        const int CoordinateYId = 2;
+        const int coordinatePlaces = 3;
 
         public static MyGraph Read(string filePath)
         {
@@ -22,9 +28,9 @@ namespace Graph
 
             for (int i = 0; i < vertice.Count; i++)
             {
-                List<int> connectionsForVertice = new List<int>();
+                
                 for (int j = 0; j < vertice.Count; j++)
-                {
+                {            
                     int lengthConnection = int.Parse(stringsVertices[i][j]);
                     if (lengthConnection != 0)
                     {
@@ -34,37 +40,57 @@ namespace Graph
                         {
                             connections.Add(newConn);
                         }
-
                     }
 
                 }
-
+                Point point = new Point();
+                point.X = double.Parse(stringsVertices[i][vertice.Count + CoordinateXId]);
+                point.Y = double.Parse(stringsVertices[i][vertice.Count + CoordinateYId]);
+                vertice[i].RectCenter = point;
             }
             return new MyGraph(vertice, connections);
         }
 
+
+        
         public static void WriteToFile(MyGraph graph, string filePath)
         {
+
+            int countOfVertice = graph.AllVertices.Count;
             List<string[]> stringsVertices = new List<string[]>();
-            for (int i = 0; i < graph.AllVertices.Count; i++)
+            for (int i = 0; i < countOfVertice; i++)
             {
-                string[] arrayConnection = new string[graph.AllVertices.Count];
-                for (int j = 0; j < graph.AllVertices.Count; j++)
+                string[] arrayConnectionAndCoordinate = new string[countOfVertice + coordinatePlaces];
+                for (int j = 0; j < countOfVertice; j++)
                 {
                     Connection checkConnection = null;
-                    if (i == j) arrayConnection[j] = "0";
+                    if (i == j) arrayConnectionAndCoordinate[j] = "0";
                     else checkConnection = Connection.SearchConnection(
                         Vertice.SearchVertice(graph.AllVertices[i].Id, graph.AllVertices), 
                         Vertice.SearchVertice(graph.AllVertices[j].Id, graph.AllVertices),
                         graph.Connections);
 
-                    if (checkConnection != null) arrayConnection[j] = checkConnection.Length.ToString();
-                    else arrayConnection[j] = "0";
+                    if (checkConnection != null) arrayConnectionAndCoordinate[j] = checkConnection.Length.ToString();
+                    else arrayConnectionAndCoordinate[j] = "0";
                 }
-                stringsVertices.Add(arrayConnection);
+                stringsVertices.Add(arrayConnectionAndCoordinate);
+            }
+            int counter = 0;
+            foreach(Vertice vertice in graph.AllVertices)
+            {
+                Point point = vertice.RectCenter;
+                for (int j = 0; j < coordinatePlaces; j++)
+                {
+                    if (j == WordCoordId) stringsVertices[counter][countOfVertice + WordCoordId] = "Coordinates:";
+                    else if (j == CoordinateXId) stringsVertices[counter][countOfVertice + CoordinateXId] = point.X.ToString();
+                    else if (j == CoordinateYId) stringsVertices[counter][countOfVertice + CoordinateYId] = point.Y.ToString();
+                    
+                }
+                counter++;
             }
             string[] str=stringsVertices.Select(x => string.Join(';',x)).ToArray();
             File.WriteAllLines(filePath,str);
+
         }
 
     }

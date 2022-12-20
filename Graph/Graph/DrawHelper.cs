@@ -36,26 +36,33 @@ namespace Graph
                     Rect.Fill = new SolidColorBrush(Colors.Brown);
                     Rect.Stroke = new SolidColorBrush(Colors.Black);
                     Rect.MouseMove += MainWindow.ToolAddVertice.RectangleMouseMove;
-                    Canvas.SetZIndex(Rect, 2);
+
+
+
+                    Vertice vert = graph.AllVertices[i];
+                    vert.Rect = Rect;
+                    Canvas.SetTop(Rect, vert.RectCenter.Y - Rect.Height / 2);
+                    Canvas.SetLeft(Rect, vert.RectCenter.X - Rect.Width / 2);
                     canvas.Children.Add(Rect);
-                    Point center = new Point(LeftIndent + RectBetweenIndent * (i % RectOnOneLine), TopIndent + RectBetweenIndent * (i / RectOnOneLine));
-                    Canvas.SetTop(Rect, center.Y);
-                    Canvas.SetLeft(Rect, center.X);
+                    Canvas.SetZIndex(Rect, 2);
 
-                    graph.AllVertices[i].Rect = Rect;
-                    graph.AllVertices[i].RectCenter = new Point(center.X + Rect.Width / 2, center.Y + Rect.Height / 2);
+
+
+                    
+
                     TextBlock textBlock = new TextBlock() { Text = (graph.AllVertices[i].Id + 1).ToString() };
-
                     textBlock.Height = 20;
                     textBlock.Width = 50;
                     textBlock.VerticalAlignment = VerticalAlignment.Top;
                     textBlock.HorizontalAlignment = HorizontalAlignment.Center;
                     textBlock.TextAlignment = TextAlignment.Center;
-                    Canvas.SetZIndex(textBlock, 2);
+                    Canvas.SetZIndex(textBlock, 3);
+                    vert.NameTextBlock = textBlock;
+                    Canvas.SetTop(textBlock, vert.RectCenter.Y + TextBoxIndent - Rect.Height / 2);
+                    Canvas.SetLeft(textBlock, vert.RectCenter.X - Rect.Width / 2);
                     canvas.Children.Add(textBlock);
-                    Canvas.SetTop(textBlock, center.Y + TextBoxIndent);
-                    Canvas.SetLeft(textBlock, center.X);
-                    graph.AllVertices[i].NameTextBlock = textBlock;
+
+                    
                 }
                 else
                 {
@@ -67,8 +74,6 @@ namespace Graph
                     Canvas.SetLeft(vert.NameTextBlock, vert.RectCenter.X - vert.Rect.Width / 2);
                     canvas.Children.Add(vert.NameTextBlock);
                 }
-                
-
             }
             DrawConnections(canvas, graph);
         }

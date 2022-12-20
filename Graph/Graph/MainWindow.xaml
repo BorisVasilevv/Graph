@@ -14,7 +14,7 @@
         </Canvas>
 
         <Rectangle HorizontalAlignment="Left" Height="410" VerticalAlignment="Top" Width="80" Fill="Brown"></Rectangle>
-        <Rectangle x:Name="CommectRect" Fill="White" HorizontalAlignment="Right" Width="150" Margin="0,0,1,0"></Rectangle>
+        <Rectangle x:Name="CommentRect" Fill="White" HorizontalAlignment="Right" Stroke="Black" Width="300" Margin="0,0,1,0"></Rectangle>
 
         <Button 
             x:Name="btnCreateVertice" HorizontalAlignment="Left"  Margin="5,10,0,0" Height="30" 

@@ -26,12 +26,13 @@ namespace Graph
         public static bool IsUserCanUseButtons = false;
         public static AddVerticeTool ToolAddVertice;
         public AddConnectionTool ToolAddConnedtion;
+        public static int LeftIndent;
 
         const string Extension = ".csv";
         public MainWindow()
         {
             InitializeComponent();
-
+            LeftIndent = (int)CommentRect.Width + 1;
 
 
             ToolAddVertice = new AddVerticeTool();
