@@ -22,7 +22,11 @@ namespace Graph
 
         static StringBuilder sb = new StringBuilder();
         
-        
+        public static void ClearLogger()
+        {
+            sb.Clear();
+            LoggerTextBlock.Text = "";
+        }
 
         static Canvas _canvas;
         static double FullTextHeigh = 0; 
@@ -82,7 +86,8 @@ namespace Graph
             LoggerTextBlock.Text= stringBuilder.ToString();
 
 
-            grid.Children.Add(LoggerTextBlock);
+            if(!grid.Children.Contains(LoggerTextBlock)) 
+                grid.Children.Add(LoggerTextBlock);
 
            
 
