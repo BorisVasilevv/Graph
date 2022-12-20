@@ -23,7 +23,7 @@ namespace Graph
         MyGraph MainGraph = MainWindow.MainGraph;
         private Canvas _canvas = MainWindow.MainCanvas;
         public List<Shape> Shapes { get; private set; }
-        public List<(Polyline,string)> LineDescription { get; private set; }
+        public List<(Connection,string)> ConnectionDescriptions { get; private set; }
 
         AlgorithmType _type;
 
@@ -33,7 +33,7 @@ namespace Graph
             if(type == AlgorithmType.Traversal|| type == AlgorithmType.Prim) 
                 Shapes = new List<Shape>();
             if (type==AlgorithmType.FordFarkenson)
-                LineDescription = new List<(Polyline, string)>();
+                ConnectionDescriptions = new List<(Connection, string)>();
         }
 
 

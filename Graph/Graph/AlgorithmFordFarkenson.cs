@@ -70,6 +70,7 @@ namespace Graph
         {
             Connection connection = new Connection();
             List<int> logVert = new List<int>();
+            AnimaztionPainter animationHelper = new AnimaztionPainter(AnimaztionPainter.AlgorithmType.FordFarkenson);
 
             Logger logger = new Logger();
 
@@ -113,6 +114,7 @@ namespace Graph
                     //int connectionMaxFlow = Int32.Parse(Connection.SearchConnection(u, v, mainGraph.Connections).BlockText.Text.ToString());
                     connection = Connection.SearchConnection(u, v, MainGraph.Connections);
                     connection.BlockText.Text = $"{path_flow}/{graph[u, v]}";
+                    animationHelper.ConnectionDescriptions.Add((connection, $"{path_flow}/{graph[u, v]}"));
                     //Connection.SearchConnection(u, v, mainGraph.Connections).BlockText.Text = $"{path_flow}/{graph[u, v]}";
                 }
                 logger.AddLine("максимальный поток на пути из вершин:");
