@@ -32,7 +32,7 @@ namespace Graph
         {
             InitializeComponent();
 
-            
+
 
             ToolAddVertice = new AddVerticeTool();
             MainCanvas = canvas1;
@@ -170,10 +170,7 @@ namespace Graph
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (IsUserCanUseButtons)
-            {
-                FileWorker.WriteToFile(MainGraph, FileToWork);
-            }
+            FileWorker.WriteToFile(MainGraph, FileToWork);
         }
 
         private void btnExit_click(object sender, RoutedEventArgs e)
@@ -251,14 +248,11 @@ namespace Graph
         private void btnMinTree_Click(object sender, RoutedEventArgs e)
         {
             MainGraphCopy = new MyGraph(MainGraph);
-            bool IsGraphConnected = true;
+
             if (IsUserCanUseButtons)
             {
-                if (IsGraphConnected)
-                {
-                    MainGraph.Connections = PrimAlghoritm.AlgorithmByPrim(MainGraph);
-                }
-
+                IsUserCanUseButtons = false;
+                MainGraph.Connections = PrimAlghoritm.AlgorithmByPrim(MainGraph);
             }
         }
 
@@ -278,7 +272,7 @@ namespace Graph
         {
             MainCanvas.Children.Clear();
             MainGraph = MainGraphCopy == null ? MainGraph : MainGraphCopy;
-
+            IsUserCanUseButtons = true;
             DrawHelper.DrawGraph(MainCanvas, MainGraph);
             DrawHelper.BtnReturn.Click -= BtnReturn_Click;
 

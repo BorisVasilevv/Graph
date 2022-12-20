@@ -53,7 +53,7 @@ namespace Graph
                 MainGraph.AllVertices.Add(vertice);
                 vertice.RectCenter = point;
 
-                TextBlock textBlock = new TextBlock() { Text = (++_counter).ToString() };
+                TextBlock textBlock = new TextBlock() { Text = (vertice.Id + 1).ToString()};
 
                 textBlock.Height = 20;
                 textBlock.Width = 50;

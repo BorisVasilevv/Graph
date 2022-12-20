@@ -114,8 +114,6 @@ namespace Graph
             BtnReturn.Click -= BtnReturn_Click;
             if (_canvas.Children.Contains(BtnNext)) _canvas.Children.Remove(BtnNext);
             _canvas.Children.Remove(BtnReturn);
-
-
             _canvas.MouseMove += AddVerticeTool.clearSelection;
             _canvas.MouseMove += DeleteConnectionTool.clearSelection;
             _canvas.MouseMove += ChangeDataTool.TextBlockSelected;
@@ -186,6 +184,8 @@ namespace Graph
             }
             _counter++;
         }
+
+
 
 
         private void BtnNextFordFarkenson_Click(object sender, RoutedEventArgs e)

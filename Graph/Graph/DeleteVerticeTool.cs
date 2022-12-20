@@ -35,11 +35,7 @@ namespace Graph
                     MainWindow.MainCanvas.Children.Remove(conn.BlockText);
                 }
                 MainWindow.MainCanvas.Children.Remove(selectedRectangle);
-                MainWindow.MainCanvas.Children.Remove(vert.NameTextBlock);
-                foreach (Vertice vrt in MainGraph.AllVertices)
-                {
-                    if (vrt.Id > vert.Id) vrt.Id--;
-                }
+                MainWindow.MainCanvas.Children.Remove(vert.NameTextBlock);              
             }
             MainWindow.MainCanvas.MouseDown -= DeleteVertice;
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace Graph
 {
@@ -82,11 +83,21 @@ namespace Graph
                 notUsedE.RemoveAt(minE);
             }
 
+
+            MainWindow.MainCanvas.Children.Add(DrawHelper.BtnReturn);
+            DrawHelper.BtnReturn.Click += BtnReturn_Click;
+            Canvas.SetZIndex(DrawHelper.BtnReturn, 20);
+
             animaztionPainter.ShowAnimation();
             //Animize
             MainWindow.IsUserCanUseButtons = true;
             logger.AddLine("Алгоритм Прима завершён\n");
             return usedE;
+        }
+
+        private static void BtnReturn_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            //отписка из AnimaztionPainter
         }
     }
 }

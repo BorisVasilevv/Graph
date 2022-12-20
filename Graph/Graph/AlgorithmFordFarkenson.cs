@@ -213,7 +213,7 @@ namespace Graph
         private static void BtnReturn_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.BtnReturn_Click(sender, e);
-
+            MainWindow.IsUserCanUseButtons = true;
 
             foreach (Connection connection in MainWindow.MainGraph.Connections)
             {
