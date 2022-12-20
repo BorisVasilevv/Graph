@@ -425,6 +425,8 @@ namespace Graph
                     path = $"{endVertex.ToString()};{path}";
                 }
                 logger.AddLine("Алгоритм Дейкстры завершён\n");
+
+                Logger.ShowAllLogToUser(MainWindow.MainCanvas, MainWindow.MainGrid);
                 return path;
             }
         }

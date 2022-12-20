@@ -83,7 +83,7 @@ namespace Graph
                 notUsedE.RemoveAt(minE);
             }
 
-
+            Logger.ShowAllLogToUser(MainWindow.MainCanvas, MainWindow.MainGrid);
             animaztionPainter.ShowAnimation();
             //Animize
             MainWindow.IsUserCanUseButtons = true;
