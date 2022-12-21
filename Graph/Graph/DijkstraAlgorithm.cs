@@ -58,16 +58,12 @@ namespace Graph
                 if (path.Contains(vertise.Id))
                     vertices1.Add(vertise);
             }
+
             MainWindow.MainGraph = new MyGraph( vertices1, connections1);
             
 
-            MainWindow.MainCanvas.Children.Clear();
-
-            DrawHelper.DrawGraph(MainWindow.MainCanvas, MainWindow.MainGraph);
-
-            MainWindow.IsUserCanUseButtons = true;
+                   
             
-
             foreach (Connection connection in connections1)
             {
                 result += connection.Length;
@@ -75,9 +71,9 @@ namespace Graph
             TextBlock textBlock = DrawHelper.AnswerBlock;
             textBlock.Text = $"Min way from {start.NameTextBlock.Text} to {end.NameTextBlock.Text} \nResult: {result}" ;
             result = 0;
-            MainWindow.MainCanvas.Children.Add(DrawHelper.BtnReturn);
+            //MainWindow.MainCanvas.Children.Add(DrawHelper.BtnReturn);
 
-            Canvas.SetZIndex(DrawHelper.BtnReturn, 20);
+            //Canvas.SetZIndex(DrawHelper.BtnReturn, 20);
 
             MainWindow.MainCanvas.Children.Add(DrawHelper.AnswerRect);
             Canvas.SetZIndex(DrawHelper.AnswerRect, 18);

@@ -122,7 +122,9 @@ namespace Graph
                         line.Effect = null;
                     }
                 }
-
+                MainWindow.MainCanvas.Children.Clear();
+                MainWindow.MainGraph = MainWindow.MainGraphCopy == null ? MainGraph : new MyGraph(MainWindow.MainGraphCopy);
+                DrawHelper.DrawGraph(MainWindow.MainCanvas, MainWindow.MainGraph);
             }
 
             if (_type == AlgorithmType.FordFarkenson)
@@ -137,9 +139,9 @@ namespace Graph
             if (_type == AlgorithmType.Dijkstra)
             {
                 MainWindow.MainCanvas.Children.Clear();
-                MainGraph = MainWindow.MainGraphCopy == null ? MainGraph : MainWindow.MainGraphCopy;
-                MainWindow.IsUserCanUseButtons = true;
-                DrawHelper.DrawGraph(MainWindow.MainCanvas, MainGraph);
+                MainWindow.MainGraph = MainWindow.MainGraphCopy == null ? MainGraph : new MyGraph(MainWindow.MainGraphCopy) ;
+                
+                DrawHelper.DrawGraph(MainWindow.MainCanvas, MainWindow.MainGraph);
             }
 
 
@@ -182,14 +184,23 @@ namespace Graph
 
             if (_counter < _shapes.Count)
             {
-                _shapes[_counter].Fill = new SolidColorBrush(Colors.Green);
-            }
-            if (_counter == _shapes.Count)
-            {
-                BtnNext.Click -= BtnNextTraversal_Click;
-                _canvas.Children.Remove(BtnNext);
+                if (_shapes[_counter] is Polyline line)
+                {
+                    line.Effect = new DropShadowEffect() { Color = Colors.Black };
+                }
+                else if (_shapes[_counter] is Rectangle rect)
+                {
+                    rect.Fill = new SolidColorBrush(Colors.Green);
+                    rect.Stroke = new SolidColorBrush(Colors.Green);
+                }
             }
             _counter++;
+            if (_counter >= _shapes.Count)
+            {
+                _canvas.Children.Clear();
+                DrawHelper.DrawGraph(MainWindow.MainCanvas, MainWindow.MainGraph);
+                _canvas.Children.Add(BtnReturn);
+            }
         }
 
 
@@ -218,7 +229,9 @@ namespace Graph
 
         private void BtnNextDijkstra_Click(object sender, RoutedEventArgs e)
         {
-
+            MainWindow.MainCanvas.Children.Clear();
+            DrawHelper.DrawGraph(MainWindow.MainCanvas, MainWindow.MainGraph);
+            _canvas.Children.Add(BtnReturn);
         }
 
     }
