@@ -32,6 +32,8 @@ namespace Graph
         static TextBlock TextBlockTellUser;
         static double Length = MainWindow.MainCanvas.Width;
         static bool IsElemsAdd = false;
+
+        const int LeftIndent = 80;
         public static void TextBlock_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             TextBox.Text = "";
@@ -73,7 +75,8 @@ namespace Graph
                 IsElemsAdd = true;
                 MainWindow.MainCanvas.Children.Add(RectToAddData);
                 Canvas.SetZIndex(RectToAddData, 8);
-                Canvas.SetLeft(RectToAddData, Length - RectToAddData.Width - 15);
+
+                Canvas.SetLeft(RectToAddData, LeftIndent);
 
 
                 TextBox.Height = 20;
@@ -83,7 +86,7 @@ namespace Graph
                 TextBox.HorizontalAlignment = HorizontalAlignment.Center;
                 Canvas.SetZIndex(TextBox, 10);
                 Canvas.SetTop(TextBox, 80+ButtonLoggerIndent);
-                Canvas.SetLeft(TextBox, Length - RectToAddData.Width);
+                Canvas.SetLeft(TextBox, LeftIndent);
                 MainWindow.MainCanvas.Children.Add(TextBox);
 
 
@@ -93,14 +96,14 @@ namespace Graph
                     $"\nмежду {connectionToChange.Vertice1.NameTextBlock.Text} и " +
                     $"{connectionToChange.Vertice2.NameTextBlock.Text}";
                 Canvas.SetTop(TextBlock, 20+ ButtonLoggerIndent);
-                Canvas.SetLeft(TextBlock, Length - RectToAddData.Width);
+                Canvas.SetLeft(TextBlock, LeftIndent);
                 Canvas.SetZIndex(TextBlock, 10);
                 MainWindow.MainCanvas.Children.Add(TextBlock);
 
                 BtnExit.Height = 20;
                 BtnExit.Width = 150;
                 Canvas.SetTop(BtnExit, 150 + ButtonLoggerIndent);
-                Canvas.SetLeft(BtnExit, Length - RectToAddData.Width);
+                Canvas.SetLeft(BtnExit, LeftIndent);
                 BtnExit.Content = "Отмена";
                 BtnExit.HorizontalContentAlignment = HorizontalAlignment.Center;
                 BtnExit.VerticalContentAlignment = VerticalAlignment.Center;
@@ -112,7 +115,7 @@ namespace Graph
                 BtnReadyToAddData.Height = 20;
                 BtnReadyToAddData.Width = 150;
                 Canvas.SetTop(BtnReadyToAddData, 120 + ButtonLoggerIndent);
-                Canvas.SetLeft(BtnReadyToAddData, Length - RectToAddData.Width);
+                Canvas.SetLeft(BtnReadyToAddData, LeftIndent);
                 BtnReadyToAddData.Content = "Готово";
                 BtnReadyToAddData.HorizontalContentAlignment = HorizontalAlignment.Center;
                 BtnReadyToAddData.VerticalContentAlignment = VerticalAlignment.Center;
@@ -181,7 +184,7 @@ namespace Graph
             TextBlockTellUser.Height = 40;
             TextBlockTellUser.Width = 150;
             Canvas.SetTop(TextBlockTellUser, 180+ ButtonLoggerIndent);
-            Canvas.SetLeft(TextBlockTellUser, Length - RectToAddData.Width);
+            Canvas.SetLeft(TextBlockTellUser, LeftIndent);
             Canvas.SetZIndex(TextBlockTellUser, 10);
             TextBlockTellUser.Text = "Введённые данные \nнекорректны";
             MainWindow.MainCanvas.Children.Add(TextBlockTellUser);
