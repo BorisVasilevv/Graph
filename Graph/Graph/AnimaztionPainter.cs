@@ -129,6 +129,7 @@ namespace Graph
 
             if (_type == AlgorithmType.FordFarkenson)
             {
+                AlgorithmFordFarkenson.ResultLength.Clear();
                 foreach (Connection connection in MainWindow.MainGraph.Connections)
                 {
                     connection.BlockText.Text = connection.Length.ToString();

@@ -39,7 +39,7 @@ namespace Graph
                     logger.AddLine($"{i.NameTextBlock.Text}");
                 }
 
-                verticesInOrderOfVisit.Add(vert);
+                if (!verticesInOrderOfVisit.Contains(vert)) verticesInOrderOfVisit.Add(vert);
                 logger.AddLine($"Обходим все соединения связывающие вершину {vert.NameTextBlock.Text}.\nДобавляем в стек все вершины из списка\nнепосещеных связанных с {vert.NameTextBlock.Text}.");
                 foreach (Vertice vertice in notVisitedV)
                 {
@@ -64,6 +64,11 @@ namespace Graph
                     logger.AddLine($"{i.NameTextBlock.Text}");
                 }
                 if (!verticesInOrderOfVisit.Contains(vert)) verticesInOrderOfVisit.Add(vert);
+            }
+            logger.AddLine("Вершины в порядке посещения");
+            foreach(Vertice vertice in verticesInOrderOfVisit)
+            {
+                logger.AddLine(vertice.NameTextBlock.Text);
             }
             logger.AddLine("Алгорит обхода в глубину завершён");
             logger.AddLine(String.Empty);
@@ -160,6 +165,12 @@ namespace Graph
                 {
                     logger.AddLine($"{i.NameTextBlock.Text}");
                 }
+            }
+
+            logger.AddLine("Вершины в порядке посещения");
+            foreach (Vertice vertice in visitedV)
+            {
+                logger.AddLine(vertice.NameTextBlock.Text);
             }
 
             logger.AddLine("Алгорит обхода в ширину завершён.");

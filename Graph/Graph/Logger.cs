@@ -26,6 +26,7 @@ namespace Graph
         {
             sb.Clear();
             LoggerTextBlock.Text = "";
+            start = 0;
         }
 
         static Canvas _canvas;
@@ -44,6 +45,8 @@ namespace Graph
             sb.Append("\n");
             
         }
+
+
         static int start = 0;
         static int end = 0;
         static int amountOfStrOnTextBlock;

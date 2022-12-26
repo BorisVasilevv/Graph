@@ -6,8 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Graph"
         mc:Ignorable="d"
-        Title="MainWindow"
-        
+        Title="Algorithm using graph"    
         WindowState="Maximized">
     <Grid x:Name="Grid1">
         <Canvas x:Name="canvas1" Background="LightGray" Height="450" Width="800">
